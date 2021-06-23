@@ -1,0 +1,21 @@
+.header {
+    height: 10vh;
+    background-color: skyblue;
+}
+
+.headerLink {
+    text-decoration: none;
+    border: 2px solid darkblue;
+    color: darkblue;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;;
+
+}
+
+.headerContain {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
