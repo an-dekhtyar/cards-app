@@ -20,10 +20,10 @@ export const Button: React.FC<SuperButtonPropsType> = (
         <span className={s.contain}>
         <button
             className={finalClassName}
+            children={restProps.value}
             {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
-        >
-          {restProps.value}
-        </button>
+        />
+
       </span>
     )
 }
