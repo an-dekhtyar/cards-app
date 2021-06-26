@@ -9,6 +9,7 @@ export const Registration = () => (
         <SuperInputText/>
         <SuperInputText/>
         <SuperInputText/>
+
         <Button value={'Send'}/>
     </div>
 );
