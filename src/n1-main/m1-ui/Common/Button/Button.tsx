@@ -15,13 +15,15 @@ export const Button: React.FC<SuperButtonPropsType> = (
     }
 ) => {
     const finalClassName = `${red ? s.red : s.default} ${className}`
-
+    console.log(restProps.value)
     return (
         <span className={s.contain}>
         <button
             className={finalClassName}
             {...restProps} // отдаём кнопке остальные пропсы если они есть (children там внутри)
-        />
+        >
+          {restProps.value}
+        </button>
       </span>
     )
 }
