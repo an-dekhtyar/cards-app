@@ -5,6 +5,7 @@ import {Button} from "../../../n1-main/m1-ui/Common/Button/Button";
 
 export const Registration = () => (
     <div className={st.registrationPage}>
+
         <h1>REGISTRATION PAGE</h1>
         <SuperInputText/>
         <SuperInputText/>
