@@ -60,7 +60,6 @@ export const Registration = () => {
             {error===true && <div className={st.PasswordError}>Check YOUR PASSWORD</div>}
 
             <Button children={'Send'} onClick={() => onclickHandler()}/>
-
             {buttonOn &&
             loginForm.map((m: setRegistrationType) => {
                 return (
