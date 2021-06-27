@@ -34,7 +34,6 @@ export const Registration = () => {
                 setError(false)
             },3000)
         }
-
         setEmail('')
         setPassword1('')
         setPassword2('')
