@@ -1,5 +1,7 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, useState} from 'react'
 import s from './Input.module.css'
+import {Login} from "../../../../n2-features";
+import {setRegistrationType} from "../../../../n2-features/h1-auth/a2-registration/Registration";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -7,10 +9,13 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 // здесь мы говорим что у нашего инпута будут такие же пропсы как у обычного инпута
 // (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
 type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
+    // @ts-ignore
     onChangeText?: (value: string) => void
     onEnter?: () => void
     error?: string
     spanClassName?: string
+    value?:string
+
 }
 
 const SuperInputText: React.FC<SuperInputTextPropsType> = (
@@ -20,15 +25,17 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
         onKeyPress, onEnter,
         error,
         className, spanClassName,
-
+        value,
         ...restProps// все остальные пропсы попадут в объект restProps
     }
 ) => {
+
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange // если есть пропс onChange
         && onChange(e) // то передать ему е (поскольку onChange не обязателен)
 
         onChangeText && onChangeText(e.currentTarget.value)
+
     }
     const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
         onKeyPress && onKeyPress(e);
@@ -49,7 +56,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
-
+value={value}
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
             </span>
