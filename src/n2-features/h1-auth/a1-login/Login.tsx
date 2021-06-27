@@ -10,11 +10,14 @@ export const Login: React.FC = () => {
         <div className={st.loginPage}>
             <h1>LOGIN PAGE</h1>
             <label>Email
-                <input/>
+                <input type={'email'}/>
             </label>
             <label>
                 Password
-                <input/>
+                <input type={'password'}/>
+            </label>
+            <label>Remember me
+                <input type={'checkbox'}/>
             </label>
             <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
             <button>Login</button>
