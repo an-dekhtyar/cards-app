@@ -16,6 +16,7 @@ export const Registration = () => {
     let [loginForm, setloginForm] = useState<any>([])
     let [buttonOn, setbuttonOn] = useState(false)
     console.log(loginForm)
+
     let onclickHandler = () => {
         console.log(login, password1, password2)
         setbuttonOn(true);
