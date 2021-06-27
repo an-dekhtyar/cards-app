@@ -6,6 +6,7 @@
     box-sizing: border-box;
     transition: .3s;
     font-family: "Courier New";
+    width: 35%;
 }
 
 .errorInput {

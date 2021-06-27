@@ -15,6 +15,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё проп
     error?: string
     spanClassName?: string
     value?:string
+    placeholder?:string
 
 }
 
@@ -52,6 +53,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
         <span className={s.inputContain}>
             <span>
             <input
+                placeholder={restProps.placeholder}
                 type={'text'}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}

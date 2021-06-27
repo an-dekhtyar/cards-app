@@ -3,7 +3,7 @@ import st from './Registration.module.css'
 import SuperInputText from "../../../n1-main/m1-ui/Common/Input/Input";
 import {Button} from "../../../n1-main/m1-ui/Common/Button/Button";
 import {ApiCards} from "../../../API/ApiCards";
-import {addUserAC, authReducer} from "../../../n1-main/m2-bll/auth-reducer";
+import {addUserAC, addUserACThunk, authReducer} from "../../../n1-main/m2-bll/auth-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
 
@@ -27,7 +27,8 @@ export const Registration = () => {
         setbuttonOn(true);
         if (password1 === password2) {
             setError(false)
-            dispath(addUserAC(email, password1, password2))
+            // dispath(addUserAC(email, password1, password2))
+            dispath(addUserACThunk(email, password1))
         }else{
             setError(true)
             setTimeout(()=>{
@@ -41,10 +42,7 @@ export const Registration = () => {
 
     useEffect(() => {
 
-        ApiCards.addUser("Shashelephant@gmail.com", "223120Dilan-Bars211")
-            .then((res) => {
-                console.log(res.data)
-            })
+
         // ApiCards.ping()
         //     .then((res)=>{
         //         console.log(res)
@@ -55,9 +53,9 @@ export const Registration = () => {
     return (
         <div className={st.registrationPage}>
             <h1>REGISTRATION PAGE</h1>
-            <SuperInputText value={email} onChangeText={setEmail}/>
-            <SuperInputText value={password1} onChangeText={setPassword1}/>
-            <SuperInputText value={password2} onChangeText={setPassword2}/>
+            <SuperInputText value={email} onChangeText={setEmail} placeholder={'Enter your EMAIL'}/>
+            <SuperInputText value={password1} onChangeText={setPassword1} placeholder={'Enter your PASSWORD'}/>
+            <SuperInputText value={password2} onChangeText={setPassword2}  placeholder={'Enter your PASSWORD AGAIN'}/>
 
             {error===true && <div className={st.PasswordError}>Check YOUR PASSWORD</div>}
 
@@ -69,8 +67,6 @@ export const Registration = () => {
                     <div className={st.buttonOn}>
                         <div>Your Login={m.email}</div>
                         <div>Your Password={m.password1}</div>
-
-
                     </div>
                 )
             })

@@ -10,6 +10,12 @@ let instance=axios.create({
     // }
 })
 
+// type AddUserType={
+//
+// }
+
+
+
 export const ApiCards={
     ping(){
         return instance.get(`ping`)
@@ -19,7 +25,3 @@ export const ApiCards={
     },
 
 }
-// {
-//     email: "nya-admin@nya.nya"
-//     password: "1qazxcvBG"
-// }
