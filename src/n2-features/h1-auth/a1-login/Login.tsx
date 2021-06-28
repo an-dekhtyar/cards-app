@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import st from './Login.module.css'
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,23 +9,30 @@ import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {loginTC} from '../../../n1-main/m2-bll/login-reducer';
 
 export const Login: React.FC = () => {
-    const [email, setEmail] = useState(useSelector<AppStoreType, string>(state => state.login.email))
-    const [password, setPassword] = useState<string>('');
-    const [rememberMe, setRememberMe] = useState<boolean>(useSelector<AppStoreType, boolean>(state => state.login.rememberMe))
-    const dispatch = useDispatch();
 
+    //state
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState<string>('');
+    const [rememberMe, setRememberMe] = useState<boolean>(false)
+    const dispatch = useDispatch();
+    const isAuth = useSelector<AppStoreType, boolean>(state => state.login.isAuth);
+    const error = useSelector<AppStoreType, string | null>(state => state.login.error);
+
+
+    if (isAuth) {
+        return <Redirect to={PATH.PROFILE}/>
+    }
+
+    //functions
     const onEmailInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.currentTarget.value);
     }
-
     const onPasswordInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setPassword(e.currentTarget.value);
     }
-
     const onRememberMeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setRememberMe(e.currentTarget.checked);
     }
-
     const onSubmitClick = () => {
         dispatch(loginTC({email, password, rememberMe}))
     }
@@ -35,18 +42,20 @@ export const Login: React.FC = () => {
         <div className={st.loginPage}>
             <h1>LOGIN PAGE</h1>
             <label>Email <SuperInputText type={'email'}
-                                value={email}
-                                onChange={onEmailInputChange}/>
+                                         value={email}
+                                         placeholder={'example@gmail.com'}
+                                         onChange={onEmailInputChange}/>
             </label>
             <label>
                 Password <SuperInputText type={'password'}
-                                value={password}
-                                onChange={onPasswordInputChange}/>
+                                         value={password}
+                                         onChange={onPasswordInputChange}/>
             </label>
             <label>Remember me <input type={'checkbox'}
                                       checked={rememberMe}
                                       onChange={onRememberMeInputChange}/>
             </label>
+            {error && <span className={st.error}>{error}</span>}
             <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
             <Button onClick={onSubmitClick}>Login</Button>
             <p>Don't have an account?</p>
