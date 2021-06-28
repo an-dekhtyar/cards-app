@@ -6,6 +6,7 @@ import {ApiCards} from "../../../API/ApiCards";
 import {addUserAC, addUserACThunk, authReducer} from "../../../n1-main/m2-bll/auth-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
+import {Redirect} from 'react-router-dom';
 
 export type setRegistrationType = {
     email: '',
@@ -18,10 +19,12 @@ export const Registration = () => {
     let [password1, setPassword1] = useState('')
     let [password2, setPassword2] = useState('')
     let [buttonOn, setbuttonOn] = useState(false)
-    let[error,setError]=useState(false)
+    let [error, setError] = useState(false)
 
     let dispath = useDispatch()
     let loginForm = useSelector<AppStoreType, Array<setRegistrationType>>(state => state.auth)
+    let statusLoginForm=loginForm.find((f)=>f.email)
+    let[statusRedirect,setStatusRedirect]=useState(false)
 
     let onclickHandler = () => {
         setbuttonOn(true);
@@ -29,11 +32,11 @@ export const Registration = () => {
             setError(false)
             // dispath(addUserAC(email, password1, password2))
             dispath(addUserACThunk(email, password1))
-        }else{
+        } else {
             setError(true)
-            setTimeout(()=>{
+            setTimeout(() => {
                 setError(false)
-            },3000)
+            }, 3000)
         }
         setEmail('')
         setPassword1('')
@@ -48,18 +51,23 @@ export const Registration = () => {
         //         console.log(res)
         //     })
     }, [])
-
+    console.log(statusLoginForm)
+    if (statusLoginForm) {
+        setStatusRedirect(true)
+            return (<Redirect to={'/login'}/>)
+    }
 
     return (
         <div className={st.registrationPage}>
             <h1>REGISTRATION PAGE</h1>
             <SuperInputText value={email} onChangeText={setEmail} placeholder={'Enter your EMAIL'}/>
             <SuperInputText value={password1} onChangeText={setPassword1} placeholder={'Enter your PASSWORD'}/>
-            <SuperInputText value={password2} onChangeText={setPassword2}  placeholder={'Enter your PASSWORD AGAIN'}/>
+            <SuperInputText value={password2} onChangeText={setPassword2} placeholder={'Enter your PASSWORD AGAIN'}/>
 
-            {error===true && <div className={st.PasswordError}>Check YOUR PASSWORD</div>}
+            {error === true && <div className={st.PasswordError}>Check YOUR PASSWORD</div>}
 
             <Button children={'Send'} onClick={() => onclickHandler()}/>
+
             {buttonOn &&
             loginForm.map((m: setRegistrationType) => {
                 return (
