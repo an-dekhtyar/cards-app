@@ -17,7 +17,7 @@ export const Login: React.FC = () => {
     const dispatch = useDispatch();
     const isAuth = useSelector<AppStoreType, boolean>(state => state.login.isAuth);
     const error = useSelector<AppStoreType, string | null>(state => state.login.error);
-
+    const isLoading = useSelector<AppStoreType, boolean>(state => state.login.isLoading);
 
     if (isAuth) {
         return <Redirect to={PATH.PROFILE}/>
@@ -41,6 +41,7 @@ export const Login: React.FC = () => {
     return (
         <div className={st.loginPage}>
             <h1>LOGIN PAGE</h1>
+            {isLoading && <span style={{color: 'blue'}}>loading</span>}
             <label>Email <SuperInputText type={'email'}
                                          value={email}
                                          placeholder={'example@gmail.com'}
@@ -57,7 +58,8 @@ export const Login: React.FC = () => {
             </label>
             {error && <span className={st.error}>{error}</span>}
             <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
-            <Button onClick={onSubmitClick}>Login</Button>
+            <Button onClick={onSubmitClick}
+                    disabled={isLoading}>Login</Button>
             <p>Don't have an account?</p>
             <NavLink to={PATH.REGISTRATION}>Sing up</NavLink>
         </div>
