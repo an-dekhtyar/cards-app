@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
 
 
 let instance = axios.create({
@@ -17,8 +18,8 @@ export const ApiCards = {
     addUser(email: string, password: string) {
         return instance.post('/auth/register', {email: email, password: password})
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance.post<LoginResponseType>('/auth/login', {email, password, rememberMe})
+    login(data: LoginDataType) {
+        return instance.post<LoginResponseType>('/auth/login', {...data})
     }
 
 }
@@ -30,7 +31,7 @@ export const ApiCards = {
 
 //types
 
-type LoginResponseType = {
+export type LoginResponseType = {
     _id: string
     email: string
     name: string
@@ -43,3 +44,4 @@ type LoginResponseType = {
     rememberMe: boolean
     error?: string
 }
+

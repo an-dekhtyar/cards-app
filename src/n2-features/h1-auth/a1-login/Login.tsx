@@ -2,15 +2,17 @@ import React, {ChangeEvent, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import st from './Login.module.css'
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import SuperInputText from '../../../n1-main/m1-ui/Common/Input/Input';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
+import {loginTC} from '../../../n1-main/m2-bll/login-reducer';
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState(useSelector<AppStoreType, string>(state => state.login.email))
     const [password, setPassword] = useState<string>('');
     const [rememberMe, setRememberMe] = useState<boolean>(useSelector<AppStoreType, boolean>(state => state.login.rememberMe))
+    const dispatch = useDispatch();
 
     const onEmailInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.currentTarget.value);
@@ -23,6 +25,11 @@ export const Login: React.FC = () => {
     const onRememberMeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setRememberMe(e.currentTarget.checked);
     }
+
+    const onSubmitClick = () => {
+        dispatch(loginTC({email, password, rememberMe}))
+    }
+
 
     return (
         <div className={st.loginPage}>
@@ -41,7 +48,7 @@ export const Login: React.FC = () => {
                                       onChange={onRememberMeInputChange}/>
             </label>
             <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
-            <Button>Login</Button>
+            <Button onClick={onSubmitClick}>Login</Button>
             <p>Don't have an account?</p>
             <NavLink to={PATH.REGISTRATION}>Sing up</NavLink>
         </div>
