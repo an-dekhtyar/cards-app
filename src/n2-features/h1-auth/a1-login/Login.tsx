@@ -4,6 +4,8 @@ import st from './Login.module.css'
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
+import SuperInputText from '../../../n1-main/m1-ui/Common/Input/Input';
+import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 
 export const Login: React.FC = () => {
     const [email, setEmail] = useState(useSelector<AppStoreType, string>(state => state.login.email))
@@ -25,12 +27,12 @@ export const Login: React.FC = () => {
     return (
         <div className={st.loginPage}>
             <h1>LOGIN PAGE</h1>
-            <label>Email <input type={'email'}
+            <label>Email <SuperInputText type={'email'}
                                 value={email}
                                 onChange={onEmailInputChange}/>
             </label>
             <label>
-                Password <input type={'password'}
+                Password <SuperInputText type={'password'}
                                 value={password}
                                 onChange={onPasswordInputChange}/>
             </label>
@@ -39,7 +41,7 @@ export const Login: React.FC = () => {
                                       onChange={onRememberMeInputChange}/>
             </label>
             <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
-            <button>Login</button>
+            <Button>Login</Button>
             <p>Don't have an account?</p>
             <NavLink to={PATH.REGISTRATION}>Sing up</NavLink>
         </div>
