@@ -1,6 +1,5 @@
 import {Dispatch} from "redux";
 import {ApiCards} from "../../API/ApiCards";
-import {log} from "util";
 
 
 let initialState:Array<string>=[]
@@ -27,10 +26,12 @@ export const addUserAC =(email:string,password:string,data:{email:string,passwor
             }as const
 }
 
-export const addUserACThunk=(email:string,password:string)=>(dispatch:Dispatch)=>{
+export const addUserACThunk=(email:string,password:string,setPreloader:(value:boolean)=>void)=>(dispatch:Dispatch)=>{
+    setPreloader(true)
     ApiCards.addUser(email, password)
         .then((res) => {
             dispatch(addUserAC(email,password,res.config.data));
+            setPreloader(false)
             console.log(res.config.data)
         })
 }

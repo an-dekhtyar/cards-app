@@ -21,7 +21,7 @@ export const ApiCards={
         return instance.get(`ping`)
     },
     addUser(email: string,password: string){
-        return instance.post('/auth/register',{email:email, password:password})
+        return instance.post('/auth/register',{email:email, password:password,})
     },
 
 }

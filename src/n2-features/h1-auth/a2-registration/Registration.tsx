@@ -7,6 +7,7 @@ import {addUserAC, addUserACThunk, authReducer} from "../../../n1-main/m2-bll/au
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
 import {Redirect} from 'react-router-dom';
+import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
 
 export type setRegistrationType = {
     email: '',
@@ -20,18 +21,22 @@ export const Registration = () => {
     let [password2, setPassword2] = useState('')
     let [buttonOn, setbuttonOn] = useState(false)
     let [error, setError] = useState(false)
+    let [preloader,setPreloader]=useState(false)
 
     let dispath = useDispatch()
     let loginForm = useSelector<AppStoreType, Array<setRegistrationType>>(state => state.auth)
-    let statusLoginForm=loginForm.find((f)=>f.email)
-    let[statusRedirect,setStatusRedirect]=useState(false)
+     let statusLoginForm=loginForm.find((f)=>f.email)
+
 
     let onclickHandler = () => {
         setbuttonOn(true);
         if (password1 === password2) {
             setError(false)
             // dispath(addUserAC(email, password1, password2))
-            dispath(addUserACThunk(email, password1))
+
+            dispath(addUserACThunk(email, password1,setPreloader))
+
+
         } else {
             setError(true)
             setTimeout(() => {
@@ -44,21 +49,23 @@ export const Registration = () => {
     }
 
     useEffect(() => {
-
-
         // ApiCards.ping()
         //     .then((res)=>{
         //         console.log(res)
         //     })
     }, [])
-    console.log(statusLoginForm)
-    if (statusLoginForm) {
-        setStatusRedirect(true)
-            return (<Redirect to={'/login'}/>)
-    }
 
-    return (
+    console.log(statusLoginForm)
+    // if (statusLoginForm) {
+    //     setStatusRedirect(true)
+    //         return (<Redirect to={'/login'}/>)
+    // }
+    if (statusLoginForm) {
+        return (<Redirect to={'/login'}/>)
+    }
+       return (
         <div className={st.registrationPage}>
+            {preloader&&<Preloader/>}
             <h1>REGISTRATION PAGE</h1>
             <SuperInputText value={email} onChangeText={setEmail} placeholder={'Enter your EMAIL'}/>
             <SuperInputText value={password1} onChangeText={setPassword1} placeholder={'Enter your PASSWORD'}/>
