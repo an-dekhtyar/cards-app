@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import SuperInputText from '../../../n1-main/m1-ui/Common/Input/Input';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
-import {loginTC} from '../../../n1-main/m2-bll/login-reducer';
+import {loginTC, setError} from '../../../n1-main/m2-bll/login-reducer';
 
 export const Login: React.FC = () => {
 
@@ -34,14 +34,16 @@ export const Login: React.FC = () => {
         setRememberMe(e.currentTarget.checked);
     }
     const onSubmitClick = () => {
-        dispatch(loginTC({email, password, rememberMe}))
+        dispatch(setError(null));
+        dispatch(loginTC({email, password, rememberMe}));
     }
 
 
     return (
         <div className={st.loginPage}>
             <h1>LOGIN PAGE</h1>
-            {isLoading && <span style={{color: 'blue'}}>loading</span>}
+            {isLoading && <span className={st.isLoading}>loading</span>}
+            {error && <span className={st.error}>{error}</span>}
             <label>Email <SuperInputText type={'email'}
                                          value={email}
                                          placeholder={'example@gmail.com'}
@@ -56,7 +58,6 @@ export const Login: React.FC = () => {
                                       checked={rememberMe}
                                       onChange={onRememberMeInputChange}/>
             </label>
-            {error && <span className={st.error}>{error}</span>}
             <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
             <Button onClick={onSubmitClick}
                     disabled={isLoading}>Login</Button>

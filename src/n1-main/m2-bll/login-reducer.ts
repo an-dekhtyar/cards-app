@@ -36,28 +36,28 @@ export const loginReducer = (state = initialState, action: LoginActionsType): Lo
 
 //action creators
 
-const toggleIsLoading = (isLoading: boolean) => ({
+export const toggleIsLoading = (isLoading: boolean) => ({
     type: 'cards-app/login/TOGGLE-IS-LOADING',
     payload: {
         isLoading
     }
 } as const);
 
-const setUserParams = (LoginData: LoginResponseType) => ({
+export const setUserParams = (LoginData: LoginResponseType) => ({
     type: 'cards-app/login/SET-USER-PARAMS',
     payload: {
         ...LoginData
     }
 } as const)
 
-const setError = (error: string | null) => ({
+export const setError = (error: string | null) => ({
     type: 'cards-app/login/SET-ERROR',
     payload: {
         error
     }
 } as const)
 
-const setIsAuthorized = (isAuth: boolean) => ({
+export const setIsAuthorized = (isAuth: boolean) => ({
     type: 'cards-app/login/SET-ERROR',
     payload: {
         isAuth
