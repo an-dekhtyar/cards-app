@@ -3,11 +3,12 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
 import {Redirect, useLocation} from "react-router-dom";
-import {setNewPassword} from "../../../n1-main/m2-bll/auth-reducer";
 import st from "./EnterNewPass.module.css";
-import {Preloader} from "../a4-restore-pass/RestorePass";
+
 import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
 import {EnterNewPass} from "./EnterNewPass";
+import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
+import { setNewPassword } from "../../../n1-main/m2-bll/restore-pass-reducer";
 
 
 
