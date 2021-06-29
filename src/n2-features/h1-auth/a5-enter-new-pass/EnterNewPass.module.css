@@ -1,0 +1,46 @@
+.enterNewPass {
+    display: flex;
+    justify-content: center;
+    height: 90vh;
+    color: #3b4652;
+}
+
+.enterNewPassContain {
+    border: 3px solid darkblue;
+    width: 500px;
+    height: 700px;
+    align-self: center;
+    border-radius: 25px;
+
+
+}
+.enterNewPassContent {
+    height: 630px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.logo {
+    width:300px;
+    height: 70px;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+.emailLogo {
+    height: 50px;
+    width: 50px;
+    border-radius: 20px;
+    background-color: mediumslateblue;
+}
+
+.loader {
+    height:80%;
+    vertical-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

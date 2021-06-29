@@ -1,5 +1,5 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {authReducer} from "./auth-reducer";
+import {authReducer, restorePassReducer} from "./auth-reducer";
 import {loginReducer} from "./login-reducer";
 import {profileReducer} from "./profile-reducer";
 import thunk from "redux-thunk";
@@ -8,7 +8,8 @@ import thunk from "redux-thunk";
 const reducers = combineReducers({
     auth:authReducer,
     login:loginReducer,
-    profile:profileReducer
+    profile:profileReducer,
+    restorePass:restorePassReducer
 })
 
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import {Redirect, Route, Switch } from 'react-router-dom';
-import {Registration, Profile, RestorePass, EnterNewPass, Test, Login} from "../../../n2-features";
+import {Registration, Profile, RestorePass, EnterNewPassContain, Test, Login} from "../../../n2-features";
 import {Page404} from "../../m4-pages/a4-page404/Page404";
+
 
 
 export const PATH = {
@@ -24,7 +25,7 @@ export const Routes = () => (
             <Route path={PATH.REGISTRATION} render={() => <Registration/>}/>
             <Route path={PATH.PROFILE} render={() => <Profile/>}/>
             <Route path={PATH.RESTORE_PASS} render={() => <RestorePass/>}/>
-            <Route path={PATH.ENTER_NEW_PASS} render={() => <EnterNewPass/>}/>
+            <Route path={PATH.ENTER_NEW_PASS} render={() => <EnterNewPassContain/>}/>
             <Route path={PATH.TEST} render={() => <Test/>}/>
             <Route path={PATH.PAGE_404} render={() => <Page404/>}/>
 
