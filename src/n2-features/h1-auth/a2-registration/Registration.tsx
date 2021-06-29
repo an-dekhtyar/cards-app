@@ -53,6 +53,7 @@ export const Registration = () => {
         //         console.log(res)
         //     })
     }, [])
+
     console.log(statusLoginForm)
 
     return (
