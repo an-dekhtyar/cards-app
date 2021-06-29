@@ -1,7 +1,11 @@
-.buttonOn{
+.buttonOn {
     border: lightskyblue 1px solid;
     background: lightskyblue;
-    width: 20%;
-  margin: auto ;
+    width: 50%;
+    margin: auto;
     margin-top: 20px;
+}
+
+.PasswordError {
+    color: red;
 }
