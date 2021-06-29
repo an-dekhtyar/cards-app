@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import st from './Registration.module.css'
 import SuperInputText from "../../../n1-main/m1-ui/Common/Input/Input";
 import {Button} from "../../../n1-main/m1-ui/Common/Button/Button";
+import {ApiCards} from "../../../API/ApiCards";
 
 export type setRegistrationType = {
     login: '',
@@ -15,9 +16,10 @@ export const Registration = () => {
     let [password2, setPassword2] = useState('')
     let [loginForm, setloginForm] = useState<any>([])
     let [buttonOn, setbuttonOn] = useState(false)
-    console.log(loginForm)
+    // console.log(loginForm)
+
     let onclickHandler = () => {
-        console.log(login, password1, password2)
+        // console.log(login, password1, password2)
         setbuttonOn(true);
         let newItemLoginForm = {login: login, password1: password1, password2: password2}
         setloginForm([...loginForm, newItemLoginForm])
@@ -25,6 +27,18 @@ export const Registration = () => {
         setPassword1('')
         setPassword2('')
     }
+
+    useEffect(() => {
+
+        ApiCards.addUser( "Shashelephant@gmail.com", "223120Dilan-Bars211")
+            .then((res) => {
+                console.log(res.data)
+            })
+        // ApiCards.ping()
+        //     .then((res)=>{
+        //         console.log(res)
+        //     })
+    }, [])
 
 
     return (
@@ -35,15 +49,15 @@ export const Registration = () => {
             <SuperInputText value={password2} onChangeText={setPassword2}/>
 
             <Button children={'Send'} onClick={() => onclickHandler()}/>
-            { buttonOn &&
-                loginForm.map((m:setRegistrationType)=>{
-                    return(
-                        <div className={st.buttonOn}>
-                            <div>Your Login={m.login}</div>
-                            <div>Your Password={m.password1}</div>
-                        </div>
-                    )
-                })
+            {buttonOn &&
+            loginForm.map((m: setRegistrationType) => {
+                return (
+                    <div className={st.buttonOn}>
+                        <div>Your Login={m.login}</div>
+                        <div>Your Password={m.password1}</div>
+                    </div>
+                )
+            })
             }
         </div>
     )
