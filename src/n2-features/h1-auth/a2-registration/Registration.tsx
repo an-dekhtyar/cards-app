@@ -27,7 +27,6 @@ export const Registration = () => {
     let loginForm = useSelector<AppStoreType, Array<setRegistrationType>>(state => state.auth)
      let statusLoginForm=loginForm.find((f)=>f.email)
 
-
     let onclickHandler = () => {
         setbuttonOn(true);
         if (password1 === password2) {
