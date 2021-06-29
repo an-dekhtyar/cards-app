@@ -1,7 +1,5 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent, useState} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
 import s from './Input.module.css'
-import {Login} from "../../../../n2-features";
-import {setRegistrationType} from "../../../../n2-features/h1-auth/a2-registration/Registration";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -14,7 +12,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё проп
     onEnter?: () => void
     error?: string
     spanClassName?: string
-    value?:string
+    value?: string
 
 }
 
@@ -46,17 +44,17 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
     }
 
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${error ? s.errorInput: s.superInput}  ${className}` // need to fix with (?:) and s.superInput
+    const finalInputClassName = `${error ? s.errorInput : s.superInput}  ${className}` // need to fix with (?:) and s.superInput
 
     return (
         <span className={s.inputContain}>
             <span>
             <input
-                type={'text'}
+                type={type}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
-value={value}
+                value={value}
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
             </span>
