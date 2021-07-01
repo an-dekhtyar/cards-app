@@ -1,4 +1,4 @@
-import React from 'react';
+
 import axios from 'axios';
 import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
 
@@ -20,8 +20,21 @@ export const ApiCards = {
     },
     login(data: LoginDataType) {
         return instance.post<LoginResponseType>('/auth/login', {...data})
+    },
+    getInstruction(email: string) {
+        return instance.post('auth/forgot', {
+            email,
+            from: "test-front-admin <ai73a@yandex.by>",
+            message: `<div style="background-color: lime; padding: 15px"> To change your password, please follow the link:<a href='http://localhost:3000/#/new-pass/$token$'>link</a></div>`
+        })
+    },
+    setNewPassword(newPassword: string, token: string) {
+        return instance.post('auth/set-new-password',{
+                password: newPassword,
+                resetPasswordToken: token
+            },
+        )
     }
-
 }
 // {
 //     email: "nya-admin@nya.nya"
