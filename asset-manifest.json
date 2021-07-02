@@ -1,22 +1,24 @@
 {
   "files": {
-    "main.css": "/cards-app/static/css/main.e5fcfae1.chunk.css",
-    "main.js": "/cards-app/static/js/main.9681a595.chunk.js",
-    "main.js.map": "/cards-app/static/js/main.9681a595.chunk.js.map",
-    "runtime-main.js": "/cards-app/static/js/runtime-main.bdc91e34.js",
-    "runtime-main.js.map": "/cards-app/static/js/runtime-main.bdc91e34.js.map",
-    "static/js/2.a3f132e9.chunk.js": "/cards-app/static/js/2.a3f132e9.chunk.js",
-    "static/js/2.a3f132e9.chunk.js.map": "/cards-app/static/js/2.a3f132e9.chunk.js.map",
-    "static/js/3.8362aae0.chunk.js": "/cards-app/static/js/3.8362aae0.chunk.js",
-    "static/js/3.8362aae0.chunk.js.map": "/cards-app/static/js/3.8362aae0.chunk.js.map",
+    "main.css": "/cards-app/static/css/main.affb6c9e.chunk.css",
+    "main.js": "/cards-app/static/js/main.ffd1b377.chunk.js",
+    "main.js.map": "/cards-app/static/js/main.ffd1b377.chunk.js.map",
+    "runtime-main.js": "/cards-app/static/js/runtime-main.39cfaa80.js",
+    "runtime-main.js.map": "/cards-app/static/js/runtime-main.39cfaa80.js.map",
+    "static/js/2.76f1a84d.chunk.js": "/cards-app/static/js/2.76f1a84d.chunk.js",
+    "static/js/2.76f1a84d.chunk.js.map": "/cards-app/static/js/2.76f1a84d.chunk.js.map",
+    "static/js/3.15004abd.chunk.js": "/cards-app/static/js/3.15004abd.chunk.js",
+    "static/js/3.15004abd.chunk.js.map": "/cards-app/static/js/3.15004abd.chunk.js.map",
     "index.html": "/cards-app/index.html",
-    "static/css/main.e5fcfae1.chunk.css.map": "/cards-app/static/css/main.e5fcfae1.chunk.css.map",
-    "static/js/2.a3f132e9.chunk.js.LICENSE.txt": "/cards-app/static/js/2.a3f132e9.chunk.js.LICENSE.txt"
+    "static/css/main.affb6c9e.chunk.css.map": "/cards-app/static/css/main.affb6c9e.chunk.css.map",
+    "static/js/2.76f1a84d.chunk.js.LICENSE.txt": "/cards-app/static/js/2.76f1a84d.chunk.js.LICENSE.txt",
+    "static/media/logo.70fefd3f.png": "/cards-app/static/media/logo.70fefd3f.png",
+    "static/media/preloader.576a7a69.svg": "/cards-app/static/media/preloader.576a7a69.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.bdc91e34.js",
-    "static/js/2.a3f132e9.chunk.js",
-    "static/css/main.e5fcfae1.chunk.css",
-    "static/js/main.9681a595.chunk.js"
+    "static/js/runtime-main.39cfaa80.js",
+    "static/js/2.76f1a84d.chunk.js",
+    "static/css/main.affb6c9e.chunk.css",
+    "static/js/main.ffd1b377.chunk.js"
   ]
 }
