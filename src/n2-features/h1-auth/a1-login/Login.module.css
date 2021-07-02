@@ -6,6 +6,10 @@
     position: relative;
 }
 
+.loginPage label{
+    width: 50%;
+}
+
 .isLoading{
     color: blue;
     position: absolute;
