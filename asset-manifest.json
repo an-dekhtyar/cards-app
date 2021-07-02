@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cards-app/static/css/main.affb6c9e.chunk.css",
-    "main.js": "/cards-app/static/js/main.ffd1b377.chunk.js",
-    "main.js.map": "/cards-app/static/js/main.ffd1b377.chunk.js.map",
+    "main.js": "/cards-app/static/js/main.0b10ad81.chunk.js",
+    "main.js.map": "/cards-app/static/js/main.0b10ad81.chunk.js.map",
     "runtime-main.js": "/cards-app/static/js/runtime-main.39cfaa80.js",
     "runtime-main.js.map": "/cards-app/static/js/runtime-main.39cfaa80.js.map",
     "static/js/2.76f1a84d.chunk.js": "/cards-app/static/js/2.76f1a84d.chunk.js",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.39cfaa80.js",
     "static/js/2.76f1a84d.chunk.js",
     "static/css/main.affb6c9e.chunk.css",
-    "static/js/main.ffd1b377.chunk.js"
+    "static/js/main.0b10ad81.chunk.js"
   ]
 }
