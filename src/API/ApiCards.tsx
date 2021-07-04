@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
 
@@ -6,9 +5,6 @@ import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
 let instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
-    // headers:{
-    //     'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad2'
-    // }
 })
 
 export const ApiCards = {
@@ -34,6 +30,9 @@ export const ApiCards = {
                 resetPasswordToken: token
             },
         )
+    },
+    GETCardsPack:()=>{
+        return instance.get('cards/pack')
     }
 }
 // {

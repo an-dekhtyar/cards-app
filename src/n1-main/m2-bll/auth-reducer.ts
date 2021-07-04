@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 
 import {ApiCards} from "../../API/ApiCards";
+import {AxiosError} from "axios";
 
 
 let initialState:Array<string>=[]
@@ -35,8 +36,8 @@ export const addUserACThunk=(email:string,password:string,setRedirect:(value:boo
             setRedirect(true)
             console.log(res.config.data)
         })
-        .catch((res)=>{
-            console.log(res)
+        .catch((res:AxiosError)=>{
+            console.log(res.name)
             setPreloader(false)
             setErrorFromServer('Email already exists, or your Password must be more than 7 characters...')
         })

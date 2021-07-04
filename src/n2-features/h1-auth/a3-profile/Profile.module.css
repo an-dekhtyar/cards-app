@@ -1,0 +1,19 @@
+.profile {
+    padding: 30px;
+    padding-top: 0px;
+    /*display: flex;*/
+    margin-left:25% ;
+}
+
+li {
+    padding-top: 20px;
+    padding-left: 5px;
+    border: #aaaaaa 1px solid;
+    border-radius: 10px;
+    width: 300px;
+   height: 150px;
+    margin-left:5px
+}
+.profile > div {
+    margin-right: 50px;
+}
