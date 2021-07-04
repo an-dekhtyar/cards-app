@@ -1,15 +1,14 @@
 import React, {useEffect} from 'react';
 import st from './Profile.module.css'
-import {ApiCards} from "../../../API/ApiCards";
 import {useDispatch, useSelector} from "react-redux";
-import {GETCardsPackThunk, profileReducer} from "../../../n1-main/m2-bll/profile-reducer";
+import {AddNewCardsPackThunk, GETCardsPackThunk} from "../../../n1-main/m2-bll/profile-reducer";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
-import {Table, userType} from "./Table";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
+import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 
-type cardPacksType = {
-    cardPacks: Array<any>
+export type cardPacksType = {
+    cardPacks: Array<userType>
     cardPacksTotalCount: number
     maxCardsCount: number
     minCardsCount: number
@@ -18,7 +17,23 @@ type cardPacksType = {
     token: string
     tokenDeathTime: number
 }
-
+export type userType = {
+    cardsCount: number
+    created: string
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+}
 export const Profile = () => {
     let dispatch = useDispatch()
     // @ts-ignore
@@ -32,9 +47,13 @@ export const Profile = () => {
     if (!isAuth) {
         return <Redirect to={PATH.REGISTRATION}/>
     }
+    const AddNewCard=()=>{
+        dispatch(AddNewCardsPackThunk())
+    }
     return (
         <div className={st.profilePage}>
             <h1>PROFILE PAGE</h1>
+            <Button children={'add new card'} onClick={AddNewCard}/>
             <div className={st.profile}>{
                 dataForTable.cardPacks.map((m) => {
                     return (

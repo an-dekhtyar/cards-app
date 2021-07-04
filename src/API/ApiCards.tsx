@@ -33,7 +33,10 @@ export const ApiCards = {
     },
     GETCardsPack:()=>{
         return instance.get('cards/pack')
-    }
+    },
+    AddNewCardsPack:()=>{
+        return instance.post('cards/pack', {cardsPack:{}})
+    },
 }
 // {
 //     email: "nya-admin@nya.nya"
