@@ -1,12 +1,12 @@
 import {Dispatch} from "redux";
-import {ApiCards} from "../../API/ApiCards";
-import {cardPacksType} from "../../n2-features/h1-auth/a3-profile/Profile";
+import {userType} from "../../n2-features/h1-auth/a3-profile/Profile";
+import {ApiCardsPack} from "../../API/ApiCardsPack";
 
-
-//
-let initialState: cardPacksType | {} = {}
-
-export const profileReducer = (state = initialState, action: allActionTypes) => {
+let initialState = {
+    cardPacks: [] as Array<userType>
+}
+export type InitialProfileReducerType = typeof initialState
+export const profileReducer = (state = initialState, action: allActionTypes): InitialProfileReducerType => {
     switch (action.type) {
         case 'GETCardsPack': {
             let newState = {...state};
@@ -14,49 +14,34 @@ export const profileReducer = (state = initialState, action: allActionTypes) => 
             return newState;
         }
         case "AddNewCardsPack": {
-            let newState = {...state};
-            let newCard = action.data
-            console.log(newState)
-            console.log(newCard)
-
-            // let array = [newCard]
-            //             //@ts-ignore
-            // let newCards = newState.cardPacks.map((m: userType) => {
-            //     array.push(m)
-            // })
-            // console.log(array)
-            // return array
-
-            // let array = [newCard]
-            // @ts-ignore
-            // let newCards = newState.cardPacks.map((m)=>{
-            //     debugger
-            //     array.push(m)
-            // })
-
-
-            // let MapCards = newState.cardPacks.map(m => ({...m, newCard}))
-            // let AllCards = {...newState, cardPacks: MapCards}
-            // console.log(AllCards)
-            // return AllCards
-
-            let array = [newCard]
-            // @ts-ignore
-            let MapCards = newState.cardPacks.map(m => {
-                array.push(m)
-            })
-            let AllCards = {...newState, cardPacks: array}
-            console.log(AllCards)
-            return AllCards
-
-
+            return {
+                ...state,
+                cardPacks: [action.data, ...state.cardPacks]
+            }
         }
+        case "DeleteCardsPack": {
+            debugger
+            // let newState={...state};
+            // debugger
+            // // @ts-ignore
+            // let filterCard=newState.cardPacks.filter(f=>f._id!==action.id)
+            // console.log(filterCard)
+            // return [filterCard]
+            return {
+                ...state,
+                cardPacks: state.cardPacks.filter(f => f._id !== action.id)
+            }
+        }
+        case "UpdateCardsPack":{
+            return state
+        }
+
         default:
             return state;
     }
 };
 
-type allActionTypes = GETCardsPackACType | AddNewCardsPackType
+type allActionTypes = GETCardsPackACType | AddNewCardsPackType | DeleteCardsPackType|UpdateCardsPackType
 export type GETCardsPackACType = ReturnType<typeof GETCardsPackAC>
 
 export const GETCardsPackAC = (data: any) => {
@@ -66,12 +51,13 @@ export const GETCardsPackAC = (data: any) => {
     } as const
 }
 
-export const GETCardsPackThunk = () => (diapatch: Dispatch) => {
-    ApiCards.GETCardsPack()
+export const GETCardsPackThunk = (setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
+    setPreloader(true)
+    ApiCardsPack.GETCardsPack()
         .then((res) => {
-            console.log(res)
-            diapatch(GETCardsPackAC(res.data))
+            dispatch(GETCardsPackAC(res.data))
         })
+    setPreloader(false)
 }
 
 type AddNewCardsPackType = ReturnType<typeof AddNewCardsPackAC>
@@ -83,10 +69,57 @@ export const AddNewCardsPackAC = (data: any) => {
     } as const
 }
 
-export const AddNewCardsPackThunk = () => (dispatch: Dispatch) => {
-    ApiCards.AddNewCardsPack()
+export const AddNewCardsPackThunk = (setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
+    setPreloader(true)
+    ApiCardsPack.AddNewCardsPack()
         .then((res) => {
-            dispatch(AddNewCardsPackAC(res.data.newCardsPack))
-            // console.log(res.data.newCardsPack)
+            // dispatch(AddNewCardsPackAC(res.data.newCardsPack))
+            // dispatch(GETCardsPackAC(res.data))
+
+            // @ts-ignore
+            dispatch(GETCardsPackThunk(setPreloader))
+            setPreloader(false)
+        })
+}
+
+type DeleteCardsPackType = ReturnType<typeof DeleteCardsPackAC>
+
+export const DeleteCardsPackAC = (id: string) => {
+    return {
+        type: 'DeleteCardsPack',
+        id: id
+    } as const
+}
+
+export const DeleteCardsPackThunk = (id: string,setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
+    setPreloader(true)
+    ApiCardsPack.DeleteCardsPack(id)
+        .then((res) => {
+            // dispatch(DeleteCardsPackAC(id))
+
+            // @ts-ignore
+            dispatch(GETCardsPackThunk(setPreloader))
+            setPreloader(false)
+        })
+}
+
+type UpdateCardsPackType = ReturnType<typeof UpdateCardsPackAC>
+
+export const UpdateCardsPackAC = (id: string) => {
+    return {
+        type: 'UpdateCardsPack',
+        id: id
+    } as const
+}
+
+export const UpdateCardsPackThunk = (id: string,setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
+    setPreloader(true)
+    ApiCardsPack.UpdateCardsPack(id)
+        .then((res) => {
+            // dispatch(DeleteCardsPackAC(id))
+            console.log(res.data)
+            // @ts-ignore
+            dispatch(GETCardsPackThunk(setPreloader))
+            setPreloader(false)
         })
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
+import {cardPacksType} from "../n2-features/h1-auth/a3-profile/Profile";
 
 
 let instance = axios.create({
@@ -31,12 +32,7 @@ export const ApiCards = {
             },
         )
     },
-    GETCardsPack:()=>{
-        return instance.get('cards/pack')
-    },
-    AddNewCardsPack:()=>{
-        return instance.post('cards/pack', {cardsPack:{}})
-    },
+
 }
 // {
 //     email: "nya-admin@nya.nya"

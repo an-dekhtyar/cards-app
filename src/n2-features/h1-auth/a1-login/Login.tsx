@@ -7,6 +7,7 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import SuperInputText from '../../../n1-main/m1-ui/Common/Input/Input';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {loginTC, setError} from '../../../n1-main/m2-bll/login-reducer';
+import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
 
 export const Login: React.FC = () => {
 
@@ -38,11 +39,10 @@ export const Login: React.FC = () => {
         dispatch(loginTC({email, password, rememberMe}));
     }
 
-
     return (
         <div className={st.loginPage}>
             <h1>LOGIN PAGE</h1>
-            {isLoading && <span className={st.isLoading}>loading</span>}
+            {isLoading && <Preloader/>}
             {error && <span className={st.error}>{error}</span>}
             <label>Email <SuperInputText type={'email'}
                                          value={email}
