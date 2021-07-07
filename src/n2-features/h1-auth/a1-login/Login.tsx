@@ -6,7 +6,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import SuperInputText from '../../../n1-main/m1-ui/Common/Input/Input';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
-import {loginTC, setError} from '../../../n1-main/m2-bll/login-reducer';
+import {loginTC} from '../../../n1-main/m2-bll/login-reducer';
+import {setError} from "../../../n1-main/m2-bll/app-reducer";
 
 export const Login: React.FC = () => {
 
@@ -16,8 +17,8 @@ export const Login: React.FC = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(false)
     const dispatch = useDispatch();
     const isAuth = useSelector<AppStoreType, boolean>(state => state.login.isAuth);
-    const error = useSelector<AppStoreType, string | null>(state => state.login.error);
-    const isLoading = useSelector<AppStoreType, boolean>(state => state.login.isLoading);
+    const error = useSelector<AppStoreType, string | null>(state => state.app.error);
+    const isLoading = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
 
     if (isAuth) {
         return <Redirect to={PATH.PROFILE}/>
@@ -34,7 +35,7 @@ export const Login: React.FC = () => {
         setRememberMe(e.currentTarget.checked);
     }
     const onSubmitClick = () => {
-        dispatch(setError(null));
+        dispatch(setError(''));
         dispatch(loginTC({email, password, rememberMe}));
     }
 

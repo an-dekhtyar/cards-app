@@ -5,7 +5,7 @@ import {ApiCards} from "../../API/ApiCards";
 
 let initialState:Array<string>=[]
 
-export const authReducer = (state = initialState, action: addUserType) => {
+export const registrationReducer = (state = initialState, action: addUserType) => {
     switch (action.type){
         case 'addUser':{
             let newState=[...state]

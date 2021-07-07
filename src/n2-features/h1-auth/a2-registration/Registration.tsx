@@ -3,7 +3,7 @@ import st from './Registration.module.css'
 import SuperInputText from "../../../n1-main/m1-ui/Common/Input/Input";
 import {Button} from "../../../n1-main/m1-ui/Common/Button/Button";
 import {ApiCards} from "../../../API/ApiCards";
-import {addUserAC, addUserACThunk, authReducer} from "../../../n1-main/m2-bll/auth-reducer";
+import {addUserAC, addUserACThunk, registrationReducer} from "../../../n1-main/m2-bll/registration-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
 import {Redirect} from 'react-router-dom';
@@ -26,7 +26,7 @@ export const Registration = () => {
     let [preloader, setPreloader] = useState(false)
 
     let dispath = useDispatch()
-    let loginForm = useSelector<AppStoreType, Array<setRegistrationType>>(state => state.auth)
+    let loginForm = useSelector<AppStoreType, Array<setRegistrationType>>(state => state.registration)
     let statusLoginForm = loginForm.find((f) => f.email)
 
     let onclickHandler = () => {
@@ -90,7 +90,7 @@ export const Registration = () => {
 // import SuperInputText from "../../../n1-main/m1-ui/Common/Input/Input";
 // import {Button} from "../../../n1-main/m1-ui/Common/Button/Button";
 // import {ApiCards} from "../../../API/ApiCards";
-// import {addUserAC, addUserACThunk, authReducer} from "../../../n1-main/m2-bll/auth-reducer";
+// import {addUserAC, addUserACThunk, registrationReducer} from "../../../n1-main/m2-bll/auth-reducer";
 // import {useDispatch, useSelector} from "react-redux";
 // import {AppStoreType} from "../../../n1-main/m2-bll/store";
 // import {Redirect} from 'react-router-dom';

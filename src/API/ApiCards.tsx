@@ -6,9 +6,6 @@ import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
 let instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
-    // headers:{
-    //     'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad2'
-    // }
 })
 
 export const ApiCards = {
@@ -16,10 +13,17 @@ export const ApiCards = {
         return instance.get(`ping`)
     },
     addUser(email: string, password: string) {
-        return instance.post('/auth/register', {email: email, password: password})
+        return instance.post<RegistrationType>('/auth/register', {email: email, password: password})
     },
+    auth(){
+        return instance.post<LoginResponseType>('/auth/me', {})
+    },
+
     login(data: LoginDataType) {
         return instance.post<LoginResponseType>('/auth/login', {...data})
+    },
+    logout(){
+        return instance.delete<LoginResponseType>('/auth/me', {})
     },
     getInstruction(email: string) {
         return instance.post('auth/forgot', {
@@ -34,7 +38,8 @@ export const ApiCards = {
                 resetPasswordToken: token
             },
         )
-    }
+    },
+
 }
 // {
 //     email: "nya-admin@nya.nya"
@@ -48,7 +53,7 @@ export type LoginResponseType = {
     _id: string
     email: string
     name: string
-    avatar?: string
+    avatar: string
     publicCardPacksCount: number
     created: Date
     updated: Date
@@ -58,3 +63,7 @@ export type LoginResponseType = {
     error?: string
 }
 
+type RegistrationType = {
+    addedUser: {}
+    error?: string,
+}
