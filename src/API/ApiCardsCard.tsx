@@ -8,5 +8,8 @@ let instance = axios.create({
 export let ApiCardsCard={
     getCardsCard:(id:string)=>{
         return instance.get(`cards/card?cardsPack_id=${id}`)
+    },
+    AddCardsCard:(CardsPackId:string)=>{
+        return instance.post(`cards/card?cardsPack_id:${CardsPackId}`)
     }
 }

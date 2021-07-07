@@ -48,13 +48,19 @@ export const CardProfileReducer = (state = initialState, action: allActionTypes)
             newState=action.data
             return newState
         }
+        case "AddNewCard":{
+            return {
+                ...state,
+                cards: [action.data, ...state.cards]
+            }
+        }
 
         default:
             return state;
     }
 };
 
-type allActionTypes=GetCardsCardACType ;
+type allActionTypes=GetCardsCardACType| AddNewCardACType ;
 
 type GetCardsCardACType=ReturnType<typeof GetCardsCardAC >
 
@@ -65,10 +71,26 @@ export const GetCardsCardAC=(data:any)=>{
     }as const
 }
 
-
 export const GetCardsCardThunk=(id: string,setPreloader:(value:boolean)=>void)=>(dispatch:Dispatch)=>{
     setPreloader(true)
     ApiCardsCard.getCardsCard(id)
+        .then((res)=>{
+            console.log(res.data)
+            dispatch(GetCardsCardAC(res.data))
+        })
+}
+
+type AddNewCardACType=ReturnType<typeof AddNewCardAC>
+export const AddNewCardAC=(data:any)=>{
+    return{
+        type: 'AddNewCard',
+        data
+    }as const
+}
+
+export const AddNewCardThunk=(CardsPackId: string,setPreloader:(value:boolean)=>void)=>(dispatch:Dispatch)=>{
+    setPreloader(true)
+    ApiCardsCard.AddCardsCard(CardsPackId)
         .then((res)=>{
             console.log(res.data)
             dispatch(GetCardsCardAC(res.data))

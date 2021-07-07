@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
-import {InitialCardProfileReducerType} from "../../../n1-main/m2-bll/profileCards-reducer";
+import {AddNewCardThunk, InitialCardProfileReducerType} from "../../../n1-main/m2-bll/profileCards-reducer";
 import st from "./Profile.module.css";
+import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
 
 
 export let ProfileCards=()=>{
+    let dispatch=useDispatch()
     let CardDataForTable = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
     let [preloader, setPreloader] = useState(false)
-    console.log(CardDataForTable)
+    let AddNewCard=(CardsPackId:string)=>{
+        console.log(CardsPackId)
+        dispatch(AddNewCardThunk(CardsPackId,setPreloader))
+    }
     return(
         <div >
             <h1 className={st.h1}>ProfileCards</h1>
@@ -27,6 +32,8 @@ export let ProfileCards=()=>{
                                         <div>CREATED: {m.created}</div>
                                         <div>UPDATED: {m.updated}</div>
                                         <p></p>
+                                        <Button children={'AddNewCard'} onClick={() => AddNewCard(m.cardsPack_id)}/>
+
                                         {/*<Button children={'Delete'} onClick={() => DeleteCard(m._id)}/>*/}
                                         {/*<Button children={'Update'} onClick={() => UpdateCard(m._id)}/>*/}
                                         {/*<NavLink to={PATH.CARDS} className={st.headerLink}><Button*/}
@@ -41,7 +48,6 @@ export let ProfileCards=()=>{
                     :
                     <ul>
                         <li>
-
                         </li>
                     </ul>
 
