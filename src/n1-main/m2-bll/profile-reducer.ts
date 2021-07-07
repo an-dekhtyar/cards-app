@@ -42,15 +42,14 @@ export const profileReducer = (state = initialState, action: allActionTypes): In
 };
 
 type allActionTypes = GETCardsPackACType | AddNewCardsPackType | DeleteCardsPackType|UpdateCardsPackType
-export type GETCardsPackACType = ReturnType<typeof GETCardsPackAC>
 
+export type GETCardsPackACType = ReturnType<typeof GETCardsPackAC>
 export const GETCardsPackAC = (data: any) => {
     return {
         type: 'GETCardsPack',
         data
     } as const
 }
-
 export const GETCardsPackThunk = (setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
     setPreloader(true)
     ApiCardsPack.GETCardsPack()
@@ -61,14 +60,12 @@ export const GETCardsPackThunk = (setPreloader: (value: boolean) => void) => (di
 }
 
 type AddNewCardsPackType = ReturnType<typeof AddNewCardsPackAC>
-
 export const AddNewCardsPackAC = (data: any) => {
     return {
         type: 'AddNewCardsPack',
         data: data
     } as const
 }
-
 export const AddNewCardsPackThunk = (setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
     setPreloader(true)
     ApiCardsPack.AddNewCardsPack()
@@ -83,14 +80,12 @@ export const AddNewCardsPackThunk = (setPreloader: (value: boolean) => void) => 
 }
 
 type DeleteCardsPackType = ReturnType<typeof DeleteCardsPackAC>
-
 export const DeleteCardsPackAC = (id: string) => {
     return {
         type: 'DeleteCardsPack',
         id: id
     } as const
 }
-
 export const DeleteCardsPackThunk = (id: string,setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
     setPreloader(true)
     ApiCardsPack.DeleteCardsPack(id)
@@ -104,14 +99,12 @@ export const DeleteCardsPackThunk = (id: string,setPreloader:(value:boolean)=>vo
 }
 
 type UpdateCardsPackType = ReturnType<typeof UpdateCardsPackAC>
-
 export const UpdateCardsPackAC = (id: string) => {
     return {
         type: 'UpdateCardsPack',
         id: id
     } as const
 }
-
 export const UpdateCardsPackThunk = (id: string,setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
     setPreloader(true)
     ApiCardsPack.UpdateCardsPack(id)

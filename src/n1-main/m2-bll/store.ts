@@ -4,12 +4,14 @@ import {loginReducer} from "./login-reducer";
 import {profileReducer} from "./profile-reducer";
 import thunk from "redux-thunk";
 import {restorePassReducer} from "./restore-pass-reducer";
+import {CardProfileReducer} from "./profileCards-reducer";
 
 
 const reducers = combineReducers({
     auth:authReducer,
     login:loginReducer,
     profile:profileReducer,
+    cardProfile:CardProfileReducer,
     restorePass:restorePassReducer
 })
 
