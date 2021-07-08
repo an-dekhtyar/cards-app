@@ -3,6 +3,7 @@ import {Redirect, Route, Switch } from 'react-router-dom';
 import {Registration, Profile, RestorePass, EnterNewPassContain, Test, Login} from "../../../n2-features";
 import { ProfileCards } from '../../../n2-features/h1-auth/a3-profile/ProfileCards';
 import {Page404} from "../../m4-pages/a4-page404/Page404";
+import {SearchTable} from '../../../n2-features/h2-cards/a1-search/SearchTable';
 
 
 
@@ -14,7 +15,8 @@ export const PATH = {
     RESTORE_PASS:'/restore-pass',
     ENTER_NEW_PASS:'/new-pass',
     TEST:'/test',
-    CARDS:'/cards'
+    CARDS:'/cards',
+    SEARCH_CARDS: '/searchCards'
 }
 
 
@@ -31,7 +33,7 @@ export const Routes = () => (
             <Route path={PATH.TEST} render={() => <Test/>}/>
             <Route path={PATH.PAGE_404} render={() => <Page404/>}/>
             <Route path={PATH.CARDS} render={() => <ProfileCards/>}/>
-
+            <Route path={PATH.SEARCH_CARDS} render={() => <SearchTable/>}/>
             <Redirect from={'*'} to={PATH.PAGE_404}/>
         </Switch>
 
