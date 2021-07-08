@@ -4,28 +4,37 @@ import {AppStoreType} from "../../../n1-main/m2-bll/store";
 import {AddNewCardThunk, InitialCardProfileReducerType} from "../../../n1-main/m2-bll/profileCards-reducer";
 import st from "./Profile.module.css";
 import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
+import {log} from "util";
 
 
 export let ProfileCards=({})=>{
     let dispatch=useDispatch()
     let CardDataForTable = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
-    const authUserId = useSelector<AppStoreType, string | null>(state => state.login._id);
+    const authUserId = useSelector<AppStoreType, string | null>(state => state.login._id)
+
     let [preloader, setPreloader] = useState(false)
-    let cardsPack_id = useMemo(() => CardDataForTable.cards[0]?.cardsPack_id || null, [CardDataForTable.cards])
-    let isYours = useMemo(() =>
-        CardDataForTable.cards[0]?.user_id && CardDataForTable.cards[0]?.user_id === authUserId,
-        [CardDataForTable.cards, authUserId])
+    // let cardsPack_id = useMemo(() => CardDataForTable.cards[0]?.cardsPack_id || null, [CardDataForTable.cards])
+    let cardsPack_id = CardDataForTable.cards[0]?.cardsPack_id || null;
+    let isYours = CardDataForTable.cards[0]?.cardsPack_id === authUserId;
+    console.log(authUserId,CardDataForTable.cards[0]?.cardsPack_id )
+    // let isYours = useMemo(() =>
+    //     CardDataForTable.cards[0]?.user_id && CardDataForTable.cards[0]?.user_id === authUserId,
+    //     [CardDataForTable.cards, authUserId])
 
     let AddNewCard=()=>{
-        if (!cardsPack_id) return;
-        dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
+        // if (!cardsPack_id) return;
+        // dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
+
+        if (cardsPack_id) {
+            dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
+        };
     }
     return(
         <div >
             <h1 className={st.h1}>ProfileCards</h1>
             <p></p>
-            <Button children={'AddNewCard'} disabled={!isYours} onClick={() => AddNewCard()} style={{color: isYours ? '': 'red'}}/>
-            {/*<Button children={'AddNewCard'} onClick={() => AddNewCard( "60e6c0994dd5fe27086f7a40")}/>*/}
+            <Button children={'AddNewCard'} onClick={() => AddNewCard()} />
+            {/*<Button children={'AddNewCard'} disabled={!isYours} onClick={() => AddNewCard()} style={{color: isYours ? '': 'red'}}/>*/}
             <div >{
                 CardDataForTable.cards!==[]?
                     CardDataForTable.cards.map((m) => {

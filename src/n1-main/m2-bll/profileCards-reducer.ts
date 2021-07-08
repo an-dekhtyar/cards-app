@@ -90,15 +90,22 @@ export const AddNewCardAC=(data:any)=>{
 
 export const AddNewCardThunk=(CardsPackId: string,setPreloader:(value:boolean)=>void)=>(dispatch:Dispatch)=>{
     setPreloader(true)
-    console.log(CardsPackId)
-    ApiCardsCard.AddCardsCard(CardsPackId)
+     ApiCardsCard.AddCardsCard(CardsPackId)
         .then((res)=>{
-            console.log(res)
+            console.log(res.data)
             dispatch(AddNewCardAC(res.data.newCard))
-        }).catch(e => console.log(e))
+        })
+         .catch(e => console.log(e))
 }
 
-
+export let CreateCardsPackIdThunk=(CardsPackId: string)=>(dispatch:Dispatch)=>{
+    ApiCardsCard.AddCardsCard(CardsPackId)
+        .then((res)=>{
+            console.log(res.data)
+            // dispatch(AddNewCardAC(res.data.newCard))
+        })
+        .catch(e => console.log(e))
+}
 
 
 //========================================================================================

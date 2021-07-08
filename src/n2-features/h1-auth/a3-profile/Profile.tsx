@@ -15,6 +15,7 @@ import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
 import {
     AddNewCardThunk,
+    CreateCardsPackIdThunk,
     GetCardsCardThunk,
     InitialCardProfileReducerType
 } from '../../../n1-main/m2-bll/profileCards-reducer';
@@ -72,10 +73,9 @@ export const Profile = () => {
 
     const GetCardsCard = (id: string, cardsCount: number) => {
         dispatch(GetCardsCardThunk(id, setPreloader))
-        let cardsPackId0 = cardsProfile.cards
-        console.log(cardsPackId0)
         if (cardsCount === 0) {
-            dispatch(AddNewCardThunk(id, setPreloader))
+            // dispatch(AddNewCardThunk(id, setPreloader))
+            dispatch(CreateCardsPackIdThunk(id))
         }
     }
 
