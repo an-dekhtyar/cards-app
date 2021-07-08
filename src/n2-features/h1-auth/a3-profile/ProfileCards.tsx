@@ -1,7 +1,11 @@
 import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
-import {AddNewCardThunk, InitialCardProfileReducerType} from "../../../n1-main/m2-bll/profileCards-reducer";
+import {
+    AddNewCardThunk,
+    DeleteCardsCardThunk,
+    InitialCardProfileReducerType
+} from "../../../n1-main/m2-bll/profileCards-reducer";
 import st from "./Profile.module.css";
 import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
 import {log} from "util";
@@ -14,7 +18,7 @@ export let ProfileCards=({})=>{
 
     let [preloader, setPreloader] = useState(false)
     // let cardsPack_id = useMemo(() => CardDataForTable.cards[0]?.cardsPack_id || null, [CardDataForTable.cards])
-    let cardsPack_id = CardDataForTable.cards[0]?.cardsPack_id || null;
+    let cardsPackId = CardDataForTable.cards[0]?.cardsPack_id || null;
     let isYours = CardDataForTable.cards[0]?.cardsPack_id === authUserId;
     console.log(authUserId,CardDataForTable.cards[0]?.cardsPack_id )
     // let isYours = useMemo(() =>
@@ -24,16 +28,20 @@ export let ProfileCards=({})=>{
     let AddNewCard=()=>{
         // if (!cardsPack_id) return;
         // dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
-
-        if (cardsPack_id) {
-            dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
+        if (cardsPackId) {
+            dispatch(AddNewCardThunk(cardsPackId, setPreloader))
         };
     }
+
+    let DeleteCardsCard=(id:string)=>{
+        dispatch(DeleteCardsCardThunk(id,setPreloader))
+    }
+
     return(
         <div >
             <h1 className={st.h1}>ProfileCards</h1>
             <p></p>
-            <Button children={'AddNewCard'} onClick={() => AddNewCard()} />
+            <Button children={'AddNewCard'} onClick={() => AddNewCard()} style={{color: isYours ? 'red': 'green'}}/>
             {/*<Button children={'AddNewCard'} disabled={!isYours} onClick={() => AddNewCard()} style={{color: isYours ? '': 'red'}}/>*/}
             <div >{
                 CardDataForTable.cards!==[]?
@@ -51,7 +59,7 @@ export let ProfileCards=({})=>{
                                         <div>CREATED: {m.created}</div>
                                         <div>UPDATED: {m.updated}</div>
                                         <p></p>
-                                        {/*<Button children={'Delete'} onClick={() => DeleteCard(m._id)}/>*/}
+                                        <Button children={'Delete'} onClick={() => DeleteCardsCard(m._id)}/>
                                         {/*<Button children={'Update'} onClick={() => UpdateCard(m._id)}/>*/}
                                         {/*<NavLink to={PATH.CARDS} className={st.headerLink}><Button*/}
                                         {/*    children={'Show Cards'} onClick={() => GetCardsCard(m._id)}/></NavLink>*/}

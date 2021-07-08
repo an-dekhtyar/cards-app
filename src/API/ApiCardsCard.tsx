@@ -11,7 +11,10 @@ export let ApiCardsCard={
     },
     AddCardsCard:(CardsPackId:string)=>{
         return instance.post(`cards/card?cardsPack_id=${CardsPackId}`, {card: {cardsPack_id: CardsPackId}})
-    }
+    },
+    DeleteCardsCard:(id:string)=>{
+        return instance.delete(`cards/card?id=${id}`)
+    },
 }
 
 // 60e3022aa8b1610004c03ce1
