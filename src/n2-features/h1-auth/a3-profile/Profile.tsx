@@ -13,7 +13,12 @@ import {NavLink} from "react-router-dom";
 import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
-import {GetCardsCardThunk} from '../../../n1-main/m2-bll/profileCards-reducer';
+import {
+    AddNewCardThunk,
+    GetCardsCardThunk,
+    InitialCardProfileReducerType
+} from '../../../n1-main/m2-bll/profileCards-reducer';
+import {stat} from "fs";
 
 
 export type cardPacksType = {
@@ -46,6 +51,7 @@ export type userType = {
 export const Profile = () => {
     let dispatch = useDispatch()
     let dataForTable = useSelector<AppStoreType, InitialProfileReducerType>(state => state.profile)
+    let cardsProfile = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
     let [preloader, setPreloader] = useState(false)
 
     useEffect(() => {
@@ -64,8 +70,13 @@ export const Profile = () => {
         dispatch(UpdateCardsPackThunk(id, setPreloader))
     }
 
-    const GetCardsCard = (id:string) => {
-        dispatch(GetCardsCardThunk(id,setPreloader))
+    const GetCardsCard = (id: string, cardsCount: number) => {
+        dispatch(GetCardsCardThunk(id, setPreloader))
+        let cardsPackId0 = cardsProfile.cards
+        console.log(cardsPackId0)
+        if (cardsCount === 0) {
+            dispatch(AddNewCardThunk(id, setPreloader))
+        }
     }
 
     return (
@@ -89,8 +100,10 @@ export const Profile = () => {
                                         <p></p>
                                         <Button children={'Delete'} onClick={() => DeleteCard(m._id)}/>
                                         <Button children={'Update'} onClick={() => UpdateCard(m._id)}/>
-                                        <NavLink to={PATH.CARDS} className={st.headerLink}><Button
-                                            children={'Show Cards'} onClick={() => GetCardsCard(m._id)}/></NavLink>
+                                        <NavLink to={PATH.CARDS} className={st.headerLink}>
+                                            <Button
+                                            children={'Show Cards'} onClick={() => GetCardsCard(m._id, m.cardsCount)}/>
+                                        </NavLink>
 
                                     </li>
                                 </ul>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
 import {AddNewCardThunk, InitialCardProfileReducerType} from "../../../n1-main/m2-bll/profileCards-reducer";
@@ -6,25 +6,35 @@ import st from "./Profile.module.css";
 import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
 
 
-export let ProfileCards=()=>{
+export let ProfileCards=({})=>{
     let dispatch=useDispatch()
     let CardDataForTable = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
+    const authUserId = useSelector<AppStoreType, string | null>(state => state.login._id);
     let [preloader, setPreloader] = useState(false)
-    let AddNewCard=(CardsPackId:string)=>{
-        console.log(CardsPackId)
-        dispatch(AddNewCardThunk(CardsPackId,setPreloader))
+    let cardsPack_id = useMemo(() => CardDataForTable.cards[0]?.cardsPack_id || null, [CardDataForTable.cards])
+    let isYours = useMemo(() =>
+        CardDataForTable.cards[0]?.user_id && CardDataForTable.cards[0]?.user_id === authUserId,
+        [CardDataForTable.cards, authUserId])
+
+    let AddNewCard=()=>{
+        if (!cardsPack_id) return;
+        dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
     }
     return(
         <div >
             <h1 className={st.h1}>ProfileCards</h1>
             <p></p>
+            <Button children={'AddNewCard'} disabled={!isYours} onClick={() => AddNewCard()} style={{color: isYours ? '': 'red'}}/>
+            {/*<Button children={'AddNewCard'} onClick={() => AddNewCard( "60e6c0994dd5fe27086f7a40")}/>*/}
             <div >{
                 CardDataForTable.cards!==[]?
                     CardDataForTable.cards.map((m) => {
                         return (
                             <div className={st.profile}>
+
                                 <ul>
                                     <li>
+                                        <div>packUserId: {m.cardsPack_id}</div>
                                         <div>ID: {m._id}</div>
                                         <div>USER-ID: {m.user_id}</div>
                                         <div>QUESTION: {m.question}</div>
@@ -32,8 +42,6 @@ export let ProfileCards=()=>{
                                         <div>CREATED: {m.created}</div>
                                         <div>UPDATED: {m.updated}</div>
                                         <p></p>
-                                        <Button children={'AddNewCard'} onClick={() => AddNewCard(m.cardsPack_id)}/>
-
                                         {/*<Button children={'Delete'} onClick={() => DeleteCard(m._id)}/>*/}
                                         {/*<Button children={'Update'} onClick={() => UpdateCard(m._id)}/>*/}
                                         {/*<NavLink to={PATH.CARDS} className={st.headerLink}><Button*/}
