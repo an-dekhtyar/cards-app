@@ -3,7 +3,7 @@ import {userType} from "../../n2-features/h1-auth/a3-profile/Profile";
 import {ApiCardsPack} from "../../API/ApiCardsPack";
 import {ApiCardsCard} from "../../API/ApiCardsCard";
 
-type DataCardType={
+export type DataCardType={
     cards:CardUserType,
     cardsTotalCount: number
     maxGrade: number
@@ -15,7 +15,7 @@ type DataCardType={
     tokenDeathTime: number
 }
 
-type CardUserType={
+export type CardUserType={
     answer: string
     answerImg: string
     answerVideo: string
