@@ -1,28 +1,17 @@
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
 import {ApiCards, LoginResponseType} from '../../API/ApiCards';
+import { Dispatch } from 'redux';
+import {setUserData} from "./profile-reducer";
+import {setError, setIsFetching, setIsInitialized} from "./app-reducer";
 
 const initialState = {
-    isLoading: false,
     isAuth: false,
-    _id: null as string | null,
-    email: null as string | null,
-    name: null as string | null,
-    rememberMe: false,
-    avatar: null as string | null,
-    publicCardPacksCount: null as number | null,
-    created: null as Date | null,
-    updated: null as Date | null,
-    isAdmin: false,
-    verified: false,
-    error: null as string | null
 }
 
 export const loginReducer = (state = initialState, action: LoginActionsType): LoginReducerStateType => {
     switch (action.type) {
-        case 'cards-app/login/SET-USER-PARAMS':
-        case 'cards-app/login/SET-ERROR':
-        case 'cards-app/login/TOGGLE-IS-LOADING':
+        case 'cards-app/login/SET-IS-AUTH':
             return {
                 ...state,
                 ...action.payload
@@ -36,29 +25,8 @@ export const loginReducer = (state = initialState, action: LoginActionsType): Lo
 
 //action creators
 
-export const toggleIsLoading = (isLoading: boolean) => ({
-    type: 'cards-app/login/TOGGLE-IS-LOADING',
-    payload: {
-        isLoading
-    }
-} as const);
-
-export const setUserParams = (LoginData: LoginResponseType) => ({
-    type: 'cards-app/login/SET-USER-PARAMS',
-    payload: {
-        ...LoginData
-    }
-} as const)
-
-export const setError = (error: string | null) => ({
-    type: 'cards-app/login/SET-ERROR',
-    payload: {
-        error
-    }
-} as const)
-
-export const setIsAuthorized = (isAuth: boolean) => ({
-    type: 'cards-app/login/SET-ERROR',
+export const setIsAuth = (isAuth: boolean) => ({
+    type: 'cards-app/login/SET-IS-AUTH',
     payload: {
         isAuth
     }
@@ -69,28 +37,62 @@ export const setIsAuthorized = (isAuth: boolean) => ({
 
 export const loginTC = (data: LoginDataType): ThunkAction<void, AppStoreType, unknown, LoginActionsType> => {
     return async (dispatch) => {
-        dispatch(toggleIsLoading(true));
+        dispatch(setIsFetching(false));
         try {
             const response = await ApiCards.login(data);
-            dispatch(setUserParams(response.data));
-            dispatch(setIsAuthorized(true));
+            console.log("response", response)
+            let {_id, email, name, avatar, publicCardPacksCount} = response.data
+            dispatch(setUserData({_id, email, name, avatar, publicCardPacksCount}));
+            dispatch(setIsInitialized(true))
+            dispatch(setIsAuth(true));
         } catch (e) {
             const error = e.response ? e.response.data.error : (e.message + ', more details in console');
             dispatch(setError(error));
         }
-        dispatch(toggleIsLoading(false));
+        dispatch(setIsFetching(true))
+        dispatch(setIsInitialized(true));
     }
 }
-
+export const authTC = () => (dispatch:Dispatch) => {
+    dispatch(setIsFetching(false))
+    ApiCards.auth()
+        .then(response => {
+            let {_id, email, name, avatar, publicCardPacksCount} = response.data
+            dispatch(setUserData({_id, email, name, avatar, publicCardPacksCount}))
+            dispatch(setIsAuth(true))
+            dispatch(setIsInitialized(true));
+        })
+        .catch(err => {
+            const error = err.response ? err.response.data.error : (err.message + ', more details in console')
+            dispatch(setError(error))
+            dispatch(setIsInitialized(true))
+            dispatch(setIsFetching(false));
+        })
+    dispatch(setIsFetching(true))
+}
+export const logOutTC = () => (dispatch:Dispatch) => {
+    ApiCards.logout()
+        .then(res => {
+            let email = null
+            let _id = null
+            let name = ''
+            let avatar = ''
+            let publicCardPacksCount = null
+            dispatch(setIsAuth(false))
+            dispatch(setUserData({email, _id, name, avatar, publicCardPacksCount}))}
+        )
+        .catch(err => console.log(err))
+}
 
 //types
 
 export type LoginReducerStateType = typeof initialState;
 
-type LoginActionsType = ReturnType<typeof toggleIsLoading>
-    | ReturnType<typeof setUserParams>
+export type LoginActionsType = ReturnType<typeof setIsFetching>
+    | ReturnType<typeof setUserData>
     | ReturnType<typeof setError>
-    | ReturnType<typeof setIsAuthorized>
+    | ReturnType<typeof setIsAuth>
+    | ReturnType<typeof setIsInitialized>
 
 export type LoginDataType = {
     email: string

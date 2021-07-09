@@ -5,13 +5,13 @@ import {ApiCards} from "../../API/ApiCards";
 
 let initialState:Array<string>=[]
 
-export const authReducer = (state = initialState, action: addUserType) => {
+export const registrationReducer = (state = initialState, action: addUserType) => {
     switch (action.type){
         case 'addUser':{
             let newState=[...state]
             let newItemLoginForm = {email: action.email, password1: action.password}
             // setloginForm([...loginForm, newItemLoginForm])
-                return [...newState, newItemLoginForm]
+            return [...newState, newItemLoginForm]
         }
         default :return state
     }
@@ -24,7 +24,7 @@ export const addUserAC =(email:string,password:string,data:{email:string,passwor
         type:'addUser',
         email:email,
         password:password,
-            }as const
+    }as const
 }
 export const addUserACThunk=(email:string,password:string,setRedirect:(value:boolean)=>void,setPreloader:(value:boolean)=>void,setErrorFromServer:(value:string)=>void)=>(dispatch:Dispatch)=>{
     setPreloader(true)

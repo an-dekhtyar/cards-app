@@ -1,35 +1,20 @@
 .superInput {
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    font-size: 16px;
+    width: 347px;
+    height: 48px;
     outline: none;
-    padding: 5px;
-    box-sizing: border-box;
-    transition: .3s;
-    font-family: "Courier New";
-    width: 35%;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1.58px solid #24254A;
+    background: white
 }
 
 .errorInput {
-    border: 1px solid pink;
-    border-radius: 4px;
-    outline: none;
-    padding: 5px;
-    box-sizing: border-box;
-    box-shadow: 0 0 8px 0 pink;
-    font-family: "Courier New";
-
+    border: 2px solid red;
 }
+
 
 .error {
-    font-family: "Courier New";
-    font-size: 10px;
     color: red;
-    text-align: center;
-
-}
-
-.inputContain {
-    display: flex;
-    flex-direction: column;
-    padding-right: 5px;
 }

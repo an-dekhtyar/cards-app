@@ -35,7 +35,7 @@ export const EnterNewPassContain = () => {
 
         <div className={st.enterNewPass}>
             <div className={st.enterNewPassContain}>
-                <div className={st.logo} style={mainLogo}/>
+                <h2>IT-Incubator</h2>
                 <div className={st.enterNewPassContent}>
                     {isFetching
                         ? <EnterNewPass value={value} setValue={setValue} createNewPassword={createNewPassword}/>

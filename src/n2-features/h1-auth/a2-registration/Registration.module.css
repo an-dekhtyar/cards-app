@@ -1,3 +1,31 @@
+
+
+.registrationPage {
+    display: flex;
+    justify-content: center;
+    min-height: 80vh;
+    color: #3b4652;
+    text-align: center;
+
+}
+
+.registrationContain {
+    border: 1px solid darkblue;
+    width: 413px;
+    height: 540px;
+    align-self: center;
+    border-radius: 25px;
+    background-color: white;
+    text-align: center;
+
+}
+.registrationContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
 .buttonOn {
     border: lightskyblue 1px solid;
     background: lightskyblue;
@@ -8,4 +36,16 @@
 
 .PasswordError {
     color: red;
+}
+
+.inputContainer {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.buttonContainer {
+    display: flex;
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: space-around;
 }

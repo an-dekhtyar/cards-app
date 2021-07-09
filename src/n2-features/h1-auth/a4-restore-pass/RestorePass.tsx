@@ -10,9 +10,6 @@ import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
 import {getInstructionTC} from "../../../n1-main/m2-bll/restore-pass-reducer";
 
 
-const mainLogo = {
-    backgroundImage: `url(${logo})`,
-}
 
 
 export const RestorePass = () => {
@@ -29,7 +26,7 @@ export const RestorePass = () => {
     return (
         <div className={st.restorePass}>
             <div className={st.restorePassContain}>
-                <div className={st.logo} style={mainLogo} />
+                <h2>IT-Incubator</h2>
                 {isFetching
                     ? <div className={st.restorePassContent}>
                         {isNotifySent
