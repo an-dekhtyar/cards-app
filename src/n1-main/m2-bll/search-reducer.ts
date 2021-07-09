@@ -7,11 +7,13 @@ import {cardPacksType, userType} from '../../n2-features/h1-auth/a3-profile/Prof
 const initialState = {
     packName: '',
     cardPacksTotalCount:0,
-    maxCardsCount: 0,
+    curMin: 0,
+    curMax: 30,
+    maxCardsCount: 60,
     minCardsCount: 0,
     sortPacks: 0,
     page: 1,
-    pageCount: 0,
+    pageCount: 10,
     cardPacks: [] as Array<userType>,
     token: '',
     tokenDeathTime: 1
@@ -58,8 +60,8 @@ export const GETCardsPackTC = (setPreloader: (value: boolean) => void): ThunkAct
         setPreloader(true);
         const {
             packName,
-            maxCardsCount,
-            minCardsCount,
+            curMax,
+            curMin,
             sortPacks,
             page,
             pageCount
@@ -67,8 +69,8 @@ export const GETCardsPackTC = (setPreloader: (value: boolean) => void): ThunkAct
 
         const paramsData: SearchParamsType = {
             packName,
-            min: minCardsCount,
-            max: maxCardsCount,
+            min: curMin,
+            max: curMax,
             sortPacks,
             page,
             pageCount
@@ -95,6 +97,8 @@ type ParamsDomainType = {
     packName?: string
     minCardsCount?: number
     maxCardsCount?: number
+    curMin?: number
+    curMax?: number
     sortPacks?: number
     page?: number
     pageCount?: number
