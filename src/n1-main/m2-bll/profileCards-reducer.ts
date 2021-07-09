@@ -1,5 +1,4 @@
 import {Dispatch} from "redux";
-import {userType} from "../../n2-features/h1-auth/a3-profile/Profile";
 import {ApiCardsPack} from "../../API/ApiCardsPack";
 import {ApiCardsCard} from "../../API/ApiCardsCard";
 

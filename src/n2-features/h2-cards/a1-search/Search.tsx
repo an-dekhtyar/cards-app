@@ -1,4 +1,4 @@
-import SuperInputText from '../../../n1-main/m1-ui/Common/Input/Input';
+import {Input} from './../../../n1-main/m1-ui/Common/Input/Input'
 import {ChangeEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
@@ -18,7 +18,7 @@ export const Search = () => {
     }
 
     return (
-        <SuperInputText value={packName}
+        <Input value={packName}
                         placeholder={'Search...'}
                         onChange={onInputChange}/>
     )

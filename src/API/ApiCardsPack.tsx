@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {cardPacksType} from '../n2-features/h1-auth/a3-profile/Profile';
+import { cardPacksType } from '../n2-features/h1-auth/a3-profile/Cards';
+
 
 
 let instance = axios.create({

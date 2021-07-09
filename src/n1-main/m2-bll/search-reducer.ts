@@ -1,7 +1,8 @@
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
 import {ApiCardsPack, SearchParamsType} from '../../API/ApiCardsPack';
-import {cardPacksType, userType} from '../../n2-features/h1-auth/a3-profile/Profile';
+import {cardPacksType, userType} from "../../n2-features/h1-auth/a3-profile/Cards";
+
 
 
 const initialState = {

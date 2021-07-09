@@ -7,6 +7,7 @@ import {restorePassReducer} from "./restore-pass-reducer";
 import { appReducer } from "./app-reducer";
 import {CardProfileReducer} from "./profileCards-reducer";
 import {searchReducer} from './search-reducer';
+import {cardsPackReducer} from "./cardsPack-reducer";
 
 
 const reducers = combineReducers({
@@ -16,7 +17,8 @@ const reducers = combineReducers({
     profile:profileReducer,
     cardProfile:CardProfileReducer,
     restorePass:restorePassReducer,
-    search: searchReducer
+    search: searchReducer,
+    cardsPack:cardsPackReducer
 })
 
 

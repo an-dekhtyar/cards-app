@@ -12,7 +12,8 @@ import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
 import {log} from "util";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
-import {GETCardsPackThunk} from "../../../n1-main/m2-bll/profile-reducer";
+import {GETCardsPackThunk} from "../../../n1-main/m2-bll/cardsPack-reducer";
+
 
 
 /*
@@ -23,7 +24,7 @@ import {GETCardsPackThunk} from "../../../n1-main/m2-bll/profile-reducer";
 export let ProfileCards=({})=>{
     let dispatch=useDispatch()
     let CardDataForTable = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
-    const authUserId = useSelector<AppStoreType, string | null>(state => state.login._id)
+    const authUserId = useSelector<AppStoreType, string | null>(state => state.profile._id)
     const cardsPackId = useSelector<AppStoreType, string | null>(state => state.cardProfile.currentCardsPackId)
     //const Id = useSelector<AppStoreType, string | null>(state => state.profile.cardPacks[0]._id)
 
