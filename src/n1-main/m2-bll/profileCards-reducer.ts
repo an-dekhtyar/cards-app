@@ -37,7 +37,8 @@ type CardUserType = {
 }
 
 let initialState = {
-    cards: [] as Array<CardUserType>
+    cards: [] as Array<CardUserType>,
+    currentCardsPackId: ''
 }
 
 export type InitialCardProfileReducerType = typeof initialState
@@ -46,10 +47,13 @@ export const CardProfileReducer = (state = initialState, action: allActionTypes)
     switch (action.type) {
         case "GetCardsCard": {
             let newState = {...state, cards: action.data?.cards ? action.data?.cards : []};
-            console.log(newState)
             return newState
         }
+        case "SetCurrentPackId": {
+            return {...state, currentCardsPackId: action.data};
+        }
         case "AddNewCard": {
+            console.log(state)
             return {
                 ...state,
                 cards: [action.data, ...state.cards]
@@ -61,7 +65,7 @@ export const CardProfileReducer = (state = initialState, action: allActionTypes)
     }
 };
 
-type allActionTypes = GetCardsCardACType | AddNewCardACType;
+type allActionTypes = GetCardsCardACType | AddNewCardACType | SetCurrentPackIdType;
 
 type GetCardsCardACType = ReturnType<typeof GetCardsCardAC>
 export const GetCardsCardAC = (data: any) => {
@@ -70,7 +74,16 @@ export const GetCardsCardAC = (data: any) => {
         data
     } as const
 }
+type SetCurrentPackIdType = ReturnType<typeof setCurrentPackId>
+export const setCurrentPackId = (data: string) => {
+    return {
+        type: 'SetCurrentPackId',
+        data
+    } as const
+}
+
 export const GetCardsCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
+    dispatch(setCurrentPackId(id))
     setPreloader(true)
     ApiCardsCard.getCardsCard(id)
         .then((res) => {

@@ -19,14 +19,3 @@ export let ApiCardsCard={
         return instance.put(`cards/card?cardsPack_id=${id}`, {card: {_id: id,question:'UPDATED'}})
     },
 }
-
-// 60e3022aa8b1610004c03ce1
-
-// card: {
-//     cardsPack_id: "5eb543f6bea3ad21480f1ee7"
-
-// AddNewCardsPack:()=>{
-//     return instance.post('cards/pack', {cardsPack:{}})
-// },
-
-// {email: email, password: password}
