@@ -1,39 +1,71 @@
 import React, {useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../../n1-main/m2-bll/store";
-import {AddNewCardThunk, InitialCardProfileReducerType} from "../../../n1-main/m2-bll/profileCards-reducer";
+import {
+    AddNewCardThunk, CreateCardsPackIdThunk,
+    DeleteCardsCardThunk,
+    InitialCardProfileReducerType,
+    UpdateCardsCardThunk
+} from "../../../n1-main/m2-bll/profileCards-reducer";
 import st from "./Profile.module.css";
 import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
 import {log} from "util";
+import {Redirect} from "react-router-dom";
+import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
+import {GETCardsPackThunk} from "../../../n1-main/m2-bll/profile-reducer";
 
+
+/*
+* CARDS_PACK
+* [CARD, CARD] ===> CARDS_PACK_ID
+* */
 
 export let ProfileCards=({})=>{
     let dispatch=useDispatch()
     let CardDataForTable = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
     const authUserId = useSelector<AppStoreType, string | null>(state => state.login._id)
+    const cardsPackId = useSelector<AppStoreType, string | null>(state => state.cardProfile.currentCardsPackId)
+    //const Id = useSelector<AppStoreType, string | null>(state => state.profile.cardPacks[0]._id)
+
 
     let [preloader, setPreloader] = useState(false)
     // let cardsPack_id = useMemo(() => CardDataForTable.cards[0]?.cardsPack_id || null, [CardDataForTable.cards])
-    let cardsPack_id = CardDataForTable.cards[0]?.cardsPack_id || null;
-    let isYours = CardDataForTable.cards[0]?.cardsPack_id === authUserId;
+    //let cardsPackId = CardDataForTable.cards[0]?.cardsPack_id || null;
+    let isYours = CardDataForTable.cards[0]?.user_id === authUserId;
     console.log(authUserId,CardDataForTable.cards[0]?.cardsPack_id )
     // let isYours = useMemo(() =>
     //     CardDataForTable.cards[0]?.user_id && CardDataForTable.cards[0]?.user_id === authUserId,
     //     [CardDataForTable.cards, authUserId])
 
     let AddNewCard=()=>{
+        console.log('AddNewCard')
         // if (!cardsPack_id) return;
         // dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
-
-        if (cardsPack_id) {
-            dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
-        };
+        if (cardsPackId) {
+            dispatch(AddNewCardThunk(cardsPackId, setPreloader))
+            // console.log()
+        }else{
+            //@ts-ignore
+            dispatch(CreateCardsPackIdThunk(Id))
+            dispatch(GETCardsPackThunk(setPreloader))
+            // return <Redirect to={PATH.PROFILE}/>
+        }
     }
+
+    let DeleteCardsCard=(id:string)=>{
+        dispatch(DeleteCardsCardThunk(id,setPreloader))
+    }
+
+    const UpdateCard=(id:string)=>{
+        dispatch(UpdateCardsCardThunk(id,setPreloader))
+
+    }
+
     return(
         <div >
             <h1 className={st.h1}>ProfileCards</h1>
             <p></p>
-            <Button children={'AddNewCard'} onClick={() => AddNewCard()} />
+            <Button children={'AddNewCard'} onClick={() => AddNewCard()} style={{color: isYours ? 'red': 'green'}}/>
             {/*<Button children={'AddNewCard'} disabled={!isYours} onClick={() => AddNewCard()} style={{color: isYours ? '': 'red'}}/>*/}
             <div >{
                 CardDataForTable.cards!==[]?
@@ -51,8 +83,8 @@ export let ProfileCards=({})=>{
                                         <div>CREATED: {m.created}</div>
                                         <div>UPDATED: {m.updated}</div>
                                         <p></p>
-                                        {/*<Button children={'Delete'} onClick={() => DeleteCard(m._id)}/>*/}
-                                        {/*<Button children={'Update'} onClick={() => UpdateCard(m._id)}/>*/}
+                                        <Button children={'Delete'} onClick={() => DeleteCardsCard(m._id)}/>
+                                        <Button children={'Update'} onClick={() => UpdateCard(m._id)}/>
                                         {/*<NavLink to={PATH.CARDS} className={st.headerLink}><Button*/}
                                         {/*    children={'Show Cards'} onClick={() => GetCardsCard(m._id)}/></NavLink>*/}
 
