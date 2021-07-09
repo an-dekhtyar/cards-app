@@ -104,7 +104,6 @@ export const Profile = () => {
                                             <Button
                                             children={'Show Cards'} onClick={() => GetCardsCard(m._id, m.cardsCount)}/>
                                         </NavLink>
-
                                     </li>
                                 </ul>
 

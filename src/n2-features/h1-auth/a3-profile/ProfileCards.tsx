@@ -4,7 +4,8 @@ import {AppStoreType} from "../../../n1-main/m2-bll/store";
 import {
     AddNewCardThunk,
     DeleteCardsCardThunk,
-    InitialCardProfileReducerType
+    InitialCardProfileReducerType,
+    UpdateCardsCardThunk
 } from "../../../n1-main/m2-bll/profileCards-reducer";
 import st from "./Profile.module.css";
 import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
@@ -37,6 +38,11 @@ export let ProfileCards=({})=>{
         dispatch(DeleteCardsCardThunk(id,setPreloader))
     }
 
+    const UpdateCard=(id:string)=>{
+        dispatch(UpdateCardsCardThunk(id,setPreloader))
+
+    }
+
     return(
         <div >
             <h1 className={st.h1}>ProfileCards</h1>
@@ -60,7 +66,7 @@ export let ProfileCards=({})=>{
                                         <div>UPDATED: {m.updated}</div>
                                         <p></p>
                                         <Button children={'Delete'} onClick={() => DeleteCardsCard(m._id)}/>
-                                        {/*<Button children={'Update'} onClick={() => UpdateCard(m._id)}/>*/}
+                                        <Button children={'Update'} onClick={() => UpdateCard(m._id)}/>
                                         {/*<NavLink to={PATH.CARDS} className={st.headerLink}><Button*/}
                                         {/*    children={'Show Cards'} onClick={() => GetCardsCard(m._id)}/></NavLink>*/}
 

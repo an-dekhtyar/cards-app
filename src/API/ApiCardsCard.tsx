@@ -15,6 +15,9 @@ export let ApiCardsCard={
     DeleteCardsCard:(id:string)=>{
         return instance.delete(`cards/card?id=${id}`)
     },
+    UpdateCradsCard:(id:string)=>{
+        return instance.put(`cards/card?cardsPack_id=${id}`, {card: {_id: id,question:'UPDATED'}})
+    },
 }
 
 // 60e3022aa8b1610004c03ce1

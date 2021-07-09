@@ -46,6 +46,7 @@ export const CardProfileReducer = (state = initialState, action: allActionTypes)
     switch (action.type) {
         case "GetCardsCard": {
             let newState = {...state, cards: action.data?.cards ? action.data?.cards : []};
+            console.log(newState)
             return newState
         }
         case "AddNewCard": {
@@ -108,8 +109,18 @@ export let DeleteCardsCardThunk = (id: string, setPreloader: (value: boolean) =>
     setPreloader(true)
     ApiCardsCard.DeleteCardsCard(id)
         .then((res) => {
-            debugger
             const {cardsPack_id} = res.data.deletedCard
+            dispatch(GetCardsCardThunk(cardsPack_id, setPreloader))
+            setPreloader(false)
+        })
+}
+
+export const UpdateCardsCardThunk= (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
+    setPreloader(true)
+    ApiCardsCard.UpdateCradsCard(id)
+        .then((res) => {
+            console.log(res.data)
+            const {cardsPack_id} = res.data.updatedCard
             dispatch(GetCardsCardThunk(cardsPack_id, setPreloader))
             setPreloader(false)
         })
