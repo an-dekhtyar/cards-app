@@ -55,6 +55,7 @@ export const changeSearchParams = (params: ParamsDomainType) => ({
 //thunk creators
 
 export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType): ThunkAction<void, AppStoreType, unknown, SearchActionsType> => {
+
     return (dispatch, getState) => {
         const {
             packName,
