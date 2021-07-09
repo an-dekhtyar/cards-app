@@ -1,10 +1,10 @@
 import {Button} from '../Button/Button';
-import {Simulate} from 'react-dom/test-utils';
 
 
 type SortButtonPropsType = {
     sortValue: boolean
     changeSortValue: (value: boolean) => void
+    active: boolean
 }
 
 export const SortButton = (props: SortButtonPropsType) => {
@@ -15,7 +15,7 @@ export const SortButton = (props: SortButtonPropsType) => {
     }
 
     return (
-        <Button onClick={onButtonClick}>
+        <Button onClick={onButtonClick} red={props.active}>
             {props.sortValue ? '^' : '⌄'}
         </Button>
     )

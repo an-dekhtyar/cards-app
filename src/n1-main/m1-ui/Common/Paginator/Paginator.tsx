@@ -10,7 +10,6 @@ type PaginatorPropsType = {
 }
 
 export const Paginator = (props: PaginatorPropsType) => {
-    debugger
     const {
         currentItem,
         itemCount,

@@ -6,12 +6,12 @@ import {cardPacksType, userType} from '../../n2-features/h1-auth/a3-profile/Prof
 
 const initialState = {
     packName: '',
-    cardPacksTotalCount:0,
+    cardPacksTotalCount: 0,
     curMin: 0,
     curMax: 30,
     maxCardsCount: 60,
     minCardsCount: 0,
-    sortPacks: 0,
+    sortPacks: '0updated',
     page: 1,
     pageCount: 10,
     cardPacks: [] as Array<userType>,
@@ -44,7 +44,6 @@ export const setCardPacks = (data: cardPacksType) => ({
 } as const)
 
 
-
 export const changeSearchParams = (params: ParamsDomainType) => ({
     type: 'cards-app/search/CHANGE-SEARCH-PARAMS',
     payload: {
@@ -55,7 +54,7 @@ export const changeSearchParams = (params: ParamsDomainType) => ({
 
 //thunk creators
 
-export const GETCardsPackTC = (setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, SearchActionsType> => {
+export const GETCardsPackTC = (setPreloader: (value: boolean) => void, searchParams?: SearchParamsType): ThunkAction<void, AppStoreType, unknown, SearchActionsType> => {
     return (dispatch, getState) => {
         setPreloader(true);
         const {
@@ -67,18 +66,25 @@ export const GETCardsPackTC = (setPreloader: (value: boolean) => void): ThunkAct
             pageCount
         } = getState().search;
 
-        const paramsData: SearchParamsType = {
-            packName,
-            min: curMin,
-            max: curMax,
-            sortPacks,
-            page,
-            pageCount
-        }
+        const paramsData: SearchParamsType = searchParams ?
+            searchParams : {
+                packName,
+                min: curMin,
+                max: curMax,
+                sortPacks,
+                page,
+                pageCount
+            }
 
         ApiCardsPack.GETCardsPack(paramsData)
             .then((res) => {
-               dispatch(setCardPacks(res.data))
+                const curState = getState().search
+                if (curState.packName === packName
+                    && curMax === curState.curMax
+                    && curMin === curState.curMin
+                    && sortPacks === curState.sortPacks){
+                    dispatch(setCardPacks(res.data))
+                }
             })
         setPreloader(false)
     }
@@ -99,7 +105,7 @@ type ParamsDomainType = {
     maxCardsCount?: number
     curMin?: number
     curMax?: number
-    sortPacks?: number
+    sortPacks?: string
     page?: number
     pageCount?: number
     user_id?: string
