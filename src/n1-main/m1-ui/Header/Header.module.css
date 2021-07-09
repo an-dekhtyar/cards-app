@@ -1,9 +1,12 @@
 .header {
-    height: 10vh;
-    background-color: skyblue;
+    height: 60px;
+    background-color: #c3c9cf;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
-.headerLink {
+.header a {
     text-decoration: none;
     border: 2px solid darkblue;
     color: darkblue;
@@ -13,9 +16,11 @@
 
 }
 
-.headerContain {
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.header a:hover {
+    background-color: darkblue;
+    color: white;
+}
+a.active {
+    background-color: darkblue;
+    color: white;
 }

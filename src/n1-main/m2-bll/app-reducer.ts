@@ -4,7 +4,7 @@ import {ThunkAction} from "redux-thunk";
 import {AppStoreType} from "./store";
 
 const initState = {
-    isFetching: false,
+    isFetching: true,
     error: '',
     isInitialized: false,
 }
@@ -47,7 +47,7 @@ export const setAppError = (error: string | null) => (dispatch:Dispatch) => {
 
 
 export const initializeApp = () :ThunkAction<void, AppStoreType, unknown, AppReducerActionsTypes>=> (dispatch) => {
-    dispatch(setIsFetching(true))
+    dispatch(setIsFetching(false))
     dispatch(authTC())}
 
 export type TState = typeof initState

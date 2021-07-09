@@ -1,35 +1,29 @@
 .restorePass {
     display: flex;
     justify-content: center;
-    height: 90vh;
+    min-height: 80vh;
     color: #3b4652;
+    text-align: center;
+
 }
 
 .restorePassContain {
-    border: 3px solid darkblue;
-    width: 500px;
-    height: 700px;
+    border: 1px solid darkblue;
+    width: 413px;
+    height: 540px;
     align-self: center;
     border-radius: 25px;
-
+    background-color: white;
+    text-align: center;
 
 }
 .restorePassContent {
-    height: 630px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    text-align: center;
 }
 
-
-.logo {
-    width:300px;
-    height: 70px;
-    background-size: cover;
-    background-position: center;
-    margin: 0 auto;
-    margin-top: 15px;
-}
 .emailLogo {
     height: 50px;
     width: 50px;
@@ -43,4 +37,29 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.inputContainer {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+.buttonContainer {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+.smallText {
+    font-size: small;
+}
+
+img {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 108px;
+    height: 108px;
+
+}
+.email {
+    margin-top: 10px;
+    font-weight: bold;
+    color: darkblue;;
 }
