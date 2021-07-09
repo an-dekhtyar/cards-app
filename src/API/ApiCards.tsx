@@ -1,10 +1,15 @@
+
 import axios from 'axios';
 import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
+import {cardPacksType} from "../n2-features/h1-auth/a3-profile/Profile";
 
 
 let instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
     withCredentials: true,
+    // headers:{
+    //     'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad2'
+    // }
 })
 
 export const ApiCards = {
