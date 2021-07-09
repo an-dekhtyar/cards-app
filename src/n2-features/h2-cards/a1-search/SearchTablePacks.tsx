@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
-import {userType} from '../../h1-auth/a3-profile/Profile';
 import st from './SearchTable.module.css';
 import {SearchSortButton} from './SearchSortButton';
+import {userType} from '../../h1-auth/a3-profile/Table';
 
 export const SearchTablePacks = () => {
     //state

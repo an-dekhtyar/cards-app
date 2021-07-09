@@ -1,8 +1,8 @@
-import SuperInputText from '../../../n1-main/m1-ui/Common/Input/Input';
 import {ChangeEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {changeSearchParams, GETCardsPackTC} from '../../../n1-main/m2-bll/search-reducer';
+import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
 
 
 export const Search = () => {
@@ -18,8 +18,8 @@ export const Search = () => {
     }
 
     return (
-        <SuperInputText value={packName}
-                        placeholder={'Search...'}
-                        onChange={onInputChange}/>
+        <Input value={packName}
+               placeholder={'Search...'}
+               onChange={onInputChange}></Input>
     )
 }

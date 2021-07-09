@@ -1,7 +1,7 @@
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
 import {ApiCardsPack, SearchParamsType} from '../../API/ApiCardsPack';
-import {cardPacksType, userType} from '../../n2-features/h1-auth/a3-profile/Profile';
+import {userType} from '../../n2-features/h1-auth/a3-profile/Table';
 
 
 const initialState = {
@@ -36,7 +36,7 @@ export const searchReducer = (state = initialState, action: SearchActionsType): 
 
 //action creators
 
-export const setCardPacks = (data: cardPacksType) => ({
+export const setCardPacks = (data: CardPacksType) => ({
     type: 'cards-app/search/SET-CARD-PACKS',
     payload: {
         ...data
@@ -82,10 +82,10 @@ export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType):
                 if (curState.packName === packName
                     && curMax === curState.curMax
                     && curMin === curState.curMin
-                    && sortPacks === curState.sortPacks){
-                    dispatch(setCardPacks(res.data))
+                    && sortPacks === curState.sortPacks) {
+                    dispatch(setCardPacks(res.data));
                 }
-                if(first){
+                if (first) {
                     dispatch(changeSearchParams({curMax: res.data.maxCardsCount, curMin: res.data.minCardsCount}))
                 }
             })
@@ -111,4 +111,12 @@ type ParamsDomainType = {
     page?: number
     pageCount?: number
     user_id?: string
+}
+export type CardPacksType = {
+    cardPacks: Array<userType>
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
 }

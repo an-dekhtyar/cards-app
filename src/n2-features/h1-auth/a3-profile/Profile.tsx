@@ -1,16 +1,17 @@
-import React, {ChangeEvent, ChangeEventHandler, useEffect, useState} from 'react';
-import {Button} from "../../../n1-main/m1-ui/Common/Button/Button";
-import {useDispatch, useSelector} from "react-redux";
-import {authTC, LoginReducerStateType, logOutTC} from "../../../n1-main/m2-bll/login-reducer";
-import {Redirect} from "react-router-dom";
-import { PATH } from '../../../n1-main/m1-ui/Routes/Routes';
-import { AppStoreType } from '../../../n1-main/m2-bll/store';
-import {changeUserDataTC, UserDataType} from "../../../n1-main/m2-bll/profile-reducer";
+import React from 'react';
+import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
+import {useDispatch, useSelector} from 'react-redux';
+import {logOutTC} from '../../../n1-main/m2-bll/login-reducer';
+import {Redirect} from 'react-router-dom';
+import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
+import {AppStoreType} from '../../../n1-main/m2-bll/store';
+import {changeUserDataTC, UserDataType} from '../../../n1-main/m2-bll/profile-reducer';
 import st from './Profile.module.css'
-import { Input } from '../../../n1-main/m1-ui/Common/Input/Input';
+import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
 import profileLogo from '../../../assets/images/profileLogo.png'
-import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
-import { EditableSpan } from './Editablespan';
+import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
+import {EditableSpan} from './Editablespan';
+
 export const Profile = () => {
 
     const dispatch = useDispatch()

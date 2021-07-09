@@ -1,7 +1,5 @@
-
 import axios from 'axios';
 import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
-import {cardPacksType} from "../n2-features/h1-auth/a3-profile/Profile";
 
 
 let instance = axios.create({
@@ -32,9 +30,9 @@ export const ApiCards = {
     getInstruction(email: string) {
         return axios.post('https://neko-back.herokuapp.com/2.0auth/forgot', {
             email,
-            from: "test-front-admin <ai73a@yandex.by>",
+            from: 'test-front-admin <ai73a@yandex.by>',
             message: `<div style="background-color: lime; padding: 15px"> To change your password, please follow the link:<a href='http://localhost:3000/#/new-pass/$token$'>link</a></div>`
-        }, {withCredentials:true})
+        }, {withCredentials: true})
     },
     setNewPassword(newPassword: string, token: string) {
         return instance.post('auth/set-new-password', {
@@ -43,7 +41,7 @@ export const ApiCards = {
             },
         )
     },
-    changeUserData(name:string, avatar: string) {
+    changeUserData(name: string, avatar: string) {
         return instance.put('/auth/me', {name, avatar})
     }
 }
