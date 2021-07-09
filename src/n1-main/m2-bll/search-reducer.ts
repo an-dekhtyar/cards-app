@@ -5,6 +5,7 @@ import {userType} from '../../n2-features/h1-auth/a3-profile/Table';
 
 
 const initialState = {
+    user_id: undefined as string | undefined,
     packName: '',
     cardPacksTotalCount: 0,
     curMin: 0,
@@ -57,13 +58,15 @@ export const changeSearchParams = (params: ParamsDomainType) => ({
 export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType): ThunkAction<void, AppStoreType, unknown, SearchActionsType> => {
 
     return (dispatch, getState) => {
+        debugger;
         const {
             packName,
             curMax,
             curMin,
             sortPacks,
             page,
-            pageCount
+            pageCount,
+            user_id
         } = getState().search;
 
         const paramsData: SearchParamsType = searchParams ?
@@ -73,7 +76,8 @@ export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType):
                 max: curMax,
                 sortPacks,
                 page,
-                pageCount
+                pageCount,
+                user_id
             }
 
         ApiCardsPack.GETCardsPack(paramsData)

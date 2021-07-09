@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {logOutTC} from '../../../n1-main/m2-bll/login-reducer';
@@ -7,10 +7,14 @@ import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {changeUserDataTC, UserDataType} from '../../../n1-main/m2-bll/profile-reducer';
 import st from './Profile.module.css'
-import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
 import profileLogo from '../../../assets/images/profileLogo.png'
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {EditableSpan} from './Editablespan';
+import {Search} from '../../h2-cards/a1-search/Search';
+import {SearchTablePacks} from '../../h2-cards/a1-search/SearchTablePacks';
+import {SearchPaginator} from '../../h2-cards/a1-search/SearchPaginator';
+import {changeSearchParams, GETCardsPackTC} from '../../../n1-main/m2-bll/search-reducer';
+import {SearchDoubleRange} from '../../h2-cards/a1-search/SearchDoubleRange';
 
 export const Profile = () => {
 
@@ -18,6 +22,11 @@ export const Profile = () => {
     const userData = useSelector<AppStoreType, UserDataType>(state => state.profile)
     const isAuth = useSelector<AppStoreType, boolean>(state => state.login.isAuth)
     const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching)
+    const user_id = useSelector<AppStoreType, string | null>(state => state.profile._id)
+    useEffect(() => {
+        dispatch(changeSearchParams({user_id: user_id?user_id:undefined}))
+        dispatch(GETCardsPackTC(true, {user_id: user_id?user_id:undefined}))
+    }, [])
 
     const {_id, name, avatar, email, publicCardPacksCount} = userData
 
@@ -31,10 +40,10 @@ export const Profile = () => {
         return <Redirect to={PATH.LOGIN}/>
     }
 
-    const onChangeName = (newName:string)=> {
-            dispatch(changeUserDataTC(newName, avatar))
-            }
-    const onChangeAvatar = (avatar:string)=> {
+    const onChangeName = (newName: string) => {
+        dispatch(changeUserDataTC(newName, avatar))
+    }
+    const onChangeAvatar = (avatar: string) => {
         dispatch(changeUserDataTC(name, avatar))
     }
 
@@ -45,41 +54,38 @@ export const Profile = () => {
 
                 {isFetching
                     ?
-                <>
-                <div className={st.leftBlock}>
-                    <div className={st.info}>
+                    <>
+                        <div className={st.leftBlock}>
+                            <div className={st.info}>
 
-                        <div className={st.logo} >
-                            <img className={st.logo} src={avatar === "Avatar is not defined" || "Add link to add ava!" ? profileLogo : avatar}/>
+                                <div className={st.logo}>
+                                    <img className={st.logo}
+                                         src={avatar === 'Avatar is not defined' || 'Add link to add ava!' ? profileLogo : avatar}/>
+                                </div>
+                                <div>ID: {_id}</div>
+                                <div>Email: {email}</div>
+                                <div>My public card count is: {publicCardPacksCount}</div>
+
+                                <EditableSpan value={avatar} onChange={onChangeAvatar}/>
+                                {/*<Button disabled>Update Profile</Button>*/}
+                            </div>
+                            <div className={st.range}><SearchDoubleRange/></div>
+                            <div className={st.button}>
+
+                                <Button onClick={logout}>Log out</Button>
+                            </div>
                         </div>
-                        <div>ID: {_id}</div>
-                        <div>Email: {email}</div>
-                        <div>My public card count is: {publicCardPacksCount}</div>
 
-                        <EditableSpan value={avatar} onChange={onChangeAvatar}/>
-                        {/*<Button disabled>Update Profile</Button>*/}
-                    </div>
-                    <div className={st.range}>Range</div>
-                    <div className={st.button}>
-
-                        <Button onClick={logout} >Log out</Button>
-                    </div>
-                </div>
-
-                <div className={st.rightBlock}>
-                    <div className={st.input}>
-                        <div>Packs list <EditableSpan value={name} onChange={onChangeName}/></div>
-                        <Input placeholder={'Search'}/>
-                    </div>
-                    <div className={st.table}>Table</div>
-                    <div className={st.pagination}>Pagination</div>
-                </div>
-                </> : <Preloader/>
+                        <div className={st.rightBlock}>
+                            <div className={st.input}>
+                                <div>Packs list <EditableSpan value={name} onChange={onChangeName}/></div>
+                                <Search/>
+                            </div>
+                            <SearchTablePacks/>
+                            <div className={st.pagination}><SearchPaginator/></div>
+                        </div>
+                    </> : <Preloader/>
                 }
-
-
-
-
 
 
                 {/* <div>My name is:{name}</div>
@@ -93,13 +99,6 @@ export const Profile = () => {
             </div>
         </div>)
 };
-
-
-
-
-
-
-
 
 
 //------------------------------------------------------------------
