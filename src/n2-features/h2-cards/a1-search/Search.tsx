@@ -14,8 +14,7 @@ export const Search = () => {
     //functions
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(changeSearchParams({packName: e.currentTarget.value}));
-        dispatch(GETCardsPackTC((value) => {
-        }))
+        dispatch(GETCardsPackTC(false))
     }
 
     return (

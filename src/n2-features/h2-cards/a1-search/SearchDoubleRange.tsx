@@ -16,8 +16,7 @@ export const SearchDoubleRange = () => {
 
     const doubleRangeChange = (values: number[]) => {
         dispatch(changeSearchParams({curMin: values[0], curMax: values[1]}))
-        dispatch(GETCardsPackTC((value) => {
-        }));
+        dispatch(GETCardsPackTC(false));
     }
 
 

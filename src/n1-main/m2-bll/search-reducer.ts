@@ -54,9 +54,8 @@ export const changeSearchParams = (params: ParamsDomainType) => ({
 
 //thunk creators
 
-export const GETCardsPackTC = (setPreloader: (value: boolean) => void, searchParams?: SearchParamsType): ThunkAction<void, AppStoreType, unknown, SearchActionsType> => {
+export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType): ThunkAction<void, AppStoreType, unknown, SearchActionsType> => {
     return (dispatch, getState) => {
-        setPreloader(true);
         const {
             packName,
             curMax,
@@ -85,8 +84,10 @@ export const GETCardsPackTC = (setPreloader: (value: boolean) => void, searchPar
                     && sortPacks === curState.sortPacks){
                     dispatch(setCardPacks(res.data))
                 }
+                if(first){
+                    dispatch(changeSearchParams({curMax: res.data.maxCardsCount, curMin: res.data.minCardsCount}))
+                }
             })
-        setPreloader(false)
     }
 }
 

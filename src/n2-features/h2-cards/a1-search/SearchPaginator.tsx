@@ -14,7 +14,7 @@ export const SearchPaginator = () => {
     //functions
     const onPageChanged = (page: number) => {
         dispatch(changeSearchParams({page}))
-        dispatch(GETCardsPackTC((value:boolean)=>{}))
+        dispatch(GETCardsPackTC(false))
     }
 
     return(

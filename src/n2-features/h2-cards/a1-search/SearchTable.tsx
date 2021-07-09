@@ -13,8 +13,7 @@ export const SearchTable = () => {
 
 
     useEffect(() => {
-        dispatch(GETCardsPackTC((value) => {
-        }, {pageCount: 10}));
+        dispatch(GETCardsPackTC(true, {pageCount: 10}));
     }, [])
 
 

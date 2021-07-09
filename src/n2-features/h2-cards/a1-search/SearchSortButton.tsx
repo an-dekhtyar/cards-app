@@ -13,8 +13,7 @@ export const SearchSortButton = ({sortValueName}: { sortValueName: string }) => 
 
     const changePackSort = (sortValue: boolean) => {
         dispatch(changeSearchParams({sortPacks: sortValue ? `0${sortValueName}` : `1${sortValueName}`}))
-        dispatch(GETCardsPackTC((value) => {
-        }));
+        dispatch(GETCardsPackTC(false));
     }
     const active = packSort === `0${sortValueName}` || packSort ===`1${sortValueName}`;
 

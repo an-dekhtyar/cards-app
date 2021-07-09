@@ -11,7 +11,7 @@ export const SearchTablePacks = () => {
 
     const mappedCardPacks = cardPacks.map(pack => {
         return (
-            <div className={st.row}>
+            <div className={st.row} key={pack._id}>
                 <span>{pack.name}</span>
                 <span>{pack.cardsCount}</span>
                 <span>{pack.updated}</span>
