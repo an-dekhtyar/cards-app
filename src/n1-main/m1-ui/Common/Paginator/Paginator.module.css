@@ -1,0 +1,21 @@
+.currentItem{
+    font-weight: bold;
+    background-color: #de9448;
+}
+
+.item{
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid gray;
+    margin: 2px;
+}
+
+.item:hover{
+    background-color: #de9448;
+}
+
+.btn{
+    width: 70px;
+    height: 30px;
+}
