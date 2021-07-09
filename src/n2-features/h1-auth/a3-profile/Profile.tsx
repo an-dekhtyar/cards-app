@@ -32,7 +32,6 @@ export const Profile = () => {
 
     const {_id, name, avatar, email, publicCardPacksCount} = userData
 
-    console.log(avatar)
 
     const logout = () => {
         dispatch(logOutTC())
@@ -84,8 +83,8 @@ export const Profile = () => {
                                 <Search/>
                             </div >
                             <div className={st.table}>
-                              {/*  <Cards/>*/}
-                                <SearchTablePacks/>
+                                <Cards/>
+                             {/*   <SearchTablePacks/>*/}
                             </div>
 
                             <div className={st.pagination}><SearchPaginator/></div>
