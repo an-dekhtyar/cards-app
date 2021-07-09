@@ -6,6 +6,7 @@ import {cardPacksType, userType} from "../../n2-features/h1-auth/a3-profile/Card
 
 
 const initialState = {
+    user_id: undefined as string | undefined,
     packName: '',
     cardPacksTotalCount: 0,
     curMin: 0,
@@ -37,7 +38,7 @@ export const searchReducer = (state = initialState, action: SearchActionsType): 
 
 //action creators
 
-export const setCardPacks = (data: cardPacksType) => ({
+export const setCardPacks = (data: CardPacksType) => ({
     type: 'cards-app/search/SET-CARD-PACKS',
     payload: {
         ...data
@@ -58,13 +59,15 @@ export const changeSearchParams = (params: ParamsDomainType) => ({
 export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType): ThunkAction<void, AppStoreType, unknown, SearchActionsType> => {
 
     return (dispatch, getState) => {
+        debugger;
         const {
             packName,
             curMax,
             curMin,
             sortPacks,
             page,
-            pageCount
+            pageCount,
+            user_id
         } = getState().search;
 
         const paramsData: SearchParamsType = searchParams ?
@@ -74,7 +77,8 @@ export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType):
                 max: curMax,
                 sortPacks,
                 page,
-                pageCount
+                pageCount,
+                user_id
             }
 
         ApiCardsPack.GETCardsPack(paramsData)
@@ -83,10 +87,10 @@ export const GETCardsPackTC = (first: boolean, searchParams?: SearchParamsType):
                 if (curState.packName === packName
                     && curMax === curState.curMax
                     && curMin === curState.curMin
-                    && sortPacks === curState.sortPacks){
-                    dispatch(setCardPacks(res.data))
+                    && sortPacks === curState.sortPacks) {
+                    dispatch(setCardPacks(res.data));
                 }
-                if(first){
+                if (first) {
                     dispatch(changeSearchParams({curMax: res.data.maxCardsCount, curMin: res.data.minCardsCount}))
                 }
             })
@@ -112,4 +116,12 @@ type ParamsDomainType = {
     page?: number
     pageCount?: number
     user_id?: string
+}
+export type CardPacksType = {
+    cardPacks: Array<userType>
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
 }

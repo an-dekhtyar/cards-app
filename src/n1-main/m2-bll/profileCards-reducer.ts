@@ -2,19 +2,19 @@ import {Dispatch} from "redux";
 import {ApiCardsPack} from "../../API/ApiCardsPack";
 import {ApiCardsCard} from "../../API/ApiCardsCard";
 
-export type DataCardType={
-    cards:CardUserType,
+export type DataCardType = {
+    cards: CardUserType,
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
-    packUserId:string
+    packUserId: string
     page: number
     pageCount: number
     token: string
     tokenDeathTime: number
 }
 
-export type CardUserType={
+export type CardUserType = {
     answer: string
     answerImg: string
     answerVideo: string
@@ -44,14 +44,14 @@ export type InitialCardProfileReducerType = typeof initialState
 export const CardProfileReducer = (state = initialState, action: allActionTypes): InitialCardProfileReducerType => {
     console.log(action)
     switch (action.type) {
-        case "GetCardsCard": {
+        case 'GetCardsCard': {
             let newState = {...state, cards: action.data?.cards ? action.data?.cards : []};
             return newState
         }
-        case "SetCurrentPackId": {
+        case 'SetCurrentPackId': {
             return {...state, currentCardsPackId: action.data};
         }
-        case "AddNewCard": {
+        case 'AddNewCard': {
             console.log(state)
             return {
                 ...state,
@@ -127,7 +127,7 @@ export let DeleteCardsCardThunk = (id: string, setPreloader: (value: boolean) =>
         })
 }
 
-export const UpdateCardsCardThunk= (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
+export const UpdateCardsCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
     setPreloader(true)
     ApiCardsCard.UpdateCradsCard(id)
         .then((res) => {

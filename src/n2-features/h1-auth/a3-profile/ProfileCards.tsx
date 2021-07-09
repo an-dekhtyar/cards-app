@@ -1,8 +1,9 @@
-import React, {useMemo, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppStoreType} from "../../../n1-main/m2-bll/store";
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {
-    AddNewCardThunk, CreateCardsPackIdThunk,
+    AddNewCardThunk,
+    CreateCardsPackIdThunk,
     DeleteCardsCardThunk,
     InitialCardProfileReducerType,
     UpdateCardsCardThunk
@@ -13,6 +14,7 @@ import {log} from "util";
 import {Redirect} from "react-router-dom";
 import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
 import {GETCardsPackThunk} from "../../../n1-main/m2-bll/cardsPack-reducer";
+import {GETCardsPackTC} from "../../../n1-main/m2-bll/search-reducer";
 
 
 
@@ -21,8 +23,8 @@ import {GETCardsPackThunk} from "../../../n1-main/m2-bll/cardsPack-reducer";
 * [CARD, CARD] ===> CARDS_PACK_ID
 * */
 
-export let ProfileCards=({})=>{
-    let dispatch=useDispatch()
+export let ProfileCards = ({}) => {
+    let dispatch = useDispatch()
     let CardDataForTable = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
     const authUserId = useSelector<AppStoreType, string | null>(state => state.profile._id)
     const cardsPackId = useSelector<AppStoreType, string | null>(state => state.cardProfile.currentCardsPackId)
@@ -38,38 +40,38 @@ export let ProfileCards=({})=>{
     //     CardDataForTable.cards[0]?.user_id && CardDataForTable.cards[0]?.user_id === authUserId,
     //     [CardDataForTable.cards, authUserId])
 
-    let AddNewCard=()=>{
+    let AddNewCard = () => {
         console.log('AddNewCard')
         // if (!cardsPack_id) return;
         // dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
         if (cardsPackId) {
             dispatch(AddNewCardThunk(cardsPackId, setPreloader))
             // console.log()
-        }else{
+        } else {
             //@ts-ignore
             dispatch(CreateCardsPackIdThunk(Id))
-            dispatch(GETCardsPackThunk(setPreloader))
+            dispatch(GETCardsPackTC(false))
             // return <Redirect to={PATH.PROFILE}/>
         }
     }
 
-    let DeleteCardsCard=(id:string)=>{
-        dispatch(DeleteCardsCardThunk(id,setPreloader))
+    let DeleteCardsCard = (id: string) => {
+        dispatch(DeleteCardsCardThunk(id, setPreloader))
     }
 
-    const UpdateCard=(id:string)=>{
-        dispatch(UpdateCardsCardThunk(id,setPreloader))
+    const UpdateCard = (id: string) => {
+        dispatch(UpdateCardsCardThunk(id, setPreloader))
 
     }
 
-    return(
-        <div >
+    return (
+        <div>
             <h1 className={st.h1}>ProfileCards</h1>
             <p></p>
-            <Button children={'AddNewCard'} onClick={() => AddNewCard()} style={{color: isYours ? 'red': 'green'}}/>
+            <Button children={'AddNewCard'} onClick={() => AddNewCard()} style={{color: isYours ? 'red' : 'green'}}/>
             {/*<Button children={'AddNewCard'} disabled={!isYours} onClick={() => AddNewCard()} style={{color: isYours ? '': 'red'}}/>*/}
-            <div >{
-                CardDataForTable.cards!==[]?
+            <div>{
+                CardDataForTable.cards !== [] ?
                     CardDataForTable.cards.map((m) => {
                         return (
                             <div className={st.profile}>

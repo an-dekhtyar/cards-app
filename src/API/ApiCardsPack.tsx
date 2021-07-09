@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { cardPacksType } from '../n2-features/h1-auth/a3-profile/Cards';
-
+import {CardPacksType} from '../n1-main/m2-bll/search-reducer';
 
 
 let instance = axios.create({
@@ -11,7 +10,7 @@ let instance = axios.create({
 export const ApiCardsPack = {
 
     GETCardsPack: (searchParams: SearchParamsType = {}) => {
-        return instance.get<cardPacksType>('cards/pack', {
+        return instance.get<CardPacksType>('cards/pack', {
             params: {
                 ...searchParams
             }
