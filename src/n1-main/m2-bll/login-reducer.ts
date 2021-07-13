@@ -37,51 +37,39 @@ export const setIsAuth = (isAuth: boolean) => ({
 
 export const loginTC = (data: LoginDataType): ThunkAction<void, AppStoreType, unknown, LoginActionsType> => {
     return async (dispatch) => {
-        dispatch(setIsFetching(false));
+        dispatch(setIsFetching(true));
         try {
             const response = await ApiCards.login(data);
-            console.log("response", response)
+            console.log('response', response)
             let {_id, email, name, avatar, publicCardPacksCount} = response.data
             dispatch(setUserData({_id, email, name, avatar, publicCardPacksCount}));
-            dispatch(setIsInitialized(true))
             dispatch(setIsAuth(true));
         } catch (e) {
             const error = e.response ? e.response.data.error : (e.message + ', more details in console');
             dispatch(setError(error));
         }
-        dispatch(setIsFetching(true))
-        dispatch(setIsInitialized(true));
+        dispatch(setIsFetching(false))
     }
 }
-export const authTC = () => (dispatch:Dispatch) => {
-    dispatch(setIsFetching(false))
-    ApiCards.auth()
-        .then(response => {
-            let {_id, email, name, avatar, publicCardPacksCount} = response.data
-            dispatch(setUserData({_id, email, name, avatar, publicCardPacksCount}))
-            dispatch(setIsAuth(true))
-            dispatch(setIsInitialized(true));
-        })
-        .catch(err => {
-            const error = err.response ? err.response.data.error : (err.message + ', more details in console')
-            dispatch(setError(error))
-            dispatch(setIsInitialized(true))
-            dispatch(setIsFetching(false));
-        })
+
+export const logOutTC = () => (dispatch: Dispatch) => {
     dispatch(setIsFetching(true))
-}
-export const logOutTC = () => (dispatch:Dispatch) => {
     ApiCards.logout()
         .then(res => {
-            let email = null
-            let _id = null
-            let name = ''
-            let avatar = ''
-            let publicCardPacksCount = null
-            dispatch(setIsAuth(false))
-            dispatch(setUserData({email, _id, name, avatar, publicCardPacksCount}))}
+                let email = null
+                let _id = null
+                let name = ''
+                let avatar = ''
+                let publicCardPacksCount = null
+                dispatch(setIsAuth(false))
+                dispatch(setUserData({email, _id, name, avatar, publicCardPacksCount}))
+            }
         )
         .catch(err => console.log(err))
+        .finally(() => {
+            debugger;
+            dispatch(setIsFetching(false));
+        })
 }
 
 //types

@@ -50,7 +50,7 @@ export const Profile = () => {
         <div className={st.profilePage}>
             <div className={st.profileContain}>
 
-                {isFetching
+                {!isFetching
                     ?
                     <>
                         <div className={st.leftBlock}>

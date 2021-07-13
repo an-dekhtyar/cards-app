@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import {Search} from './Search';
 import {useDispatch} from 'react-redux';
-import {SearchTablePacks} from './SearchTablePacks';
 import {SearchPaginator} from './SearchPaginator';
 import {SearchDoubleRange} from './SearchDoubleRange';
-import { Packs } from '../../h1-auth/a3-profile/Packs';
+import {Packs} from '../../h1-auth/a3-profile/Packs';
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
 
 
