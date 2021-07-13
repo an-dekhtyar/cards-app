@@ -5,9 +5,9 @@ import {profileReducer} from "./profile-reducer";
 import thunk from "redux-thunk";
 import {restorePassReducer} from "./restore-pass-reducer";
 import { appReducer } from "./app-reducer";
-import {CardProfileReducer} from "./profileCards-reducer";
+import {cardsReducer} from "./cards-reducer";
 import {searchReducer} from './search-reducer';
-import {cardsPackReducer} from "./cardsPack-reducer";
+import {packsReducer} from "./packs-reducer";
 
 
 const reducers = combineReducers({
@@ -15,10 +15,10 @@ const reducers = combineReducers({
     registration:registrationReducer,
     login:loginReducer,
     profile:profileReducer,
-    cardProfile:CardProfileReducer,
+    cards:cardsReducer,
     restorePass:restorePassReducer,
     search: searchReducer,
-    cardsPack:cardsPackReducer,
+    packs:packsReducer,
 })
 
 

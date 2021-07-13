@@ -2,7 +2,7 @@ import React, {useState,KeyboardEvent} from 'react';
 import styles from './UpdateProfileModal.module.css'
 import {Button} from "../../n1-main/m1-ui/Common/Button/Button";
 import {useDispatch} from "react-redux";
-import { AddNewCardsPackThunk } from '../../n1-main/m2-bll/cardsPack-reducer';
+import { AddNewPackThunk } from '../../n1-main/m2-bll/packs-reducer';
 import {Input} from "../../n1-main/m1-ui/Common/Input/Input";
 
 type propsType = {
@@ -18,7 +18,7 @@ export let AddNewCardProfileModal = (props: propsType) => {
         props.setAddNewCardModal(false)
     }
     let showYesFoo = () => {
-        dispatch(AddNewCardsPackThunk(name,props.setPreloader))
+        dispatch(AddNewPackThunk(name,props.setPreloader))
         props.setAddNewCardModal(false)
     }
     let onKeyPressHandler=(event:KeyboardEvent<HTMLInputElement>)=>{

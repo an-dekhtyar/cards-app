@@ -7,19 +7,16 @@ import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {changeUserDataTC, UserDataType} from '../../../n1-main/m2-bll/profile-reducer';
 import st from './Profile.module.css'
-import { Input } from '../../../n1-main/m1-ui/Common/Input/Input';
 import profileLogo from '../../../assets/images/profileLogo.png'
-import { Cards } from './Cards';
+import {Packs} from './Packs';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {EditableSpan} from './Editablespan';
 import {Search} from '../../h2-cards/a1-search/Search';
-import {SearchTablePacks} from '../../h2-cards/a1-search/SearchTablePacks';
 import {SearchPaginator} from '../../h2-cards/a1-search/SearchPaginator';
 import {changeSearchParams, GETCardsPackTC} from '../../../n1-main/m2-bll/search-reducer';
 import {SearchDoubleRange} from '../../h2-cards/a1-search/SearchDoubleRange';
 
 export const Profile = () => {
-
     const dispatch = useDispatch()
     const userData = useSelector<AppStoreType, UserDataType>(state => state.profile)
     const isAuth = useSelector<AppStoreType, boolean>(state => state.login.isAuth)
@@ -72,7 +69,6 @@ export const Profile = () => {
                             </div>
                             <div className={st.range}><SearchDoubleRange/></div>
                             <div className={st.button}>
-
                                 <Button onClick={logout}>Log out</Button>
                             </div>
                         </div>
@@ -83,7 +79,7 @@ export const Profile = () => {
                                 <Search/>
                             </div >
                             <div className={st.table}>
-                                <Cards/>
+                                <Packs/>
                              {/*   <SearchTablePacks/>*/}
                             </div>
 

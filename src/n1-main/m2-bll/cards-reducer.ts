@@ -1,10 +1,9 @@
 import {Dispatch} from "redux";
 import {ApiCardsPack} from "../../API/ApiCardsPack";
 import {ApiCardsCard} from "../../API/ApiCardsCard";
-import {userType} from "../../n2-features/h1-auth/a3-profile/ProfileCards";
 
 export type DataCardType = {
-    cards: CardUserType,
+    cards: CardType,
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
@@ -15,7 +14,7 @@ export type DataCardType = {
     tokenDeathTime: number
 }
 
-export type CardUserType = {
+export type CardType = {
     answer: string
     answerImg: string
     answerVideo: string
@@ -37,12 +36,12 @@ export type CardUserType = {
 }
 
 let initialState = {
-    cards: [] as Array<userType>,
+    cards: [] as Array<CardType>,
     currentCardsPackId: ''
 }
 
 export type InitialCardProfileReducerType = typeof initialState
-export const CardProfileReducer = (state = initialState, action: allActionTypes): InitialCardProfileReducerType => {
+export const cardsReducer = (state = initialState, action: allActionTypes): InitialCardProfileReducerType => {
     console.log(action)
     switch (action.type) {
         case 'GetCardsCard': {
@@ -67,10 +66,10 @@ export const CardProfileReducer = (state = initialState, action: allActionTypes)
     }
 };
 
-type allActionTypes = GetCardsCardACType | AddNewCardACType | SetCurrentPackIdType|UpdateCardsPackType;
+type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType|UpdateCardType;
 
-type GetCardsCardACType = ReturnType<typeof GetCardsCardAC>
-export const GetCardsCardAC = (data: any) => {
+type GetCardsACType = ReturnType<typeof GetCardsAC>
+export const GetCardsAC = (data: any) => {
     return {
         type: 'GetCardsCard',
         data
@@ -84,13 +83,13 @@ export const setCurrentPackId = (data: string) => {
     } as const
 }
 
-export const GetCardsCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
+export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
     dispatch(setCurrentPackId(id))
     setPreloader(true)
-    ApiCardsCard.getCardsCard(id)
+    ApiCardsCard.getCards(id)
         .then((res) => {
             console.log(res.data)
-            dispatch(GetCardsCardAC(res.data))
+            dispatch(GetCardsAC(res.data))
         })
 }
 
@@ -103,7 +102,7 @@ export const AddNewCardAC = (data: any) => {
 }
 export const AddNewCardThunk = (CardsPackId: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
     setPreloader(true)
-    ApiCardsCard.AddCardsCard(CardsPackId)
+    ApiCardsCard.AddCard(CardsPackId)
         .then((res) => {
             console.log(res.data)
             dispatch(AddNewCardAC(res.data.newCard))
@@ -111,8 +110,8 @@ export const AddNewCardThunk = (CardsPackId: string, setPreloader: (value: boole
         .catch(e => console.log(e))
 }
 
-export let CreateCardsPackIdThunk = (CardsPackId: string) => (dispatch: Dispatch) => {
-    ApiCardsCard.AddCardsCard(CardsPackId)
+export let CreatePackIdThunk = (CardsPackId: string) => (dispatch: Dispatch) => {
+    ApiCardsCard.AddCard(CardsPackId)
         .then((res) => {
             console.log(res.data)
             // dispatch(AddNewCardAC(res.data.newCard))
@@ -120,26 +119,26 @@ export let CreateCardsPackIdThunk = (CardsPackId: string) => (dispatch: Dispatch
         .catch(e => console.log(e))
 }
 
-export let DeleteCardsCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
+export let DeleteCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
     setPreloader(true)
-    ApiCardsCard.DeleteCardsCard(id)
+    ApiCardsCard.DeleteCard(id)
         .then((res) => {
             const {cardsPack_id} = res.data.deletedCard
-            dispatch(GetCardsCardThunk(cardsPack_id, setPreloader))
+            dispatch(GetCardsThunk(cardsPack_id, setPreloader))
             setPreloader(false)
         })
 }
 
-type UpdateCardsPackType = ReturnType<typeof UpdateCardsPackAC>
+type UpdateCardType = ReturnType<typeof UpdateCardsPackAC>
 export const UpdateCardsPackAC = (id: string) => {
     return {
         type: 'UpdateCardsPack',
         id: id
     } as const
 }
-export const UpdateCardsCardThunk = (id: string,setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
+export const UpdateCardThunk = (id: string, setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
     setPreloader(true)
-    ApiCardsPack.UpdateCardsPack(id)
+    ApiCardsPack.UpdatePack(id)
         .then((res) => {
             // dispatch(DeleteCardsPackAC(id))
             console.log(res.data)

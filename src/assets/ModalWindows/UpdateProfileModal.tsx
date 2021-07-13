@@ -2,7 +2,7 @@ import React, {useMemo, useState} from 'react';
 import styles from './UpdateProfileModal.module.css'
 import {Button} from "../../n1-main/m1-ui/Common/Button/Button";
 import {useDispatch} from "react-redux";
-import { UpdateCardsPackThunk } from '../../n1-main/m2-bll/cardsPack-reducer';
+import { UpdatePackThunk } from '../../n1-main/m2-bll/packs-reducer';
 
 type propsType={
     setShowUpdateProfileModal:(value:boolean)=>void;
@@ -16,7 +16,7 @@ export let UpdateProfileModal = (props:propsType) => {
         props.setShowUpdateProfileModal(false)
     }
     let showYesFoo=()=>{
-        dispatch(UpdateCardsPackThunk(props.idForModal, props.setPreloader))
+        dispatch(UpdatePackThunk(props.idForModal, props.setPreloader))
         props.setShowUpdateProfileModal(false)
     }
     return (

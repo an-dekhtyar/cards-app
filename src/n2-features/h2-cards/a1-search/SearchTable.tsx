@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux';
 import {SearchTablePacks} from './SearchTablePacks';
 import {SearchPaginator} from './SearchPaginator';
 import {SearchDoubleRange} from './SearchDoubleRange';
-import { Cards } from '../../h1-auth/a3-profile/Cards';
+import { Packs } from '../../h1-auth/a3-profile/Packs';
 
 
 export const SearchTable = () => {
@@ -24,7 +24,7 @@ export const SearchTable = () => {
             <Search/>
             <SearchDoubleRange/>
             <SearchTablePacks/>
-            <Cards/>
+            <Packs/>
             <SearchPaginator/>
         </div>
     )

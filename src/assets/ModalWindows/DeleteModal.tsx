@@ -2,7 +2,7 @@ import React, {useMemo, useState} from 'react';
 import styles from './DeleteModal.module.css'
 import {Button} from "../../n1-main/m1-ui/Common/Button/Button";
 import {useDispatch} from "react-redux";
-import {DeleteCardsPackThunk} from "../../n1-main/m2-bll/cardsPack-reducer";
+import {DeletePackThunk} from "../../n1-main/m2-bll/packs-reducer";
 
 type propsType={
     setShowDeleteModal:(value:boolean)=>void;
@@ -16,7 +16,7 @@ export let DeleteModal = (props:propsType) => {
         props.setShowDeleteModal(false)
     }
     let showYesFoo=()=>{
-        dispatch(DeleteCardsPackThunk(props.idForModal, props.setPreloader))
+        dispatch(DeletePackThunk(props.idForModal, props.setPreloader))
         props.setShowDeleteModal(false)
     }
     return (
