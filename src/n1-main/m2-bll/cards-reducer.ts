@@ -1,18 +1,7 @@
-import {Dispatch} from "redux";
-import {ApiCardsPack} from "../../API/ApiCardsPack";
-import {ApiCardsCard} from "../../API/ApiCardsCard";
-
-export type DataCardType = {
-    cards: CardType,
-    cardsTotalCount: number
-    maxGrade: number
-    minGrade: number
-    packUserId: string
-    page: number
-    pageCount: number
-    token: string
-    tokenDeathTime: number
-}
+import {Dispatch} from 'redux';
+import {ApiCardsCard} from '../../API/ApiCardsCard';
+import {ThunkAction} from 'redux-thunk';
+import {AppStoreType} from './store';
 
 export type CardType = {
     answer: string
@@ -45,8 +34,7 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
     console.log(action)
     switch (action.type) {
         case 'GetCardsCard': {
-            let newState = {...state, cards: action.data?.cards ? action.data?.cards : []};
-            return newState
+            return {...state, cards: action.data?.cards ? action.data?.cards : []};
         }
         case 'SetCurrentPackId': {
             return {...state, currentCardsPackId: action.data};
@@ -58,7 +46,7 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
                 cards: [action.data, ...state.cards]
             };
         }
-        case "UpdateCardsPack":{
+        case 'UpdateCardsPack': {
             return state
         }
         default:
@@ -66,7 +54,7 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
     }
 };
 
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType|UpdateCardType;
+type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType;
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
 export const GetCardsAC = (data: any) => {
@@ -100,24 +88,26 @@ export const AddNewCardAC = (data: any) => {
         data
     } as const
 }
-export const AddNewCardThunk = (CardsPackId: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
-    setPreloader(true)
-    ApiCardsCard.AddCard(CardsPackId)
-        .then((res) => {
-            console.log(res.data)
-            dispatch(AddNewCardAC(res.data.newCard))
-        })
-        .catch(e => console.log(e))
-}
+export const AddNewCardThunk = (name: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+    (dispatch, getState) => {
+        setPreloader(true);
+        const packId = getState().cards.currentCardsPackId;
+        ApiCardsCard.AddCard(packId, name)
+            .then((res) => {
+                console.log(res.data)
+                dispatch(AddNewCardAC(res.data.newCard))
+            })
+            .catch(e => console.log(e))
+    }
 
-export let CreatePackIdThunk = (CardsPackId: string) => (dispatch: Dispatch) => {
+/*export let CreatePackIdThunk = (CardsPackId: string) => (dispatch: Dispatch) => {
     ApiCardsCard.AddCard(CardsPackId)
         .then((res) => {
             console.log(res.data)
             // dispatch(AddNewCardAC(res.data.newCard))
         })
         .catch(e => console.log(e))
-}
+}*/
 
 export let DeleteCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
     setPreloader(true)
@@ -136,14 +126,13 @@ export const UpdateCardsPackAC = (id: string) => {
         id: id
     } as const
 }
-export const UpdateCardThunk = (id: string, setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
-    setPreloader(true)
-    ApiCardsPack.UpdatePack(id)
-        .then((res) => {
-            // dispatch(DeleteCardsPackAC(id))
-            console.log(res.data)
-            // @ts-ignore
-            dispatch(GETCardsPackThunk(setPreloader))
-            setPreloader(false)
-        })
-}
+export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+    (dispatch) => {
+        setPreloader(true)
+        ApiCardsCard.UpdateCard(id)
+            .then((res) => {
+                const {cardsPack_id} = res.data.updatedCard;
+                dispatch(GetCardsThunk(cardsPack_id, setPreloader))
+                setPreloader(false)
+            })
+    }

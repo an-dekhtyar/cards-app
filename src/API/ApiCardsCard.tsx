@@ -9,8 +9,8 @@ export let ApiCardsCard = {
     getCards: (id: string) => {
         return instance.get(`cards/card?cardsPack_id=${id}`)
     },
-    AddCard: (CardsPackId: string) => {
-        return instance.post(`cards/card?cardsPack_id=${CardsPackId}`, {card: {cardsPack_id: CardsPackId}})
+    AddCard: (CardsPackId: string, name: string) => {
+        return instance.post(`cards/card`, {card: {cardsPack_id: CardsPackId}})
     },
     DeleteCard: (id: string) => {
         return instance.delete(`cards/card?id=${id}`)

@@ -13,8 +13,8 @@ import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {EditableSpan} from './Editablespan';
 import {Search} from '../../h2-cards/a1-search/Search';
 import {SearchPaginator} from '../../h2-cards/a1-search/SearchPaginator';
-import {changeSearchParams, GETCardsPackTC} from '../../../n1-main/m2-bll/search-reducer';
 import {SearchDoubleRange} from '../../h2-cards/a1-search/SearchDoubleRange';
+import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
 
 export const Profile = () => {
     const dispatch = useDispatch()
@@ -24,7 +24,7 @@ export const Profile = () => {
     const user_id = useSelector<AppStoreType, string | null>(state => state.profile._id)
     useEffect(() => {
         dispatch(changeSearchParams({user_id: user_id?user_id:undefined}))
-        dispatch(GETCardsPackTC(true, {user_id: user_id?user_id:undefined}))
+        dispatch(GetPacksTC(true, {user_id: user_id?user_id:undefined}))
     }, [])
 
     const {_id, name, avatar, email, publicCardPacksCount} = userData

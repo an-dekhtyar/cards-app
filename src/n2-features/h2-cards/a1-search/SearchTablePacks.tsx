@@ -8,7 +8,7 @@ import {PackType} from '../../../API/ApiCardsPack';
 export const SearchTablePacks = () => {
     //state
     const dispatch = useDispatch();
-    const cardPacks = useSelector<AppStoreType, Array<PackType>>(state => state.search.cardPacks);
+    const cardPacks = useSelector<AppStoreType, Array<PackType>>(state => state.packs.cardPacks);
 
     const mappedCardPacks = cardPacks.map(pack => {
         return (

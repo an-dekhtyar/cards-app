@@ -1,21 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import st from './Profile.module.css'
 import {useDispatch, useSelector} from 'react-redux';
-import {
-    CardType,
-    CreatePackIdThunk,
-    GetCardsThunk,
-    InitialCardProfileReducerType
-} from '../../../n1-main/m2-bll/cards-reducer';
+import {CardType} from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {NavLink} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
-import {DeleteModal} from '../../../assets/ModalWindows/DeleteModal';
-import {UpdateProfileModal} from '../../../assets/ModalWindows/UpdateProfileModal';
 import {AddNewCardProfileModal} from '../../../assets/ModalWindows/AddNewCardProfileModal';
-import {GETPacksThunk} from '../../../n1-main/m2-bll/packs-reducer';
+import {DeleteCardModal} from '../../../assets/ModalWindows/DeleteCardModal';
+import {UpdateCardModal} from '../../../assets/ModalWindows/UpdateCardModal';
 
 export const Cards = () => {
     let dispatch = useDispatch()
@@ -30,12 +24,12 @@ export const Cards = () => {
     let [AddNewCardModal, setAddNewCardModal] = useState(false)
 
 
-    useEffect(() => {
-        console.log('useEffect')
-        if (UserId) {
-            dispatch(GetCardsThunk(UserId, setPreloader))
-        }
-    }, [])
+    /* useEffect(() => {
+         console.log('useEffect')
+         if (UserId) {
+             dispatch(GetCardsThunk(UserId, setPreloader))
+         }
+     }, [])*/
 
     const AddNewCard = () => {
         setAddNewCardModal(true)
@@ -55,13 +49,13 @@ export const Cards = () => {
 
     return (
         <div className={st.profilePage}>
-            <h1>PROFILE PAGE</h1>
             <Button children={'add new card'} onClick={AddNewCard}/>
             {showDeleteModal &&
-            <DeleteModal setShowDeleteModal={setShowDeleteModal} idForModal={idForModal} setPreloader={setPreloader}/>}
+            <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={idForModal}
+                             setPreloader={setPreloader}/>}
             {showUpdateProfileModal &&
-            <UpdateProfileModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}
-                                setPreloader={setPreloader}/>}
+            <UpdateCardModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}
+                             setPreloader={setPreloader}/>}
             {AddNewCardModal &&
             <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} setPreloader={setPreloader}/>}
             <div className={st.profile}>{

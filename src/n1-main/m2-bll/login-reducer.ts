@@ -1,9 +1,9 @@
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
-import {ApiCards, LoginResponseType} from '../../API/ApiCards';
-import { Dispatch } from 'redux';
-import {setUserData} from "./profile-reducer";
-import {setError, setIsFetching, setIsInitialized} from "./app-reducer";
+import {ApiCards} from '../../API/ApiCards';
+import {Dispatch} from 'redux';
+import {setUserData} from './profile-reducer';
+import {setError, setIsFetching, setIsInitialized} from './app-reducer';
 
 const initialState = {
     isAuth: false,

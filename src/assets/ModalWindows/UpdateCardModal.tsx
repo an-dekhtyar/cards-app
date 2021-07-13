@@ -10,19 +10,20 @@ type propsType={
     setPreloader:(value:boolean)=>void;
 }
 
-export let UpdateCardsPackModal = (props:propsType) => {
+export let UpdateCardModal = (props:propsType) => {
     let dispatch=useDispatch()
     let showNoFoo=()=>{
         props.setShowUpdateProfileModal(false)
     }
     let showYesFoo=()=>{
+        debugger;
         dispatch(UpdateCardThunk(props.idForModal, props.setPreloader))
         props.setShowUpdateProfileModal(false)
     }
     return (
        <div className={styles.general}>
                 <div className={styles.window}>
-                    <h1>Do you want to updateCards?</h1>
+                    <h1>Do you want to update card?</h1>
                     <Button children={'No'} onClick={showNoFoo}/>
                     <Button children={'Yes'} onClick={showYesFoo} />
                 </div>
