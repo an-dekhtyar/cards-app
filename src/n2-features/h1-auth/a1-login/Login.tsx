@@ -10,7 +10,6 @@ import {loginTC} from '../../../n1-main/m2-bll/login-reducer';
 import {setError} from "../../../n1-main/m2-bll/app-reducer";
 
 export const Login: React.FC = () => {
-
     //state
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState<string>('');
