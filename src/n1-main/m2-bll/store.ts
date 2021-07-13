@@ -18,7 +18,7 @@ const reducers = combineReducers({
     cardProfile:CardProfileReducer,
     restorePass:restorePassReducer,
     search: searchReducer,
-    cardsPack:cardsPackReducer
+    cardsPack:cardsPackReducer,
 })
 
 

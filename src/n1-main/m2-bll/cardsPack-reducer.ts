@@ -52,13 +52,11 @@ export const GETCardsPackAC = (data: any) => {
                 data
         } as const
 }
-export const GETCardsPackThunk = (setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
-        setPreloader(true)
-        ApiCardsPack.GETCardsPack()
+export const GETCardsPackThunk = (user_id:string) => (dispatch: Dispatch) => {
+        ApiCardsPack.GETCardsPack({user_id})
             .then((res) => {
                     dispatch(GETCardsPackAC(res.data))
             })
-        setPreloader(false)
 }
 
 type AddNewCardsPackType = ReturnType<typeof AddNewCardsPackAC>
@@ -68,9 +66,9 @@ export const AddNewCardsPackAC = (data: any) => {
                 data: data
         } as const
 }
-export const AddNewCardsPackThunk = (setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
+export const AddNewCardsPackThunk = (name:string,setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
         setPreloader(true)
-        ApiCardsPack.AddNewCardsPack()
+        ApiCardsPack.AddNewCardsPack(name)
             .then((res) => {
                     // dispatch(AddNewCardsPackAC(res.data.newCardsPack))
                     // dispatch(GETCardsPackAC(res.data))

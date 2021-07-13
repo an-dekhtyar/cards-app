@@ -16,8 +16,8 @@ export const ApiCardsPack = {
             }
         })
     },
-    AddNewCardsPack: () => {
-        return instance.post('cards/pack', {cardsPack: {}})
+    AddNewCardsPack: (name:string) => {
+        return instance.post('cards/pack', {cardsPack: {name}})
     },
     DeleteCardsPack: (id: string) => {
         return instance.delete(`cards/pack/?id=${id}`)

@@ -1,9 +1,9 @@
 import React from 'react';
 import {Redirect, Route, Switch } from 'react-router-dom';
 import {Registration, Profile, RestorePass, EnterNewPassContain, Test, Login} from "../../../n2-features";
-import { ProfileCards } from '../../../n2-features/h1-auth/a3-profile/ProfileCards';
 import {Page404} from "../../m4-pages/a4-page404/Page404";
 import {SearchTable} from '../../../n2-features/h2-cards/a1-search/SearchTable';
+import {ProfileCards} from "../../../n2-features/h1-auth/a3-profile/ProfileCards";
 
 
 

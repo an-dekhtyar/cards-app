@@ -17,6 +17,8 @@ import {
 } from '../../../n1-main/m2-bll/profileCards-reducer';
 import {stat} from "fs";
 import {AddNewCardsPackThunk, DeleteCardsPackThunk, GETCardsPackThunk, InitialCardsPackReducerType, UpdateCardsPackThunk} from "../../../n1-main/m2-bll/cardsPack-reducer";
+import {DeleteCardsPackModal} from "../../../assets/ModalWindows/DeleteCardsPackModal";
+import { UpdateCardsPackModal } from '../../../assets/ModalWindows/UpdateCardsPackProfileModal';
 
 
 export type cardPacksType = {
@@ -49,22 +51,43 @@ export type userType = {
 export const Cards = () => {
     let dispatch = useDispatch()
     let dataForTable = useSelector<AppStoreType, InitialCardsPackReducerType>(state => state.cardsPack)
-    let cardsProfile = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
+    let UserId = useSelector<AppStoreType,string|null>(state => state.profile._id)
     let [preloader, setPreloader] = useState(false)
+
+    let [showDeleteModal, setShowDeleteModal] = useState(false)
+    let [idForModal, setIdForModal] = useState('')
+    let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false)
 
     useEffect(() => {
         console.log('useEffect')
-        dispatch(GETCardsPackThunk(setPreloader))
+        if (UserId) {
+            dispatch(GETCardsPackThunk(UserId))
+        }
     }, [])
     const AddNewCard = () => {
-        dispatch(AddNewCardsPackThunk(setPreloader))
+        console.log('AddNewCard')
+        if (UserId) {
+            dispatch(AddNewCardThunk(UserId, setPreloader))
+        }else{
+            //@ts-ignore
+            dispatch(CreateCardsPackIdThunk(UserId))
+            if(UserId) {
+                dispatch(GETCardsPackThunk(UserId))
+            }
+            // return <Redirect to={PATH.PROFILE}/>
+        }
+        // dispatch(AddNewCardsPackThunk(name,setPreloader))
     }
     const DeleteCard = (id: string) => {
         console.log(id)
-        dispatch(DeleteCardsPackThunk(id, setPreloader))
+        setShowDeleteModal(true)
+        setIdForModal(id)
+        // dispatch(DeleteCardsPackThunk(id, setPreloader))
     }
     const UpdateCard = (id: string) => {
         console.log(id)
+        setShowUpdateProfileModal(true)
+        setIdForModal(id)
         dispatch(UpdateCardsPackThunk(id, setPreloader))
     }
 
@@ -78,6 +101,8 @@ export const Cards = () => {
 
     return (
         <div className={st.profilePage}>
+            {showDeleteModal &&<DeleteCardsPackModal idForModal={idForModal} setShowDeleteModal={setShowDeleteModal} setPreloader={setPreloader}/>}
+            {showUpdateProfileModal &&<UpdateCardsPackModal idForModal={idForModal} setShowUpdateProfileModal={setShowUpdateProfileModal} setPreloader={setPreloader}/>}
 
             <Button children={'add new card'} onClick={AddNewCard}/>
             <div className={st.profile}>{

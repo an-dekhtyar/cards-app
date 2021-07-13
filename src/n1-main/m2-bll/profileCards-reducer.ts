@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {ApiCardsPack} from "../../API/ApiCardsPack";
 import {ApiCardsCard} from "../../API/ApiCardsCard";
+import {userType} from "../../n2-features/h1-auth/a3-profile/ProfileCards";
 
 export type DataCardType = {
     cards: CardUserType,
@@ -36,7 +37,7 @@ export type CardUserType = {
 }
 
 let initialState = {
-    cards: [] as Array<CardUserType>,
+    cards: [] as Array<userType>,
     currentCardsPackId: ''
 }
 
@@ -58,13 +59,15 @@ export const CardProfileReducer = (state = initialState, action: allActionTypes)
                 cards: [action.data, ...state.cards]
             };
         }
-
+        case "UpdateCardsPack":{
+            return state
+        }
         default:
             return state;
     }
 };
 
-type allActionTypes = GetCardsCardACType | AddNewCardACType | SetCurrentPackIdType;
+type allActionTypes = GetCardsCardACType | AddNewCardACType | SetCurrentPackIdType|UpdateCardsPackType;
 
 type GetCardsCardACType = ReturnType<typeof GetCardsCardAC>
 export const GetCardsCardAC = (data: any) => {
@@ -127,13 +130,21 @@ export let DeleteCardsCardThunk = (id: string, setPreloader: (value: boolean) =>
         })
 }
 
-export const UpdateCardsCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
+type UpdateCardsPackType = ReturnType<typeof UpdateCardsPackAC>
+export const UpdateCardsPackAC = (id: string) => {
+    return {
+        type: 'UpdateCardsPack',
+        id: id
+    } as const
+}
+export const UpdateCardsCardThunk = (id: string,setPreloader:(value:boolean)=>void) => (dispatch: Dispatch) => {
     setPreloader(true)
-    ApiCardsCard.UpdateCradsCard(id)
+    ApiCardsPack.UpdateCardsPack(id)
         .then((res) => {
+            // dispatch(DeleteCardsPackAC(id))
             console.log(res.data)
-            const {cardsPack_id} = res.data.updatedCard
-            dispatch(GetCardsCardThunk(cardsPack_id, setPreloader))
+            // @ts-ignore
+            dispatch(GETCardsPackThunk(setPreloader))
             setPreloader(false)
         })
 }
