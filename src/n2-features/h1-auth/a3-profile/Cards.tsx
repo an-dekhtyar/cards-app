@@ -35,13 +35,11 @@ export const Cards = () => {
         setAddNewCardModal(true)
     }
     const DeleteCard = (id: string) => {
-        console.log(id)
         setShowDeleteModal(true)
         setIdForModal(id)
         // dispatch(DeleteCardsPackThunk(id, setPreloader))
     }
     const UpdateCard = (id: string) => {
-        console.log(id)
         setShowUpdateProfileModal(true)
         setIdForModal(id)
         // dispatch(UpdateCardsPackThunk(id, setPreloader))

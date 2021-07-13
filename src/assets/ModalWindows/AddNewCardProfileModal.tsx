@@ -12,7 +12,6 @@ type propsType = {
 
 export let AddNewCardProfileModal = (props: propsType) => {
     let [name, SetName] = useState('')
-    console.log(name)
     let dispatch = useDispatch()
     let showNoFoo = () => {
         props.setAddNewCardModal(false)

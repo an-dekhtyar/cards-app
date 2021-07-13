@@ -62,7 +62,6 @@ export const Registration = () => {
         //     })
     }, [])
 
-    console.log(statusLoginForm)
 
     return (
         <div className={st.registrationPage}>

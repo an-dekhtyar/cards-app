@@ -40,7 +40,6 @@ export const loginTC = (data: LoginDataType): ThunkAction<void, AppStoreType, un
         dispatch(setIsFetching(true));
         try {
             const response = await ApiCards.login(data);
-            console.log('response', response)
             let {_id, email, name, avatar, publicCardPacksCount} = response.data
             dispatch(setUserData({_id, email, name, avatar, publicCardPacksCount}));
             dispatch(setIsAuth(true));
@@ -67,7 +66,6 @@ export const logOutTC = () => (dispatch: Dispatch) => {
         )
         .catch(err => console.log(err))
         .finally(() => {
-            debugger;
             dispatch(setIsFetching(false));
         })
 }

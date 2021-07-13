@@ -34,6 +34,7 @@ export const Profile = () => {
         dispatch(logOutTC())
     }
 
+
     if (!isAuth) {
         return <Redirect to={PATH.LOGIN}/>
     }

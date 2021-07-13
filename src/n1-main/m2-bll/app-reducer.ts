@@ -58,7 +58,6 @@ export const authTC = () => (dispatch: Dispatch) => {
             dispatch(setError(error))
         })
         .finally(() => {
-            debugger;
             dispatch(setIsInitialized(true))
             dispatch(setIsFetching(false))
         })

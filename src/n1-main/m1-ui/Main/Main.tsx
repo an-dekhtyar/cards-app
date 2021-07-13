@@ -15,7 +15,6 @@ export const Main = () => {
     useEffect(() => {
         if (!isInitialized) dispatch(initializeApp())
     }, [dispatch])
-    debugger;
 
     if (!isInitialized) return <Preloader/>
 

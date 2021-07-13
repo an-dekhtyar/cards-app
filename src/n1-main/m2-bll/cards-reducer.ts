@@ -31,7 +31,6 @@ let initialState = {
 
 export type InitialCardProfileReducerType = typeof initialState
 export const cardsReducer = (state = initialState, action: allActionTypes): InitialCardProfileReducerType => {
-    console.log(action)
     switch (action.type) {
         case 'GetCardsCard': {
             return {...state, cards: action.data?.cards ? action.data?.cards : []};
@@ -40,7 +39,6 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
             return {...state, currentCardsPackId: action.data};
         }
         case 'AddNewCard': {
-            console.log(state)
             return {
                 ...state,
                 cards: [action.data, ...state.cards]
@@ -76,7 +74,6 @@ export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void
     setPreloader(true)
     ApiCardsCard.getCards(id)
         .then((res) => {
-            console.log(res.data)
             dispatch(GetCardsAC(res.data))
         })
 }
@@ -94,7 +91,6 @@ export const AddNewCardThunk = (name: string, setPreloader: (value: boolean) => 
         const packId = getState().cards.currentCardsPackId;
         ApiCardsCard.AddCard(packId, name)
             .then((res) => {
-                console.log(res.data)
                 dispatch(AddNewCardAC(res.data.newCard))
             })
             .catch(e => console.log(e))

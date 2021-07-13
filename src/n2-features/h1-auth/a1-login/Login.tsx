@@ -19,7 +19,6 @@ export const Login: React.FC = () => {
     const error = useSelector<AppStoreType, string | null>(state => state.app.error);
     const isLoading = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
 
-    debugger;
 
     if (isAuth) {
         return <Redirect to={PATH.PROFILE}/>
