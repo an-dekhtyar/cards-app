@@ -8,6 +8,7 @@ import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {loginTC} from '../../../n1-main/m2-bll/login-reducer';
 import {setError} from "../../../n1-main/m2-bll/app-reducer";
+import { Checkbox } from '../../../n1-main/m1-ui/Common/Checkbox/Checkbox';
 
 export const Login: React.FC = () => {
 
@@ -24,22 +25,12 @@ export const Login: React.FC = () => {
         return <Redirect to={PATH.PROFILE}/>
     }
 
-    //functions
-    const onEmailInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.currentTarget.value);
-    }
-    const onPasswordInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.currentTarget.value);
-    }
-    const onRememberMeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setRememberMe(e.currentTarget.checked);
-    }
     const onSubmitClick = () => {
         dispatch(setError(''));
         dispatch(loginTC({email, password, rememberMe}));
     }
 
-
+    console.log("rememberMe: ", rememberMe)
     return (
         <div className={st.loginPage}>
             <div className={st.loginPageContain}>
@@ -53,21 +44,18 @@ export const Login: React.FC = () => {
                         <Input type={'email'}
                                value={email}
                                placeholder={'Email'}
-                               onChange={onEmailInputChange}/>
+                               onChangeText={setEmail}/>
 
                     </div>
                     <div className={st.inputContainer}>
                         <Input type={'password'}
                                value={password}
                                placeholder={'Password'}
-                               onChange={onPasswordInputChange}/>
+                               onChangeText={setPassword}/>
                     </div>
                     <div className={st.remMeFogotContain}>
 
-            <span><input type={'checkbox'}
-                         checked={rememberMe}
-                         onChange={onRememberMeInputChange}/>
-                Remember me</span>
+                        <span><Checkbox  checked={rememberMe} onChangeChecked={setRememberMe}/>Remember me</span>
                         <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
                     </div>
                     <div className={st.buttonContainer}>

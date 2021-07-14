@@ -1,5 +1,5 @@
 .superInput {
-    font-size: 16px;
+    font-size: 20px;
     width: 347px;
     height: 48px;
     outline: none;
@@ -7,7 +7,8 @@
     border-left: 0;
     border-right: 0;
     border-bottom: 1.58px solid #24254A;
-    background: white
+    background: white;
+    margin-bottom: 3px;
 }
 
 .errorInput {
