@@ -27,12 +27,16 @@ export const MyAllToggle = () => {
     const allClassName = `${!isMy ? st.active : ''}`
 
     return (
-        <div className={st.container}>
+        <div>
+            <h2>Show packs</h2>
+            <div className={st.container}>
             <span className={myClassName}
                   onClick={onMyClick}>My</span>
-            <span className={allClassName}
-                  onClick={onAllClick}>All</span>
+                <span className={allClassName}
+                      onClick={onAllClick}>All</span>
+            </div>
         </div>
+
     )
 }
 

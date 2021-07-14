@@ -7,7 +7,7 @@ import {Packs} from '../../h1-auth/a3-profile/Packs';
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
 import {MyAllToggle} from './MyAllToggle';
 import {PageCountSelect} from './PageCountSelect';
-
+import st from './SearchTable.module.css';
 
 export const SearchTable = () => {
     //state
@@ -21,13 +21,20 @@ export const SearchTable = () => {
 
 
     return (
-        <div>
-            <Search/>
-            <SearchDoubleRange/>
-            <MyAllToggle/>
-            <Packs/>
-            <SearchPaginator/>
-            <PageCountSelect/>
+        <div className={st.container}>
+            <div className={st.leftSection}>
+                <MyAllToggle/>
+                <SearchDoubleRange/>
+            </div>
+            <div className={st.rightSection}>
+                <h2>Packs List</h2>
+                <Search/>
+                <Packs/>
+                <div className={st.pagination}>
+                    <SearchPaginator/>
+                    <PageCountSelect/>
+                </div>
+            </div>
         </div>
     )
 }

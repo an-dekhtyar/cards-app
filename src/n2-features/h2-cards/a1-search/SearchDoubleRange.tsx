@@ -24,11 +24,14 @@ export const SearchDoubleRange = () => {
     }
 
     return (
+        <div>
+            <h2>Number of cards</h2>
             <DoubleRange min={min}
                          max={max}
                          value={[val1, val2]}
                          onChangeRange={doubleRangeChange}
                          onMouseUp={onMouseUp}/>
+        </div>
 
     )
 }
