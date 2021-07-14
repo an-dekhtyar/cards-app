@@ -1,7 +1,7 @@
 .checkbox {
-    width: 20px;
+    width: 15px;
+    height: 15px;
 }
-
-.spanClassName {
-    font-family: "Courier New";
+.checkbox label {
+    padding-left: 0px;
 }

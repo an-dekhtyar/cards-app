@@ -1,0 +1,15 @@
+.star {
+    color: #21268F;
+    cursor: pointer;
+}
+
+.star2 {
+    height: 17px;
+}
+
+.star2 img{
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

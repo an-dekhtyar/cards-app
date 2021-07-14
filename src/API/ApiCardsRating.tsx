@@ -7,7 +7,7 @@ let instance = axios.create({
 })
 
 export const ApiCardsRating = {
-    setRatingCard (grade:number, card_id:string) {
+    setRatingCard(grade: number, card_id: string) {
         return instance.put('cards/grade', {grade, card_id})
-        }
     }
+}
