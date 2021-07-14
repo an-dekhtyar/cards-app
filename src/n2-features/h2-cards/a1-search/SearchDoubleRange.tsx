@@ -24,12 +24,11 @@ export const SearchDoubleRange = () => {
     }
 
     return (
-        <div>
             <DoubleRange min={min}
                          max={max}
                          value={[val1, val2]}
                          onChangeRange={doubleRangeChange}
                          onMouseUp={onMouseUp}/>
-        </div>
+
     )
 }
