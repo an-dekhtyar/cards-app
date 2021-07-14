@@ -37,7 +37,7 @@ export const setIsAuth = (isAuth: boolean) => ({
 
 export const loginTC = (data: LoginDataType): ThunkAction<void, AppStoreType, unknown, LoginActionsType> => {
     return async (dispatch) => {
-        dispatch(setIsFetching(true));
+        dispatch(setIsFetching(false));
         try {
             const response = await ApiCards.login(data);
             let {_id, email, name, avatar, publicCardPacksCount} = response.data
@@ -47,12 +47,12 @@ export const loginTC = (data: LoginDataType): ThunkAction<void, AppStoreType, un
             const error = e.response ? e.response.data.error : (e.message + ', more details in console');
             dispatch(setError(error));
         }
-        dispatch(setIsFetching(false))
+        dispatch(setIsFetching(true))
     }
 }
 
 export const logOutTC = () => (dispatch: Dispatch) => {
-    dispatch(setIsFetching(true))
+    dispatch(setIsFetching(false))
     ApiCards.logout()
         .then(res => {
                 let email = null
@@ -66,7 +66,7 @@ export const logOutTC = () => (dispatch: Dispatch) => {
         )
         .catch(err => console.log(err))
         .finally(() => {
-            dispatch(setIsFetching(false));
+            dispatch(setIsFetching(true));
         })
 }
 
