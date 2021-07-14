@@ -6,6 +6,7 @@ import {SearchDoubleRange} from './SearchDoubleRange';
 import {Packs} from '../../h1-auth/a3-profile/Packs';
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
 import {MyAllToggle} from './MyAllToggle';
+import {PageCountSelect} from './PageCountSelect';
 
 
 export const SearchTable = () => {
@@ -26,6 +27,7 @@ export const SearchTable = () => {
             <MyAllToggle/>
             <Packs/>
             <SearchPaginator/>
+            <PageCountSelect/>
         </div>
     )
 }

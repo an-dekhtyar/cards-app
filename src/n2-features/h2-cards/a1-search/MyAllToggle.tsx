@@ -1,19 +1,18 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
-import {DoubleRange} from '../../../n1-main/m1-ui/Common/DoubleRange/SuperDoubleRange';
-
+import st from './MyAllToggle.module.css';
 
 export const MyAllToggle = () => {
     //state
     const dispatch = useDispatch();
-    const isMy = useSelector<AppStoreType, boolean>(state=>!!state.packs.user_id);
-    const userId = useSelector<AppStoreType, string | null>(state=>state.profile._id)
+    const isMy = useSelector<AppStoreType, boolean>(state => !!state.packs.user_id);
+    const userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
 
     //functions
 
     const onMyClick = () => {
-        if(userId){
+        if (userId) {
             dispatch(changeSearchParams({user_id: userId}));
         }
         dispatch(GetPacksTC(false));
@@ -24,10 +23,15 @@ export const MyAllToggle = () => {
         dispatch(GetPacksTC(false));
     }
 
+    const myClassName = `${isMy ? st.active : ''}`
+    const allClassName = `${!isMy ? st.active : ''}`
+
     return (
-        <div>
-            <span onClick={onMyClick}>My</span>
-            <span onClick={onAllClick}>All</span>
+        <div className={st.container}>
+            <span className={myClassName}
+                  onClick={onMyClick}>My</span>
+            <span className={allClassName}
+                  onClick={onAllClick}>All</span>
         </div>
     )
 }
