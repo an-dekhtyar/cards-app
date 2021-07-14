@@ -49,7 +49,6 @@ export const getInstructionTC = (email: string) => (dispatch: Dispatch) => {
             }
         ).catch((err) => {
         err &&
-        console.log('Some Error')
         dispatch(toggleIsFetching(true))
 
     })

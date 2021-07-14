@@ -1,11 +1,10 @@
 import React, {useEffect} from 'react';
 import {Search} from './Search';
-import {changeSearchParams, GETCardsPackTC} from '../../../n1-main/m2-bll/search-reducer';
 import {useDispatch} from 'react-redux';
-import {SearchTablePacks} from './SearchTablePacks';
 import {SearchPaginator} from './SearchPaginator';
 import {SearchDoubleRange} from './SearchDoubleRange';
-import { Cards } from '../../h1-auth/a3-profile/Cards';
+import {Packs} from '../../h1-auth/a3-profile/Packs';
+import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
 
 
 export const SearchTable = () => {
@@ -15,7 +14,7 @@ export const SearchTable = () => {
 
     useEffect(() => {
         dispatch(changeSearchParams({user_id: undefined}))
-        dispatch(GETCardsPackTC(true, {pageCount: 10}));
+        dispatch(GetPacksTC(true, {pageCount: 10}));
     }, [])
 
 
@@ -23,8 +22,7 @@ export const SearchTable = () => {
         <div>
             <Search/>
             <SearchDoubleRange/>
-            <SearchTablePacks/>
-            <Cards/>
+            <Packs/>
             <SearchPaginator/>
         </div>
     )

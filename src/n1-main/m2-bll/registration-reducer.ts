@@ -34,10 +34,8 @@ export const addUserACThunk=(email:string,password:string,setRedirect:(value:boo
             dispatch(addUserAC(email,password,res.config.data));
             setPreloader(false)
             setRedirect(true)
-            console.log(res.config.data)
         })
         .catch((res:AxiosError)=>{
-            console.log(res.name)
             setPreloader(false)
             setErrorFromServer('Email already exists, or your Password must be more than 7 characters...')
         })

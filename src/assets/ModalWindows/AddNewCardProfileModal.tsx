@@ -1,9 +1,9 @@
-import React, {useState,KeyboardEvent} from 'react';
+import React, {KeyboardEvent, useState} from 'react';
 import styles from './UpdateProfileModal.module.css'
-import {Button} from "../../n1-main/m1-ui/Common/Button/Button";
-import {useDispatch} from "react-redux";
-import { AddNewCardsPackThunk } from '../../n1-main/m2-bll/cardsPack-reducer';
-import {Input} from "../../n1-main/m1-ui/Common/Input/Input";
+import {Button} from '../../n1-main/m1-ui/Common/Button/Button';
+import {useDispatch} from 'react-redux';
+import {Input} from '../../n1-main/m1-ui/Common/Input/Input';
+import {AddNewCardThunk} from '../../n1-main/m2-bll/cards-reducer';
 
 type propsType = {
     setAddNewCardModal: (value: boolean) => void;
@@ -12,17 +12,16 @@ type propsType = {
 
 export let AddNewCardProfileModal = (props: propsType) => {
     let [name, SetName] = useState('')
-    console.log(name)
     let dispatch = useDispatch()
     let showNoFoo = () => {
         props.setAddNewCardModal(false)
     }
     let showYesFoo = () => {
-        dispatch(AddNewCardsPackThunk(name,props.setPreloader))
+        dispatch(AddNewCardThunk(name, props.setPreloader))
         props.setAddNewCardModal(false)
     }
-    let onKeyPressHandler=(event:KeyboardEvent<HTMLInputElement>)=>{
-        if(event.key==='Enter'){
+    let onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
             showYesFoo()
         }
     }
@@ -31,7 +30,8 @@ export let AddNewCardProfileModal = (props: propsType) => {
             <div className={styles.window}>
                 <h1>Do you want to Add new Card?</h1>
                 <p></p>
-                <Input value={name} onChangeText={SetName} placeholder={'enter your card name'} onKeyPress={onKeyPressHandler}/>
+                <Input value={name} onChangeText={SetName} placeholder={'enter your card name'}
+                       onKeyPress={onKeyPressHandler}/>
                 <p></p>
                 <Button children={'No'} onClick={showNoFoo}/>
                 <Button children={'Yes'} onClick={showYesFoo}/>

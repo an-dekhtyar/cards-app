@@ -1,129 +1,78 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import st from './Profile.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {
-
-} from "../../../n1-main/m2-bll/profile-reducer";
-import {AppStoreType} from "../../../n1-main/m2-bll/store";
-import {NavLink} from "react-router-dom";
-import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
+import {useDispatch, useSelector} from 'react-redux';
+import {CardType} from '../../../n1-main/m2-bll/cards-reducer';
+import {AppStoreType} from '../../../n1-main/m2-bll/store';
+import {NavLink} from 'react-router-dom';
+import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
-import {Preloader} from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
-import {
-    AddNewCardThunk,
-    CreateCardsPackIdThunk,
-    GetCardsCardThunk,
-    InitialCardProfileReducerType
-} from '../../../n1-main/m2-bll/profileCards-reducer';
-import {stat} from "fs";
-import {AddNewCardsPackThunk, DeleteCardsPackThunk, GETCardsPackThunk, InitialCardsPackReducerType, UpdateCardsPackThunk} from "../../../n1-main/m2-bll/cardsPack-reducer";
-import {DeleteCardsPackModal} from "../../../assets/ModalWindows/DeleteCardsPackModal";
-import { UpdateCardsPackModal } from '../../../assets/ModalWindows/UpdateCardsPackProfileModal';
+import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
+import {AddNewCardProfileModal} from '../../../assets/ModalWindows/AddNewCardProfileModal';
+import {DeleteCardModal} from '../../../assets/ModalWindows/DeleteCardModal';
+import {UpdateCardModal} from '../../../assets/ModalWindows/UpdateCardModal';
 
-
-export type cardPacksType = {
-    cardPacks: Array<userType>
-    cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
-    page: number
-    pageCount: number
-    token: string
-    tokenDeathTime: number
-}
-export type userType = {
-    cardsCount: number
-    created: string
-    grade: number
-    more_id: string
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    type: string
-    updated: string
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
-}
 export const Cards = () => {
     let dispatch = useDispatch()
-    let dataForTable = useSelector<AppStoreType, InitialCardsPackReducerType>(state => state.cardsPack)
-    let UserId = useSelector<AppStoreType,string|null>(state => state.profile._id)
+    let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
+    let UserId = useSelector<AppStoreType, string | null>(state => state.profile._id)
     let [preloader, setPreloader] = useState(false)
-
+    //for Modal===============================================================
     let [showDeleteModal, setShowDeleteModal] = useState(false)
     let [idForModal, setIdForModal] = useState('')
-    let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false)
 
-    useEffect(() => {
-        console.log('useEffect')
-        if (UserId) {
-            dispatch(GETCardsPackThunk(UserId))
-        }
-    }, [])
+    let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false)
+    let [AddNewCardModal, setAddNewCardModal] = useState(false)
+
+
+    /* useEffect(() => {
+         console.log('useEffect')
+         if (UserId) {
+             dispatch(GetCardsThunk(UserId, setPreloader))
+         }
+     }, [])*/
+
     const AddNewCard = () => {
-        console.log('AddNewCard')
-        if (UserId) {
-            dispatch(AddNewCardThunk(UserId, setPreloader))
-        }else{
-            //@ts-ignore
-            dispatch(CreateCardsPackIdThunk(UserId))
-            if(UserId) {
-                dispatch(GETCardsPackThunk(UserId))
-            }
-            // return <Redirect to={PATH.PROFILE}/>
-        }
-        // dispatch(AddNewCardsPackThunk(name,setPreloader))
+        setAddNewCardModal(true)
     }
     const DeleteCard = (id: string) => {
-        console.log(id)
         setShowDeleteModal(true)
         setIdForModal(id)
         // dispatch(DeleteCardsPackThunk(id, setPreloader))
     }
     const UpdateCard = (id: string) => {
-        console.log(id)
         setShowUpdateProfileModal(true)
         setIdForModal(id)
-        dispatch(UpdateCardsPackThunk(id, setPreloader))
-    }
-
-    const GetCardsCard = (id: string, cardsCount: number) => {
-        dispatch(GetCardsCardThunk(id, setPreloader))
-        if (cardsCount === 0) {
-            // dispatch(AddNewCardThunk(id, setPreloader))
-            dispatch(CreateCardsPackIdThunk(id))
-        }
+        // dispatch(UpdateCardsPackThunk(id, setPreloader))
     }
 
     return (
         <div className={st.profilePage}>
-            {showDeleteModal &&<DeleteCardsPackModal idForModal={idForModal} setShowDeleteModal={setShowDeleteModal} setPreloader={setPreloader}/>}
-            {showUpdateProfileModal &&<UpdateCardsPackModal idForModal={idForModal} setShowUpdateProfileModal={setShowUpdateProfileModal} setPreloader={setPreloader}/>}
-
             <Button children={'add new card'} onClick={AddNewCard}/>
+            {showDeleteModal &&
+            <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={idForModal}
+                             setPreloader={setPreloader}/>}
+            {showUpdateProfileModal &&
+            <UpdateCardModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}
+                             setPreloader={setPreloader}/>}
+            {AddNewCardModal &&
+            <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} setPreloader={setPreloader}/>}
             <div className={st.profile}>{
-                dataForTable !== undefined ?
-                    dataForTable.cardPacks.map((m) => {
+                cards !== undefined ?
+                    cards.map((m) => {
                         return (
                             <div>
                                 <ul>
                                     <li>
                                         <div>ID: {m._id}</div>
                                         <div>USER-ID: {m.user_id}</div>
-                                        <div>NAME: {m.name}</div>
+                                        <div>QUESTION: {m.question}</div>
+                                        <div>ANSWER: {m.answer}</div>
                                         <div>CREATED: {m.created}</div>
                                         <div>UPDATED: {m.updated}</div>
-                                        <div>cardsCount: {m.cardsCount}</div>
                                         <p></p>
                                         <Button children={'Delete'} onClick={() => DeleteCard(m._id)}/>
                                         <Button children={'Update'} onClick={() => UpdateCard(m._id)}/>
                                         <NavLink to={PATH.CARDS} className={st.headerLink}>
-                                            <Button
-                                                children={'Show Cards'} onClick={() => GetCardsCard(m._id, m.cardsCount)}/>
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -135,14 +84,119 @@ export const Cards = () => {
                     <div>{preloader && <Preloader/>}</div>
             }</div>
 
-            {/*<Table data={dataForTable.cardPacks}/>*/}
+            {/*<Table data={cards.cardPacks}/>*/}
         </div>)
 }
 
+//=============================================================================
 
-
-
-
-
-
-
+// import React, {useState} from 'react';
+// import {useDispatch, useSelector} from 'react-redux';
+// import {AppStoreType} from '../../../n1-main/m2-bll/store';
+// import {
+//     AddNewCardThunk,
+//     CreateCardsPackIdThunk,
+//     DeleteCardsCardThunk,
+//     InitialCardProfileReducerType,
+//     UpdateCardsCardThunk
+// } from "../../../n1-main/m2-bll/profileCards-reducer";
+// import st from "./Profile.module.css";
+// import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
+// import {log} from "util";
+// import {Redirect} from "react-router-dom";
+// import {PATH} from "../../../n1-main/m1-ui/Routes/Routes";
+// import {GETCardsPackThunk} from "../../../n1-main/m2-bll/cardsPack-reducer";
+// import {GETCardsPackTC} from "../../../n1-main/m2-bll/search-reducer";
+//
+//
+//
+// /*
+// * CARDS_PACK
+// * [CARD, CARD] ===> CARDS_PACK_ID
+// * */
+//
+// export let ProfileCards = ({}) => {
+//     let dispatch = useDispatch()
+//     let CardDataForTable = useSelector<AppStoreType, InitialCardProfileReducerType>(state => state.cardProfile)
+//     const authUserId = useSelector<AppStoreType, string | null>(state => state.profile._id)
+//     const cardsPackId = useSelector<AppStoreType, string | null>(state => state.cardProfile.currentCardsPackId)
+//     //const Id = useSelector<AppStoreType, string | null>(state => state.profile.cardPacks[0]._id)
+//
+//
+//     let [preloader, setPreloader] = useState(false)
+//     // let cardsPack_id = useMemo(() => CardDataForTable.cards[0]?.cardsPack_id || null, [CardDataForTable.cards])
+//     //let cardsPackId = CardDataForTable.cards[0]?.cardsPack_id || null;
+//     let isYours = CardDataForTable.cards[0]?.user_id === authUserId;
+//     console.log(authUserId,CardDataForTable.cards[0]?.cardsPack_id )
+//     // let isYours = useMemo(() =>
+//     //     CardDataForTable.cards[0]?.user_id && CardDataForTable.cards[0]?.user_id === authUserId,
+//     //     [CardDataForTable.cards, authUserId])
+//
+//     let AddNewCard = () => {
+//         console.log('AddNewCard')
+//         // if (!cardsPack_id) return;
+//         // dispatch(AddNewCardThunk(cardsPack_id, setPreloader))
+//         if (cardsPackId) {
+//             dispatch(AddNewCardThunk(cardsPackId, setPreloader))
+//             // console.log()
+//         } else {
+//             //@ts-ignore
+//             dispatch(CreateCardsPackIdThunk(Id))
+//             dispatch(GETCardsPackTC(false))
+//             // return <Redirect to={PATH.PROFILE}/>
+//         }
+//     }
+//
+//     let DeleteCardsCard = (id: string) => {
+//         dispatch(DeleteCardsCardThunk(id, setPreloader))
+//     }
+//
+//     const UpdateCard = (id: string) => {
+//         dispatch(UpdateCardsCardThunk(id, setPreloader))
+//
+//     }
+//
+//     return (
+//         <div>
+//             <h1 className={st.h1}>ProfileCards</h1>
+//             <p></p>
+//             <Button children={'AddNewCard'} onClick={() => AddNewCard()} style={{color: isYours ? 'red' : 'green'}}/>
+//             {/*<Button children={'AddNewCard'} disabled={!isYours} onClick={() => AddNewCard()} style={{color: isYours ? '': 'red'}}/>*/}
+//             <div>{
+//                 CardDataForTable.cards !== [] ?
+//                     CardDataForTable.cards.map((m) => {
+//                         return (
+//                             <div className={st.profile}>
+//
+//                                 <ul>
+//                                     <li>
+//                                         <div>packUserId: {m.cardsPack_id}</div>
+//                                         <div>ID: {m._id}</div>
+//                                         <div>USER-ID: {m.user_id}</div>
+//                                         <div>QUESTION: {m.question}</div>
+//                                         <div>ANSWER: {m.answer}</div>
+//                                         <div>CREATED: {m.created}</div>
+//                                         <div>UPDATED: {m.updated}</div>
+//                                         <p></p>
+//                                         <Button children={'Delete'} onClick={() => DeleteCardsCard(m._id)}/>
+//                                         <Button children={'Update'} onClick={() => UpdateCard(m._id)}/>
+//                                         {/*<NavLink to={PATH.CARDS} className={st.headerLink}><Button*/}
+//                                         {/*    children={'Show Cards'} onClick={() => GetCardsCard(m._id)}/></NavLink>*/}
+//
+//                                     </li>
+//                                 </ul>
+//
+//                             </div>
+//                         )
+//                     })
+//                     :
+//                     <ul>
+//                         <li>
+//                         </li>
+//                     </ul>
+//
+//             }</div>
+//
+//         </div>
+//     )
+// }

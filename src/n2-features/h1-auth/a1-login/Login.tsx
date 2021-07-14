@@ -7,7 +7,7 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {loginTC} from '../../../n1-main/m2-bll/login-reducer';
-import {setError} from "../../../n1-main/m2-bll/app-reducer";
+import {setError} from '../../../n1-main/m2-bll/app-reducer';
 
 export const Login: React.FC = () => {
     //state
@@ -18,6 +18,7 @@ export const Login: React.FC = () => {
     const isAuth = useSelector<AppStoreType, boolean>(state => state.login.isAuth);
     const error = useSelector<AppStoreType, string | null>(state => state.app.error);
     const isLoading = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
+
 
     if (isAuth) {
         return <Redirect to={PATH.PROFILE}/>

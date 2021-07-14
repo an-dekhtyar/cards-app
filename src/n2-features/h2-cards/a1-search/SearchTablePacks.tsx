@@ -3,12 +3,12 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 
 import st from './SearchTable.module.css';
 import {SearchSortButton} from './SearchSortButton';
-import {userType} from "../../h1-auth/a3-profile/Cards";
+import {PackType} from '../../../API/ApiCardsPack';
 
 export const SearchTablePacks = () => {
     //state
     const dispatch = useDispatch();
-    const cardPacks = useSelector<AppStoreType, Array<userType>>(state => state.search.cardPacks);
+    const cardPacks = useSelector<AppStoreType, Array<PackType>>(state => state.packs.cardPacks);
 
     const mappedCardPacks = cardPacks.map(pack => {
         return (

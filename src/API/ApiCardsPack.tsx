@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {CardPacksType} from '../n1-main/m2-bll/search-reducer';
 
 
 let instance = axios.create({
@@ -9,20 +8,20 @@ let instance = axios.create({
 
 export const ApiCardsPack = {
 
-    GETCardsPack: (searchParams: SearchParamsType = {}) => {
-        return instance.get<CardPacksType>('cards/pack', {
+    GetPack: (searchParams: SearchParamsType = {}) => {
+        return instance.get<ResponsePacksType>('cards/pack', {
             params: {
                 ...searchParams
             }
         })
     },
-    AddNewCardsPack: (name:string) => {
+    AddNewPack: (name: string) => {
         return instance.post('cards/pack', {cardsPack: {name}})
     },
-    DeleteCardsPack: (id: string) => {
+    DeletePack: (id: string) => {
         return instance.delete(`cards/pack/?id=${id}`)
     },
-    UpdateCardsPack: (id: string) => {
+    UpdatePack: (id: string) => {
         return instance.put(`cards/pack`, {cardsPack: {_id: id}})
     },
 
@@ -38,4 +37,33 @@ export type SearchParamsType = {
     page?: number
     pageCount?: number
     user_id?: string
+}
+
+export type PackType = {
+    cardsCount: number
+    created: string
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+}
+
+export type ResponsePacksType = {
+    cardPacks: Array<PackType>
+    cardPacksTotalCount: number
+    maxCardsCount: number
+    minCardsCount: number
+    page: number
+    pageCount: number
+    token: string
+    tokenDeathTime: number
 }

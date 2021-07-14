@@ -44,7 +44,6 @@ export const Paginator = (props: PaginatorPropsType) => {
 
     const pagesComponent = items.map(p => {
         const onClick = () => {
-            debugger;
             props.onPageChanged(p);
         }
         return (
