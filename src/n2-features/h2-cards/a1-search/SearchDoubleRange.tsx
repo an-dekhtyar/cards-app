@@ -14,18 +14,22 @@ export const SearchDoubleRange = () => {
 
     //functions
 
-    const doubleRangeChange = (values: number[]) => {
-        dispatch(changeSearchParams({curMin: values[0], curMax: values[1]}))
+    const onMouseUp = () => {
         dispatch(GetPacksTC(false));
     }
 
+    const doubleRangeChange = (values: number[]) => {
+        dispatch(changeSearchParams({curMin: values[0], curMax: values[1]}))
+        //dispatch(GetPacksTC(false));
+    }
 
     return (
         <div>
             <DoubleRange min={min}
                          max={max}
                          value={[val1, val2]}
-                         onChangeRange={doubleRangeChange}/>
+                         onChangeRange={doubleRangeChange}
+                         onMouseUp={onMouseUp}/>
         </div>
     )
 }
