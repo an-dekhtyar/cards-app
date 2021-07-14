@@ -3,7 +3,7 @@ import {LoginDataType} from '../n1-main/m2-bll/login-reducer';
 
 
 let instance = axios.create({
-    baseURL: 'http://localhost:7542/2.0/',
+    baseURL: "http://localhost:7542/2.0/",
     withCredentials: true,
 })
 
@@ -25,14 +25,14 @@ export const ApiCards = {
         return instance.delete<LoginResponseType>('/auth/me', {})
     },
     getInstruction(email: string) {
-        return axios.post('https://neko-back.herokuapp.com/2.0auth/forgot', {
+        return axios.post('/auth/forgot', {
             email,
             from: 'test-front-admin <ai73a@yandex.by>',
             message: `<div style="background-color: lime; padding: 15px"> To change your password, please follow the link:<a href='http://localhost:3000/#/new-pass/$token$'>link</a></div>`
         }, {withCredentials: true})
     },
     setNewPassword(newPassword: string, token: string) {
-        return instance.post('auth/set-new-password', {
+        return instance.post('/auth/set-new-password', {
                 password: newPassword,
                 resetPasswordToken: token
             },
