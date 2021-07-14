@@ -58,10 +58,10 @@ export const Paginator = (props: PaginatorPropsType) => {
 
     return (
         <div>
-            {currentItem !== 1 && <button className={s.btn} onClick={onPrevButtonClick}>Prev</button>}
+            {currentItem !== 1 && <button className={s.btn} onClick={onPrevButtonClick}>{'<'}</button>}
             {pagesComponent}
             {currentItem !== totalPortionCount &&
-            <button className={s.btn} onClick={onNextButtonClick}>Next</button>}
+            <button className={s.btn} onClick={onNextButtonClick}>{'>'}</button>}
         </div>
     );
 }

@@ -15,6 +15,7 @@ import {Search} from '../../h2-cards/a1-search/Search';
 import {SearchPaginator} from '../../h2-cards/a1-search/SearchPaginator';
 import {SearchDoubleRange} from '../../h2-cards/a1-search/SearchDoubleRange';
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
+import {PageCountSelect} from '../../h2-cards/a1-search/PageCountSelect';
 
 export const Profile = () => {
     const dispatch = useDispatch()
@@ -23,8 +24,8 @@ export const Profile = () => {
     const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching)
     const user_id = useSelector<AppStoreType, string | null>(state => state.profile._id)
     useEffect(() => {
-        dispatch(changeSearchParams({user_id: user_id?user_id:undefined}))
-        dispatch(GetPacksTC(true, {user_id: user_id?user_id:undefined}))
+        dispatch(changeSearchParams({user_id: user_id ? user_id : undefined}))
+        dispatch(GetPacksTC(true, {user_id: user_id ? user_id : undefined, pageCount: 10}))
     }, [])
 
     const {_id, name, avatar, email, publicCardPacksCount} = userData
@@ -78,20 +79,19 @@ export const Profile = () => {
                             <div className={st.input}>
                                 <div>Packs list <EditableSpan value={name} onChange={onChangeName}/></div>
                                 <Search/>
-                            </div >
+                            </div>
                             <div className={st.table}>
                                 <Packs/>
-                             {/*   <SearchTablePacks/>*/}
+                                {/*   <SearchTablePacks/>*/}
                             </div>
 
-                            <div className={st.pagination}><SearchPaginator/></div>
+                            <div className={st.pagination}>
+                                <SearchPaginator/>
+                                <PageCountSelect/>
+                            </div>
                         </div>
                     </> : <Preloader/>
                 }
-
-
-
-
 
 
                 {/* <div>My name is:{name}</div>
@@ -105,13 +105,6 @@ export const Profile = () => {
             </div>
         </div>)
 };
-
-
-
-
-
-
-
 
 
 //------------------------------------------------------------------
