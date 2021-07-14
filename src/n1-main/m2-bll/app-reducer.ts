@@ -46,7 +46,7 @@ export const setAppError = (error: string | null) => (dispatch:Dispatch) => {
 */
 
 export const authTC = () => (dispatch: Dispatch) => {
-    dispatch(setIsFetching(true))
+    dispatch(setIsFetching(false))
     ApiCards.auth()
         .then(response => {
             let {_id, email, name, avatar, publicCardPacksCount} = response.data
@@ -59,7 +59,7 @@ export const authTC = () => (dispatch: Dispatch) => {
         })
         .finally(() => {
             dispatch(setIsInitialized(true))
-            dispatch(setIsFetching(false))
+            dispatch(setIsFetching(true))
         })
 }
 
