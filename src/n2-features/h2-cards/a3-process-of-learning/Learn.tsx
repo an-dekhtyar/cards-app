@@ -3,11 +3,16 @@ import {useEffect, useState} from 'react';
 import SuperRadio from '../../../n1-main/m1-ui/Common/Radio/SuperRadio';
 import {useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {CardType, UpgradeCardGradeThunk} from '../../../n1-main/m2-bll/cards-reducer';
+import {CardType, GetCardsThunk, UpgradeCardGradeThunk} from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
+import {PackType} from '../../../API/ApiCardsPack';
+import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 
 
 const getCard = (cards: Array<CardType>, curCard_id: string) => {
+    if (cards.length === 1) {
+        return cards[0];
+    }
     const newCards = cards.filter(cards => cards._id !== curCard_id);
     const gradeCount = newCards.reduce((count, card) => {
         return count + (6 - card.grade) ** 2;
@@ -31,6 +36,9 @@ export const Learn = () => {
     const [value, setValue] = useState<string>('Did not know');
     const grades = ['Did not know', 'Forgot', 'A lot of thoughts', 'Confused', 'Knew the answer'];
     const cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards);
+    const pack = useSelector<AppStoreType, PackType>(state => state.cards.currentPack);
+    const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
+    const isInitialized = cards.length !== 0 && cards[0].cardsPack_id === pack._id;
     const [curCard, setCurCard] = useState<CardType>({
         answer: '',
         answerImg: '',
@@ -49,20 +57,24 @@ export const Learn = () => {
         updated: '',
         user_id: '',
         __v: 1,
-        _id: '',
+        _id: '1',
     });
 
     useEffect(() => {
-        if (cards.length === 0) {
-            return;
-        }
-        setCurCard(getCard(cards, curCard._id));
+        dispatch(GetCardsThunk(pack._id, value1 => {
+        }));
     }, []);
+
     useEffect(() => {
         setValue(grades[Math.round(curCard.grade) - 1])
     }, [curCard])
-
     const history = useHistory();
+
+    if (curCard._id == '1') {
+        if (isInitialized) {
+            setCurCard(getCard(cards, curCard._id));
+        }
+    }
 
     //functions
 
@@ -78,29 +90,32 @@ export const Learn = () => {
     }
     const onNextButtonClick = () => {
         const newGrade = grades.indexOf(value) + 1;
-        dispatch(UpgradeCardGradeThunk(curCard._id, newGrade));
+        if (newGrade !== 0) {
+            dispatch(UpgradeCardGradeThunk(curCard._id, newGrade));
+        }
         setShowAnswer(false);
         setCurCard(getCard(cards, curCard._id));
 
     }
 
     return (
-        <div>
-            <h2>Learn 'PackName'</h2>
-            <p>Question: {curCard.question}</p>
-            {
-                showAnswer && <p>Answer: {curCard.answer}</p>}
-            {showAnswer && <div>
-                <SuperRadio value={value}
-                            options={grades}
-                            onChangeOption={onOptionChange}/>
-            </div>}
-            <Button onClick={onCancelButtonClick}>Cancel</Button>
-            {!showAnswer ?
-                <Button disabled={cards.length === 0}
-                        onClick={onShowAnswerButtonClick}>Show Answer</Button>
-                :
-                <Button onClick={onNextButtonClick}>Next</Button>}
-        </div>
+        isFetching || !isInitialized ? <Preloader/> :
+            <div>
+                <h2>Learn '{pack.name}'</h2>
+                <p>Question: {curCard.question}</p>
+                {
+                    showAnswer && <p>Answer: {curCard.answer}</p>}
+                {showAnswer && <div>
+                    <SuperRadio value={value}
+                                options={grades}
+                                onChangeOption={onOptionChange}/>
+                </div>}
+                <Button onClick={onCancelButtonClick}>Cancel</Button>
+                {!showAnswer ?
+                    <Button disabled={cards.length === 0}
+                            onClick={onShowAnswerButtonClick}>Show Answer</Button>
+                    :
+                    <Button onClick={onNextButtonClick}>Next</Button>}
+            </div>
     )
 }

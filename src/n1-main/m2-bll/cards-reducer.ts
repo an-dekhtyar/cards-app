@@ -4,6 +4,7 @@ import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
 import {ApiCardsRating} from '../../API/ApiCardsRating';
 import {AppReducerActionsTypes, setError, setIsFetching} from './app-reducer';
+import {PackType} from '../../API/ApiCardsPack';
 
 export type CardType = {
     answer: string
@@ -28,7 +29,25 @@ export type CardType = {
 
 let initialState = {
     cards: [] as Array<CardType>,
-    currentCardsPackId: ''
+    currentCardsPackId: '',
+    currentPack: {
+        cardsCount: 0,
+        created: '',
+        grade: 1,
+        more_id: '',
+        name: '',
+        path: '',
+        private: false,
+        rating: 1,
+        shots: 1,
+        type: '',
+        updated: '',
+        user_id: '',
+        user_name: '',
+        __v: 1,
+        _id: '',
+
+    }
 }
 
 export type InitialCardProfileReducerType = typeof initialState
@@ -58,12 +77,18 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
                 } : card)
             }
         }
+        case 'SetCurrentPack': {
+            return {
+                ...state,
+                currentPack: action.pack
+            }
+        }
         default:
             return state;
     }
 };
 
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType;
+type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | SetCurrentPackAT;
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
 export const GetCardsAC = (data: any) => {
@@ -81,12 +106,15 @@ export const setCurrentPackId = (data: string) => {
 }
 
 export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
+    dispatch(setIsFetching(true));
     dispatch(setCurrentPackId(id))
     setPreloader(true)
     ApiCardsCard.getCards(id)
         .then((res) => {
             dispatch(GetCardsAC(res.data))
-        })
+        }).finally(() => {
+        dispatch(setIsFetching(false));
+    })
 }
 
 type AddNewCardACType = ReturnType<typeof AddNewCardAC>
@@ -147,7 +175,6 @@ export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => vo
 
 export const UpgradeCardGradeThunk = (card_id: string, grade: number): ThunkAction<void, AppStoreType, unknown, DispatchType> => {
     return (dispatch) => {
-        dispatch(setIsFetching(false))
         ApiCardsRating.setRatingCard(grade, card_id)
             .then((res) => {
                 const {
@@ -160,9 +187,16 @@ export const UpgradeCardGradeThunk = (card_id: string, grade: number): ThunkActi
                 const error = e.response ? e.response.data.error : (e.message + ', more details in console');
                 dispatch(setError(error));
             }).finally(() => {
-            dispatch(setIsFetching(true))
         })
     }
+}
+
+type SetCurrentPackAT = ReturnType<typeof setCurrentPackAC>
+export const setCurrentPackAC = (pack: PackType) => {
+    return {
+        type: 'SetCurrentPack',
+        pack
+    } as const
 }
 
 //types
