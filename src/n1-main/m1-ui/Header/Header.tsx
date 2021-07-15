@@ -14,6 +14,7 @@ export const Header = () => (
         <NavLink to={PATH.ENTER_NEW_PASS} activeClassName={st.active}>Enter new Password</NavLink>
         <NavLink to={PATH.TEST} activeClassName={st.active}>Test Super Components</NavLink>
         <NavLink to={PATH.SEARCH_CARDS} activeClassName={st.active}>Search</NavLink>
+        <NavLink to={PATH.LEARN} activeClassName={st.active}>Learn</NavLink>
     </div>
 );
 

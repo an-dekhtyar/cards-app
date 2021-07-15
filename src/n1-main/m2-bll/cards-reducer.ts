@@ -2,6 +2,9 @@ import {Dispatch} from 'redux';
 import {ApiCardsCard} from '../../API/ApiCardsCard';
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
+import {ApiCardsRating} from '../../API/ApiCardsRating';
+import {AppReducerActionsTypes, setError, setIsFetching} from './app-reducer';
+import {PackType} from '../../API/ApiCardsPack';
 
 export type CardType = {
     answer: string
@@ -26,7 +29,25 @@ export type CardType = {
 
 let initialState = {
     cards: [] as Array<CardType>,
-    currentCardsPackId: ''
+    currentCardsPackId: '',
+    currentPack: {
+        cardsCount: 0,
+        created: '',
+        grade: 1,
+        more_id: '',
+        name: '',
+        path: '',
+        private: false,
+        rating: 1,
+        shots: 1,
+        type: '',
+        updated: '',
+        user_id: '',
+        user_name: '',
+        __v: 1,
+        _id: '',
+
+    }
 }
 
 export type InitialCardProfileReducerType = typeof initialState
@@ -45,14 +66,29 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
             };
         }
         case 'UpdateCardsPack': {
-            return state
+            const cardsCopy = [...state.cards];
+
+            return {
+                ...state,
+                cards: cardsCopy.map(card => card._id === action.card_id ? {
+                    ...card,
+                    grade: action.grade,
+                    shots: action.shots
+                } : card)
+            }
+        }
+        case 'SetCurrentPack': {
+            return {
+                ...state,
+                currentPack: action.pack
+            }
         }
         default:
             return state;
     }
 };
 
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType;
+type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | SetCurrentPackAT;
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
 export const GetCardsAC = (data: any) => {
@@ -70,12 +106,15 @@ export const setCurrentPackId = (data: string) => {
 }
 
 export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
+    dispatch(setIsFetching(true));
     dispatch(setCurrentPackId(id))
     setPreloader(true)
     ApiCardsCard.getCards(id)
         .then((res) => {
             dispatch(GetCardsAC(res.data))
-        })
+        }).finally(() => {
+        dispatch(setIsFetching(false));
+    })
 }
 
 type AddNewCardACType = ReturnType<typeof AddNewCardAC>
@@ -116,10 +155,11 @@ export let DeleteCardThunk = (id: string, setPreloader: (value: boolean) => void
 }
 
 type UpdateCardType = ReturnType<typeof UpdateCardsPackAC>
-export const UpdateCardsPackAC = (id: string) => {
+type UpdateGradeDataType = { card_id: string, grade: number, shots: number }
+export const UpdateCardsPackAC = (data: UpdateGradeDataType) => {
     return {
         type: 'UpdateCardsPack',
-        id: id
+        ...data
     } as const
 }
 export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
@@ -132,3 +172,33 @@ export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => vo
                 setPreloader(false)
             })
     }
+
+export const UpgradeCardGradeThunk = (card_id: string, grade: number): ThunkAction<void, AppStoreType, unknown, DispatchType> => {
+    return (dispatch) => {
+        ApiCardsRating.setRatingCard(grade, card_id)
+            .then((res) => {
+                const {
+                    grade,
+                    shots
+                } = res.data.updatedGrade;
+                dispatch(UpdateCardsPackAC({card_id, grade, shots}))
+            })
+            .catch((e) => {
+                const error = e.response ? e.response.data.error : (e.message + ', more details in console');
+                dispatch(setError(error));
+            }).finally(() => {
+        })
+    }
+}
+
+type SetCurrentPackAT = ReturnType<typeof setCurrentPackAC>
+export const setCurrentPackAC = (pack: PackType) => {
+    return {
+        type: 'SetCurrentPack',
+        pack
+    } as const
+}
+
+//types
+
+type DispatchType = allActionTypes | AppReducerActionsTypes
