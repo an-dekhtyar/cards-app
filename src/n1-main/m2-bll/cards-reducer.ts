@@ -2,6 +2,8 @@ import {Dispatch} from 'redux';
 import {ApiCardsCard} from '../../API/ApiCardsCard';
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
+import {ApiCardsRating} from '../../API/ApiCardsRating';
+import {AppReducerActionsTypes, setError, setIsFetching} from './app-reducer';
 
 export type CardType = {
     answer: string
@@ -45,7 +47,16 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
             };
         }
         case 'UpdateCardsPack': {
-            return state
+            const cardsCopy = [...state.cards];
+
+            return {
+                ...state,
+                cards: cardsCopy.map(card => card._id === action.card_id ? {
+                    ...card,
+                    grade: action.grade,
+                    shots: action.shots
+                } : card)
+            }
         }
         default:
             return state;
@@ -116,10 +127,11 @@ export let DeleteCardThunk = (id: string, setPreloader: (value: boolean) => void
 }
 
 type UpdateCardType = ReturnType<typeof UpdateCardsPackAC>
-export const UpdateCardsPackAC = (id: string) => {
+type UpdateGradeDataType = { card_id: string, grade: number, shots: number }
+export const UpdateCardsPackAC = (data: UpdateGradeDataType) => {
     return {
         type: 'UpdateCardsPack',
-        id: id
+        ...data
     } as const
 }
 export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
@@ -132,3 +144,27 @@ export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => vo
                 setPreloader(false)
             })
     }
+
+export const UpgradeCardGradeThunk = (card_id: string, grade: number): ThunkAction<void, AppStoreType, unknown, DispatchType> => {
+    return (dispatch) => {
+        dispatch(setIsFetching(false))
+        ApiCardsRating.setRatingCard(grade, card_id)
+            .then((res) => {
+                const {
+                    grade,
+                    shots
+                } = res.data.updatedGrade;
+                dispatch(UpdateCardsPackAC({card_id, grade, shots}))
+            })
+            .catch((e) => {
+                const error = e.response ? e.response.data.error : (e.message + ', more details in console');
+                dispatch(setError(error));
+            }).finally(() => {
+            dispatch(setIsFetching(true))
+        })
+    }
+}
+
+//types
+
+type DispatchType = allActionTypes | AppReducerActionsTypes
