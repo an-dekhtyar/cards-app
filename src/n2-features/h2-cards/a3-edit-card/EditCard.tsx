@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeUserDataTC, toggleEditMode } from "../../../n1-main/m2-bll/profile-reducer";
 import { AppStoreType } from "../../../n1-main/m2-bll/store";
 import { Preloader } from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
+import { UpdateCardThunk } from "../../../n1-main/m2-bll/cards-reducer";
 
 
 type EditCardType = {
@@ -23,12 +24,17 @@ export const EditCard = (props: EditCardType) => {
     //hooks
     let dispatch = useDispatch()
     let isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching)
-    // let [nickName, setNickName] = useState<string>(userName)
-    // let [avatar, setAvatar] = useState<string>(userAvatar)
+    let [newAnswer, setNewAnswer] = useState<string>(cardAnswer)
+    let [newQuestion, setNewQuestion] = useState<string>(cardQuestion)
 
     //callbacks
     const onChangeData = () => {
-        // dispatch(changeUserDataTC(nickName, avatar))
+        let card = {
+            _id: cardId,
+            answer: newAnswer,
+            question: newQuestion
+        }
+        dispatch(UpdateCardThunk(card))
     }
     const onClickCancel = () => {
         dispatch(toggleEditMode(false))
@@ -48,13 +54,13 @@ export const EditCard = (props: EditCardType) => {
                         </div>
 
                         <div className={st.inputContainer}>
-                            <label htmlFor={'Question'}>{cardQuestion}</label>
-                            <Input value={'nickName'} onChangeText={()=>{}} name={'Question'} />
+                            <label htmlFor={'Question'}>Question</label>
+                            <Input value={newQuestion} onChangeText={setNewQuestion} name={'Question'} />
                             <div className={st.attachFile}>+ Attach file</div>
                         </div>
                         <div className={st.inputContainer}>
-                            <label htmlFor={'Answer'}>{cardAnswer}</label>
-                            <Input value={'avatar'} onChangeText={()=>{}} name={'Answer'} />
+                            <label htmlFor={'Answer'}>Answer</label>
+                            <Input value={newAnswer} onChangeText={setNewAnswer} name={'Answer'} />
                             <div className={st.attachFile}>+ Attach file</div>
                         </div>
                         <div className={st.buttonContainer}>

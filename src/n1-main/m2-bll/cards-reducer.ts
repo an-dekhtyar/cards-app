@@ -232,15 +232,16 @@ export const UpdateCardsPackAC = (data: UpdateGradeDataType) => {
         ...data
     } as const
 }
-export const UpdateCardThunk = (cards:updateCardRequestType): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const UpdateCardThunk = (card:updateCardRequestType): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
 
     (dispatch) => {
         dispatch(setIsFetching(false))
-        ApiCardsCard.updateCard(cards)
+        ApiCardsCard.updateCard(card)
             .then((res) => {
                 const {cardsPack_id} = res.data.updatedCard;
                 dispatch(GetCardsThunk(cardsPack_id))
                 dispatch(setIsFetching(true))
+                dispatch(toggleEditCardMode(false))
             })
     }
 

@@ -8,10 +8,10 @@ export const SearchCards = () => {
     return (
 
         <div>
-            <CardSearchBar/>
+
             <Cards/>
-            <CardPaginator/>
-            <CardsPageCountSelect/>
+
+
         </div>
     )
 }

@@ -14,12 +14,22 @@ import bt from './../../../n1-main/m1-ui/Common/Button/Button.module.css'
 import { CardRating } from '../../h2-cards/a2-cards-rating/CardsRating';
 import { Input } from '../../../n1-main/m1-ui/Common/Input/Input';
 import { EditCard } from '../../h2-cards/a3-edit-card/EditCard';
+import {CardSearchBar} from "../../h2-cards/a1-search/search_cards/CardSearchBar";
+import {CardPaginator} from "../../h2-cards/a1-search/search_cards/CardPaginator";
+import {CardsPageCountSelect} from "../../h2-cards/a1-search/search_cards/CardsPageCountSelect";
 
 export const Cards = () => {
     let dispatch = useDispatch()
     let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
     let userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
+    let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.pack.user_id)
     let [preloader, setPreloader] = useState(false)
+
+    console.log("currentPackUserId", currentPackUserId)
+    console.log("userId", userId)
+    console.log("currentPackUserId", currentPackUserId === userId)
+
+    let isUserPack = currentPackUserId === userId
 
     //for Modal===============================================================
     let [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -66,8 +76,8 @@ export const Cards = () => {
                         <span className={st.packName}>  Pack Name</span>
                     </div>
                     <div className={st.cardsSearch}>
-                        <Input placeholder={'Search'} />
-                        <div><Button children={'add new card'} onClick={AddNewCard} /></div>
+                        <CardSearchBar/>
+                        {!isUserPack && <div><Button children={'add new card'} onClick={AddNewCard}/></div>}
                     </div>
                     {showDeleteModal &&
                     <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={idForModal}
@@ -98,7 +108,10 @@ export const Cards = () => {
                     }</div>
 
                     {/*<Table data={cards.cardPacks}/>*/}
-                    <div className={st.cardsPagination}>Pagination</div>
+                    <div className={st.cardsPagination}>
+                        <CardPaginator/>
+                        <CardsPageCountSelect/>
+                    </div>
                 </div>}
         </div>)
 }
@@ -159,7 +172,7 @@ export const Card = (props: CardPropsType) => {
             <span>
                 <CardRating rate={grade} />
             </span>
-            {!isUserCard &&
+            {isUserCard &&
             <span className={st.cardButton}>
                     <Button red={true} className={bt.cardButton} children={'Delete'} />
                     <Button className={bt.cardButton} children={'Update'} onClick={updateCardHandler}/>
