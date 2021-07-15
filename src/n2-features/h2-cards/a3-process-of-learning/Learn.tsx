@@ -22,7 +22,7 @@ const getCard = (cards: Array<CardType>, curCard_id: string) => {
     let i = 0;
 
     while (rndNumber > 0) {
-        rndNumber = rndNumber - (6 - cards[i].grade) ** 2;
+        rndNumber = rndNumber - (6 - newCards[i].grade) ** 2;
         i++;
     }
     return cards[i - 1];
@@ -90,6 +90,7 @@ export const Learn = () => {
     }
     const onNextButtonClick = () => {
         const newGrade = grades.indexOf(value) + 1;
+        debugger;
         if (newGrade !== 0) {
             dispatch(UpgradeCardGradeThunk(curCard._id, newGrade));
         }
