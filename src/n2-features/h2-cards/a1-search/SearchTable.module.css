@@ -1,4 +1,26 @@
 
+.container{
+    display: flex;
+    width: 80%;
+    padding-bottom: 100px;
+    margin: 0 auto;
+}
+
+.container>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leftSection{
+    background-color: #ececf9;
+    flex: 1;
+}
+
+.rightSection{
+    flex: 4;
+    background-color: #fefeff;
+}
 
 .row{
     display: flex;
@@ -11,4 +33,9 @@
 
 .row span{
     flex: 1;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
 }

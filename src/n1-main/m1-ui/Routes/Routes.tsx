@@ -4,6 +4,7 @@ import {Registration, Profile, RestorePass, EnterNewPassContain, Test, Login} fr
 import {Page404} from "../../m4-pages/a4-page404/Page404";
 import {SearchTable} from '../../../n2-features/h2-cards/a1-search/SearchTable';
 import {Cards} from "../../../n2-features/h1-auth/a3-profile/Cards";
+import {SearchCards} from '../../../n2-features/h2-cards/a1-search/search_cards/SearchCards';
 import {Learn} from '../../../n2-features/h2-cards/a3-process-of-learning/Learn';
 
 
@@ -25,7 +26,6 @@ export const PATH = {
 export const Routes = () => (
     <div>
         <Switch>
-
             <Route path={'/'} exact render={() => <Redirect to={PATH.PROFILE}/>}/>
             <Route path={PATH.LOGIN} render={() => <Login/>}/>
             <Route path={PATH.REGISTRATION} render={() => <Registration/>}/>
@@ -34,7 +34,7 @@ export const Routes = () => (
             <Route path={PATH.ENTER_NEW_PASS} render={() => <EnterNewPassContain/>}/>
             <Route path={PATH.TEST} render={() => <Test/>}/>
             <Route path={PATH.PAGE_404} render={() => <Page404/>}/>
-            <Route path={PATH.CARDS} render={() => <Cards/>}/>
+            <Route path={PATH.CARDS} render={() => <SearchCards/>}/>
             <Route path={PATH.SEARCH_CARDS} render={() => <SearchTable/>}/>
             <Route path={PATH.LEARN} render={() => <Learn/>}/>
             <Redirect from={'*'} to={PATH.PAGE_404}/>

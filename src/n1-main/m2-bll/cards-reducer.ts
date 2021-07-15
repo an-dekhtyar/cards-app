@@ -1,10 +1,10 @@
 import {Dispatch} from 'redux';
-import {ApiCardsCard, updateCardRequestType} from '../../API/ApiCardsCard';
+import {ApiCardsCard, CardSearchDataType} from '../../API/ApiCardsCard';
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
-import {isFetchingType, setIsFetching} from "./app-reducer";
+import {isFetchingType, setIsFetching, setError} from "./app-reducer";
 import {ApiCardsRating} from '../../API/ApiCardsRating';
-import {AppReducerActionsTypes, setError} from './app-reducer';
+import {AppReducerActionsTypes} from './app-reducer';
 import {PackType} from '../../API/ApiCardsPack';
 
 export type CardType = {
@@ -31,8 +31,8 @@ export type CardType = {
 let initialState = {
     cards: [] as Array<CardType>,
     currentCardsPackId: '',
-    currentPack: {
-        cardsCount: 0,
+    pack: {
+        cardsCount: 1,
         created: '',
         grade: 1,
         more_id: '',
@@ -46,9 +46,14 @@ let initialState = {
         user_id: '',
         user_name: '',
         __v: 1,
-        _id: '',
-
-    }
+        _id: ''
+    } as PackType,
+    cardQuestion: '',
+    sortCards: '0grade',
+    min: 0,
+    max: 6,
+    page: 1,
+    pageCount: 10
 }
 
 export type InitialCardProfileReducerType = typeof initialState
@@ -84,12 +89,18 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
                 currentPack: action.pack
             }
         }
+        case 'changeCardSearchParams': {
+            return {
+                ...state,
+                ...action.payload
+            }
+        }
         default:
             return state;
     }
 };
 
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | isFetchingType;| SetCurrentPackAT;
+type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | isFetchingType;| SetCurrentPackAT | ChangeCardSearchParamsAT
 
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
@@ -107,16 +118,47 @@ export const setCurrentPackId = (data: string) => {
     } as const
 }
 
-export const GetCardsThunk = (id: string) => (dispatch: Dispatch) => {
-    dispatch(setIsFetching(false))
-    dispatch(setCurrentPackId(id))
-    ApiCardsCard.getCards(id)
-        .then((res) => {
-            dispatch(GetCardsAC(res.data))
-            dispatch(setIsFetching(true))
-        })
-}
+export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+    (dispatch: Dispatch, getState) => {
+        dispatch(setIsFetching(false));
+        dispatch(setCurrentPackId(id))
+        setPreloader(true)
+        const {
+            currentCardsPackId,
+            cardQuestion,
+            min,
+            max,
+            sortCards,
+            page,
+            pageCount
+        } = getState().cards;
 
+
+        ApiCardsCard.getCards(currentCardsPackId, {
+            cardQuestion,
+            min,
+            max,
+            sortCards,
+            page,
+            pageCount
+        })
+            .then((res) => {
+                const curState = getState().cards;
+                if (curState.page === page
+                    && cardQuestion === curState.cardQuestion
+                    && sortCards === curState.sortCards) {
+                    dispatch(GetCardsAC(res.data));
+                }
+
+            })
+            .catch(e => {
+                const error = e.response ? e.response.data.error : (e.message + ', more details in console');
+                dispatch(setError(error));
+            })
+            .finally(() => {
+                dispatch(setIsFetching(true));
+            })
+    }
 type AddNewCardACType = ReturnType<typeof AddNewCardAC>
 export const AddNewCardAC = (data: any) => {
     return {
@@ -203,6 +245,15 @@ export const setCurrentPackAC = (pack: PackType) => {
     } as const
 }
 
+type ChangeCardSearchParamsAT = ReturnType<typeof changeCardSearchParamsAC>
+export const changeCardSearchParamsAC = (data: CardSearchDataType) => {
+    return {
+        type: 'changeCardSearchParams',
+        payload: {
+            ...data
+        }
+    } as const
+}
 //types
 
 type DispatchType = allActionTypes | AppReducerActionsTypes

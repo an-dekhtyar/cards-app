@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import btn from '../../../n1-main/m1-ui/Common/Button/Button.module.css';
 import {useDispatch, useSelector} from 'react-redux';
@@ -75,24 +75,26 @@ export const Profile = () => {
                                 </div>
                             </div>
 
-                            <div className={st.rightBlock}>
-                                <div className={st.input}>
-                                    <div>Packs list {name}</div>
-                                    <Search/>
-                                </div >
-                                <div className={st.table}>
-                                    {/*<Cards/>*/}
-                                    <SearchTablePacks/>
-                                </div>
-
-                                <div className={st.pagination}><SearchPaginator/></div>
+                        <div className={st.rightBlock}>
+                            <div className={st.input}>
+                                <div>Packs list <EditableSpan value={name} onChange={onChangeName}/></div>
+                                <Search/>
                             </div>
-                        </> : <Preloader/>
-                    }
-                </div>}
-        </div>)
+                            <div className={st.table}>
+                                <Packs/>
+                                {/*   <SearchTablePacks/>*/}
+                            </div>
+
+                            <div className={st.pagination}>
+                                <SearchPaginator/>
+                                <PageCountSelect/>
+                            </div>
+                        </div>
+                    </> : <Preloader/>
+                }
+
+                </div>)
+
+
 };
-
-
-
 

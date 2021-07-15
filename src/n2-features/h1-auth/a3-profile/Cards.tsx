@@ -12,9 +12,7 @@ import {DeleteCardModal} from '../../../assets/ModalWindows/DeleteCardModal';
 import {UpdateCardModal} from '../../../assets/ModalWindows/UpdateCardModal';
 
 export const Cards = () => {
-    let dispatch = useDispatch()
     let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
-    let UserId = useSelector<AppStoreType, string | null>(state => state.profile._id)
     let [preloader, setPreloader] = useState(false)
     //for Modal===============================================================
     let [showDeleteModal, setShowDeleteModal] = useState(false)

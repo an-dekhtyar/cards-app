@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent,MouseEvent} from 'react';
 import styles from './SuperDoubleRange.module.css';
 
 type SuperDoubleRangePropsType = {
@@ -8,13 +8,15 @@ type SuperDoubleRangePropsType = {
     max?: number,
     step?: number,
     disabled?: boolean
+    onMouseUp?: ()=>void
 }
 
 
 export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
     {
         onChangeRange, value,
-        min, max, step, disabled
+        min, max, step, disabled,
+        onMouseUp
     }
 ) => {
 
@@ -50,7 +52,7 @@ export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
 
     return (
         <div className={styles.doubleRange}>
-            <span>{minValue}</span>
+            <span>{value ? value[0] : 0}</span>
             <div className={styles.rangeSlider}>
                 <input type={'range'}
                        data-position={'left'}
@@ -60,6 +62,7 @@ export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
                        onChange={onInputChange}
                        step={step}
                        disabled={disabled}
+                       onMouseUp={onMouseUp}
                 />
                 <input type={'range'}
                        data-position={'right'}
@@ -69,10 +72,11 @@ export const DoubleRange: React.FC<SuperDoubleRangePropsType> = (
                        onChange={onInputChange}
                        step={step}
                        disabled={disabled}
+                       onMouseUp={onMouseUp}
                 />
 
             </div>
-            <span>{maxValue}</span>
+            <span>{value ? value[1] : 0}</span>
         </div>
 
     )

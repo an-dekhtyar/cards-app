@@ -4,6 +4,12 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 
 import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
+import {ThunkAction} from 'redux-thunk';
+
+type SearchPropsType = {
+    getItems: () => void,
+    getSearchParams: (value: string) => void
+}
 
 
 export const Search = () => {
