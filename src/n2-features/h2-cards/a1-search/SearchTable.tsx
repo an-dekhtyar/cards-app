@@ -16,7 +16,7 @@ export const SearchTable = () => {
 
     useEffect(() => {
         dispatch(changeSearchParams({user_id: undefined}))
-        dispatch(GetPacksTC(true, {pageCount: 10}));
+        dispatch(GetPacksTC(true));
     }, [])
 
 

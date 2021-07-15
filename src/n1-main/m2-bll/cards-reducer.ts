@@ -1,7 +1,9 @@
 import {Dispatch} from 'redux';
-import {ApiCardsCard} from '../../API/ApiCardsCard';
+import {ApiCardsCard, CardSearchDataType} from '../../API/ApiCardsCard';
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
+import {setError, setIsFetching} from './app-reducer';
+import {PackType} from '../../API/ApiCardsPack';
 
 export type CardType = {
     answer: string
@@ -26,7 +28,30 @@ export type CardType = {
 
 let initialState = {
     cards: [] as Array<CardType>,
-    currentCardsPackId: ''
+    currentCardsPackId: '',
+    pack: {
+        cardsCount: 1,
+        created: '',
+        grade: 1,
+        more_id: '',
+        name: '',
+        path: '',
+        private: false,
+        rating: 1,
+        shots: 1,
+        type: '',
+        updated: '',
+        user_id: '',
+        user_name: '',
+        __v: 1,
+        _id: ''
+    } as PackType,
+    cardQuestion: '',
+    sortCards: '0grade',
+    min: 0,
+    max: 6,
+    page: 1,
+    pageCount: 10
 }
 
 export type InitialCardProfileReducerType = typeof initialState
@@ -47,12 +72,23 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
         case 'UpdateCardsPack': {
             return state
         }
+        case 'changeCardSearchParams': {
+            return {
+                ...state,
+                ...action.payload
+            }
+        }
         default:
             return state;
     }
 };
 
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType;
+type allActionTypes =
+    GetCardsACType
+    | AddNewCardACType
+    | SetCurrentPackIdType
+    | UpdateCardType
+    | ChangeCardSearchParamsAT;
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
 export const GetCardsAC = (data: any) => {
@@ -69,15 +105,47 @@ export const setCurrentPackId = (data: string) => {
     } as const
 }
 
-export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: Dispatch) => {
-    dispatch(setCurrentPackId(id))
-    setPreloader(true)
-    ApiCardsCard.getCards(id)
-        .then((res) => {
-            dispatch(GetCardsAC(res.data))
-        })
-}
+export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+    (dispatch: Dispatch, getState) => {
+        dispatch(setIsFetching(true));
+        dispatch(setCurrentPackId(id))
+        setPreloader(true)
+        const {
+            currentCardsPackId,
+            cardQuestion,
+            min,
+            max,
+            sortCards,
+            page,
+            pageCount
+        } = getState().cards;
 
+
+        ApiCardsCard.getCards(currentCardsPackId, {
+            cardQuestion,
+            min,
+            max,
+            sortCards,
+            page,
+            pageCount
+        })
+            .then((res) => {
+                const curState = getState().cards;
+                if (curState.page === page
+                    && cardQuestion === curState.cardQuestion
+                    && sortCards === curState.sortCards) {
+                    dispatch(GetCardsAC(res.data));
+                }
+
+            })
+            .catch(e => {
+                const error = e.response ? e.response.data.error : (e.message + ', more details in console');
+                dispatch(setError(error));
+            })
+            .finally(() => {
+                dispatch(setIsFetching(false));
+            })
+    }
 type AddNewCardACType = ReturnType<typeof AddNewCardAC>
 export const AddNewCardAC = (data: any) => {
     return {
@@ -122,8 +190,8 @@ export const UpdateCardsPackAC = (id: string) => {
         id: id
     } as const
 }
-export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
-    (dispatch) => {
+export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> => {
+    return (dispatch) => {
         setPreloader(true)
         ApiCardsCard.UpdateCard(id)
             .then((res) => {
@@ -132,3 +200,14 @@ export const UpdateCardThunk = (id: string, setPreloader: (value: boolean) => vo
                 setPreloader(false)
             })
     }
+}
+
+type ChangeCardSearchParamsAT = ReturnType<typeof changeCardSearchParamsAC>
+export const changeCardSearchParamsAC = (data: CardSearchDataType) => {
+    return {
+        type: 'changeCardSearchParams',
+        payload: {
+            ...data
+        }
+    } as const
+}

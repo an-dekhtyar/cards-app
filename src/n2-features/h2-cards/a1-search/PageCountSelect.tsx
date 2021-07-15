@@ -26,7 +26,7 @@ export const PageCountSelect = () => {
         <div>
             Show <SuperSelect value={pageCount}
                          options={pageCountValues}
-                         onChangeOption={onPageChange}/> Cards per Page
+                         onChangeOption={onPageChange}/> Packs per Page
         </div>
     )
 }

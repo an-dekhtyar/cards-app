@@ -6,8 +6,12 @@ let instance = axios.create({
 })
 
 export let ApiCardsCard = {
-    getCards: (id: string) => {
-        return instance.get(`cards/card?cardsPack_id=${id}`)
+    getCards: (id: string, searchData: CardSearchDataType = {}) => {
+        return instance.get(`cards/card?cardsPack_id=${id}`, {
+            params: {
+                ...searchData
+            }
+        })
     },
     AddCard: (CardsPackId: string, name: string) => {
         return instance.post(`cards/card`, {card: {cardsPack_id: CardsPackId}})
@@ -22,3 +26,12 @@ export let ApiCardsCard = {
 
 
 //types
+
+export type CardSearchDataType = {
+    cardQuestion?: string
+    sortCards?: string
+    min?: number
+    max?: number
+    page?: number
+    pageCount?: number
+}
