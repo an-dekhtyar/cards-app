@@ -61,3 +61,12 @@
     margin-bottom: 5px;
     box-shadow:none
 }
+.cardButton {
+    height: 30px;
+    width: 70px;
+    padding: 5px;
+    border-radius: 5px;
+
+    box-shadow:none;
+    margin-left: 10px;
+}

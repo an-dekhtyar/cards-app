@@ -31,6 +31,8 @@ export type CardType = {
 let initialState = {
     cards: [] as Array<CardType>,
     currentCardsPackId: '',
+    editCardMode:false,
+    addCardMode:false,
     pack: {
         cardsCount: 1,
         created: '',
@@ -95,28 +97,51 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
                 ...action.payload
             }
         }
+        case 'cards-app/card/TOGGLE_ADD_CARD_MODE': {
+            return {
+                ...state,
+                addCardMode: action.addCardMode
+            };
+        }
+        case 'cards-app/card/TOGGLE_EDIT_CARD_MODE': {
+            return {
+                ...state,
+                editCardMode: action.editCardMode
+            };
+        }
         default:
             return state;
     }
 };
-
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | isFetchingType| SetCurrentPackAT | ChangeCardSearchParamsAT
-
+//types
+type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | isFetchingType| SetCurrentPackAT | ChangeCardSearchParamsAT | EditCardModeActionType
+    | AddCardModeActionType
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
+type SetCurrentPackIdType = ReturnType<typeof setCurrentPackId>
+export type EditCardModeActionType = ReturnType<typeof toggleEditCardMode>
+export type AddCardModeActionType = ReturnType<typeof togglAddCardMode>
+
+
 export const GetCardsAC = (data: any) => {
     return {
         type: 'GetCardsCard',
         data
     } as const
 }
-type SetCurrentPackIdType = ReturnType<typeof setCurrentPackId>
 export const setCurrentPackId = (data: string) => {
     return {
         type: 'SetCurrentPackId',
         data
     } as const
 }
+export const toggleEditCardMode = (editCardMode:boolean) => ({
+    type: 'cards-app/card/TOGGLE_EDIT_CARD_MODE', editCardMode
+} as const)
+export const togglAddCardMode = (addCardMode:boolean) => ({
+    type: 'cards-app/card/TOGGLE_ADD_CARD_MODE', addCardMode
+} as const)
+
 
 export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch: Dispatch, getState) => {

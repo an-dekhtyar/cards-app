@@ -6,7 +6,7 @@ import {NavLink} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
-import {GetCardsThunk, setCurrentPackAC} from '../../../n1-main/m2-bll/cards-reducer';
+import {GetCardsThunk} from '../../../n1-main/m2-bll/cards-reducer';
 import {AddNewPackThunk, UpdatePackThunk} from '../../../n1-main/m2-bll/packs-reducer';
 import {PackType} from '../../../API/ApiCardsPack';
 import {DeletePackModal} from '../../../assets/ModalWindows/DeletePackModal';
@@ -49,7 +49,6 @@ export const Packs = () => {
         }
     }
 
-
     return (
         <div className={st.profilePage}>
             {showDeleteModal && <DeletePackModal idForModal={idForModal} setShowDeleteModal={setShowDeleteModal}
@@ -62,9 +61,6 @@ export const Packs = () => {
             <div className={st.profile}>{
                 packs !== undefined ?
                     packs.map((m) => {
-                        const onLearnButtonClick = () =>{
-                            dispatch(setCurrentPackAC(m));
-                        }
                         return (
                             <div>
                                 <ul>
@@ -82,11 +78,6 @@ export const Packs = () => {
                                             <Button
                                                 children={'Show Cards'}
                                                 onClick={() => GetCards(m._id, m.cardsCount)}/>
-                                        </NavLink>
-                                        <NavLink to={`${PATH.LEARN}/${m._id}`} className={st.headerLink}>
-                                            <Button
-                                                children={'Learn'}
-                                                onClick={onLearnButtonClick}/>
                                         </NavLink>
                                     </li>
                                 </ul>

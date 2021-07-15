@@ -11,13 +11,15 @@ import { Preloader } from "../../../n1-main/m1-ui/Common/Preloader/Preloader";
 
 
 type EditCardType = {
-
+    cardId:string
+    cardAnswer:string
+    cardQuestion:string
 }
 
 export const EditCard = (props: EditCardType) => {
 
     //props
-    let {  } = props
+    let {cardId, cardAnswer, cardQuestion} = props
     //hooks
     let dispatch = useDispatch()
     let isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching)
@@ -46,12 +48,12 @@ export const EditCard = (props: EditCardType) => {
                         </div>
 
                         <div className={st.inputContainer}>
-                            <label htmlFor={'Question'}>Question</label>
+                            <label htmlFor={'Question'}>{cardQuestion}</label>
                             <Input value={'nickName'} onChangeText={()=>{}} name={'Question'} />
                             <div className={st.attachFile}>+ Attach file</div>
                         </div>
                         <div className={st.inputContainer}>
-                            <label htmlFor={'Answer'}>Answer</label>
+                            <label htmlFor={'Answer'}>{cardAnswer}</label>
                             <Input value={'avatar'} onChangeText={()=>{}} name={'Answer'} />
                             <div className={st.attachFile}>+ Attach file</div>
                         </div>

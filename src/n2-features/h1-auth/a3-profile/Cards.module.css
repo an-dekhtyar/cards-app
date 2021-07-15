@@ -1,0 +1,72 @@
+.cardsPage {
+    display: flex;
+    justify-content: center;
+    min-height: 80vh;
+    color: #3b4652;
+    text-align: center;
+
+}
+
+.cardsContain {
+    display: grid;
+
+    border: 1px solid darkblue;
+    width: 1008px;
+    height: 636px;
+    align-self: center;
+    border-radius: 25px;
+    background-color: white;
+    text-align: center;
+
+    grid-template-areas:
+    "t"
+    "s"
+    "c"
+    "p"
+;
+    grid-template-rows: 50px 50px 400px 50px;
+    grid-gap: 5px;
+
+}
+.row{
+    display: flex;
+    justify-content: space-around;
+}
+
+.row:nth-child(2n){
+    background-color: lightgray;
+}
+
+.row span{
+    flex: 1;
+}
+.cardsTable {
+    grid-area: c;
+    border: 1px dashed darkblue;
+    margin: 5px 20px 5px 20px;
+}
+.cardsPagination {
+    grid-area: p;
+    border: 1px dashed darkblue;
+    margin: 5px 20px 5px 20px;
+}
+.cardsTitle {
+    grid-area: t;
+    border: 1px dashed darkblue;
+    margin: 15px 20px 5px 20px;
+    text-align: left;
+}
+.cardsSearch {
+    grid-area: s;
+    border: 1px dashed darkblue;
+    margin: 5px 20px 5px 20px;
+    display: flex;
+}
+
+.packName {
+    font-size: large;
+}
+.cardsSearch input {
+    width: 100%;
+    height: 40px;
+}

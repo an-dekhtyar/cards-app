@@ -98,7 +98,7 @@ export const Learn = () => {
     }
 
     return (
-        isFetching || !isInitialized ? <Preloader/> :
+        !isFetching || !isInitialized ? <Preloader/> :
             <div>
                 <h2>Learn '{pack.name}'</h2>
                 <p>Question: {curCard.question}</p>

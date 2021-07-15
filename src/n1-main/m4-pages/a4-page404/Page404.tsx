@@ -5,7 +5,7 @@ import { AddNewCard } from '../../../n2-features/h2-cards/a4-add-new-card/AddNew
 export const Page404 = () => (
     <div>
         <h1>404</h1>
-        <EditCard/>
+        {/*<EditCard/>*/}
         <AddNewCard/>
     </div>
 );
