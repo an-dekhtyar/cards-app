@@ -172,6 +172,7 @@ export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unkno
                 if (curState.page === page
                     && cardQuestion === curState.cardQuestion
                     && sortCards === curState.sortCards) {
+                    //debugger;
                     dispatch(GetCardsAC(res.data));
                 }
 

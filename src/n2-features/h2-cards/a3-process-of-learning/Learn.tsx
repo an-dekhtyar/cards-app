@@ -1,7 +1,7 @@
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {useEffect, useState} from 'react';
 import SuperRadio from '../../../n1-main/m1-ui/Common/Radio/SuperRadio';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {CardType, GetCardsThunk, UpgradeCardGradeThunk} from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
@@ -25,6 +25,7 @@ const getCard = (cards: Array<CardType>, curCard_id: string) => {
         rndNumber = rndNumber - (6 - newCards[i].grade) ** 2;
         i++;
     }
+    console.log(i - 1);
     return cards[i - 1];
 }
 
@@ -34,11 +35,6 @@ export const Learn = () => {
     const dispatch = useDispatch();
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [value, setValue] = useState<string>('Did not know');
-    const grades = ['Did not know', 'Forgot', 'A lot of thoughts', 'Confused', 'Knew the answer'];
-    const cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards);
-    const pack = useSelector<AppStoreType, PackType>(state => state.cards.pack);
-    const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
-    const isInitialized = cards.length !== 0 && cards[0].cardsPack_id === pack._id;
     const [curCard, setCurCard] = useState<CardType>({
         answer: '',
         answerImg: '',
@@ -59,9 +55,16 @@ export const Learn = () => {
         __v: 1,
         _id: '1',
     });
+    const grades = ['Did not know', 'Forgot', 'A lot of thoughts', 'Confused', 'Knew the answer'];
+    const cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards);
+    const pack = useSelector<AppStoreType, PackType>(state => state.cards.pack);
+    const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
+    const isInitialized = cards.length !== 0 && (cards[0].cardsPack_id === pack._id || pack._id === '');
+    const location = useLocation();
+    const pack_id = location.pathname.substring(7, location.pathname.length);
 
     useEffect(() => {
-        dispatch(GetCardsThunk(pack._id ));
+        dispatch(GetCardsThunk(pack_id));
     }, []);
 
     useEffect(() => {
@@ -74,7 +77,6 @@ export const Learn = () => {
             setCurCard(getCard(cards, curCard._id));
         }
     }
-
     //functions
 
     const onCancelButtonClick = () => {
@@ -96,11 +98,10 @@ export const Learn = () => {
         setCurCard(getCard(cards, curCard._id));
 
     }
-
     return (
-        !isFetching || !isInitialized ? <Preloader/> :
+        !isFetching && !isInitialized ? <Preloader/> :
             <div>
-                <h2>Learn '{pack.name}'</h2>
+                <h2>Learn '{pack.name ? pack.name : 'Pack Name'}'</h2>
                 <p>Question: {curCard.question}</p>
                 {
                     showAnswer && <p>Answer: {curCard.answer}</p>}
