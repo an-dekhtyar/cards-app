@@ -90,7 +90,6 @@ export const Learn = () => {
     }
     const onNextButtonClick = () => {
         const newGrade = grades.indexOf(value) + 1;
-        debugger;
         if (newGrade !== 0) {
             dispatch(UpgradeCardGradeThunk(curCard._id, newGrade));
         }
