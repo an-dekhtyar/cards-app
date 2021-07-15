@@ -15,10 +15,24 @@ export let ApiCardsCard = {
     DeleteCard: (id: string) => {
         return instance.delete(`cards/card?id=${id}`)
     },
-    UpdateCard: (id: string) => {
+    /*UpdateCard: (id: string) => {
         return instance.put(`cards/card?cardsPack_id=${id}`, {card: {_id: id, question: 'UPDATED'}})
-    },
+    },*/
+    updateCard: (card:updateCardRequestType) => {
+        return instance.put('cards/card', {card})
+    }
 }
 
 
 //types
+
+export type updateCardRequestType = {
+        _id: string
+        answer?: string
+        answerImg?: string
+        answerVideo?: string
+        question?: string
+        questionImg?: string
+        questionVideo?: string
+}
+

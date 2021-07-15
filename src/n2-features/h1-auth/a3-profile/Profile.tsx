@@ -17,6 +17,8 @@ import {SearchPaginator} from '../../h2-cards/a1-search/SearchPaginator';
 import {SearchDoubleRange} from '../../h2-cards/a1-search/SearchDoubleRange';
 import {EditProfile} from './../a6-edit-profile/EditProfile'
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
+import {Cards} from "./Cards";
+import {SearchTablePacks} from "../../h2-cards/a1-search/SearchTablePacks";
 
 export const Profile = () => {
     const dispatch = useDispatch()
@@ -79,8 +81,8 @@ export const Profile = () => {
                                     <Search/>
                                 </div >
                                 <div className={st.table}>
-                                    {/* <Cards/> */}
-                                    {/*<SearchTablePacks/>*/}
+                                    {/*<Cards/>*/}
+                                    <SearchTablePacks/>
                                 </div>
 
                                 <div className={st.pagination}><SearchPaginator/></div>
