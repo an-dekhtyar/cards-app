@@ -15,7 +15,7 @@ export const SearchSortButton = ({sortValueName}: { sortValueName: string }) => 
 
     const changePackSort = (sortValue: boolean) => {
         dispatch(changeCardSearchParamsAC({sortCards: sortValue ? `0${sortValueName}` : `1${sortValueName}`}))
-        dispatch(GetCardsThunk(pack_id, value => {}));
+        dispatch(GetCardsThunk(pack_id));
     }
     const active = packSort === `0${sortValueName}` || packSort ===`1${sortValueName}`;
 

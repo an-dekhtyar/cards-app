@@ -36,7 +36,7 @@ export const Learn = () => {
     const [value, setValue] = useState<string>('Did not know');
     const grades = ['Did not know', 'Forgot', 'A lot of thoughts', 'Confused', 'Knew the answer'];
     const cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards);
-    const pack = useSelector<AppStoreType, PackType>(state => state.cards.currentPack);
+    const pack = useSelector<AppStoreType, PackType>(state => state.cards.pack);
     const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
     const isInitialized = cards.length !== 0 && cards[0].cardsPack_id === pack._id;
     const [curCard, setCurCard] = useState<CardType>({
@@ -61,8 +61,7 @@ export const Learn = () => {
     });
 
     useEffect(() => {
-        dispatch(GetCardsThunk(pack._id, value1 => {
-        }));
+        dispatch(GetCardsThunk(pack._id ));
     }, []);
 
     useEffect(() => {

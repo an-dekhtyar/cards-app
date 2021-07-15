@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import {ApiCardsCard, CardSearchDataType} from '../../API/ApiCardsCard';
+import {ApiCardsCard, CardSearchDataType, updateCardRequestType} from '../../API/ApiCardsCard';
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
 import {isFetchingType, setIsFetching, setError} from "./app-reducer";
@@ -86,7 +86,7 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
         case 'SetCurrentPack': {
             return {
                 ...state,
-                currentPack: action.pack
+                pack: action.pack
             }
         }
         case 'changeCardSearchParams': {
@@ -100,7 +100,7 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
     }
 };
 
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | isFetchingType;| SetCurrentPackAT | ChangeCardSearchParamsAT
+type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | isFetchingType| SetCurrentPackAT | ChangeCardSearchParamsAT
 
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
@@ -118,11 +118,11 @@ export const setCurrentPackId = (data: string) => {
     } as const
 }
 
-export const GetCardsThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch: Dispatch, getState) => {
         dispatch(setIsFetching(false));
         dispatch(setCurrentPackId(id))
-        setPreloader(true)
+
         const {
             currentCardsPackId,
             cardQuestion,
@@ -189,7 +189,7 @@ export const AddNewCardThunk = (name: string, setPreloader: (value: boolean) => 
         .catch(e => console.log(e))
 }*/
 
-export let DeleteCardThunk = (id: string, setPreloader: (value: boolean) => void) => (dispatch: any) => {
+export let DeleteCardThunk = (id: string)  => (dispatch: any) => {
     dispatch(setIsFetching(false))
     ApiCardsCard.DeleteCard(id)
         .then((res) => {

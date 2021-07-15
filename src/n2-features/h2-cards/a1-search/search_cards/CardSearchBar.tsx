@@ -16,7 +16,7 @@ export const CardSearchBar = () => {
     //functions
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(changeCardSearchParamsAC({cardQuestion: e.currentTarget.value}));
-        dispatch(GetCardsThunk(pack_id, value => {}))
+        dispatch(GetCardsThunk(pack_id))
     }
 
     return (

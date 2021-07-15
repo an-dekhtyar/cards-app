@@ -21,7 +21,7 @@ export const CardsPageCountSelect = () => {
 
     const onPageChange = (value: string) => {
         dispatch(changeCardSearchParamsAC({pageCount: Number(value)}));
-        dispatch(GetCardsThunk(pack_id, value => {}));
+        dispatch(GetCardsThunk(pack_id));
     }
 
     return (

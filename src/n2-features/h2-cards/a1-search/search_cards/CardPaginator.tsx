@@ -15,7 +15,7 @@ export const CardPaginator = () => {
     //functions
     const onPageChanged = (page: number) => {
         dispatch(changeCardSearchParamsAC({page}));
-        dispatch(GetCardsThunk(pack_id, value => {}));
+        dispatch(GetCardsThunk(pack_id));
     }
 
     return(

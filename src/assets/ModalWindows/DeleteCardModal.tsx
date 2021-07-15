@@ -16,7 +16,7 @@ export let DeleteCardModal = (props:propsType) => {
         props.setShowDeleteModal(false)
     }
     let showYesFoo=()=>{
-        dispatch(DeleteCardThunk(props.idForModal, props.setPreloader))
+        dispatch(DeleteCardThunk(props.idForModal))
         props.setShowDeleteModal(false)
     }
     return (

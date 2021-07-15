@@ -11,14 +11,15 @@ import st from './Profile.module.css'
 import profileLogo from '../../../assets/images/profileLogo.png'
 import {Packs} from './Packs';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
-import {EditableSpan} from './Editablespan';
+
 import {Search} from '../../h2-cards/a1-search/Search';
 import {SearchPaginator} from '../../h2-cards/a1-search/SearchPaginator';
 import {SearchDoubleRange} from '../../h2-cards/a1-search/SearchDoubleRange';
 import {EditProfile} from './../a6-edit-profile/EditProfile'
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
-import {Cards} from "./Cards";
-import {SearchTablePacks} from "../../h2-cards/a1-search/SearchTablePacks";
+
+
+import {PageCountSelect} from "../../h2-cards/a1-search/PageCountSelect";
 
 export const Profile = () => {
     const dispatch = useDispatch()
@@ -31,15 +32,19 @@ export const Profile = () => {
 
 
     useEffect(() => {
-        dispatch(changeSearchParams({user_id: user_id?user_id:undefined}))
-        dispatch(GetPacksTC(true, {user_id: user_id?user_id:undefined}))
+        dispatch(changeSearchParams({user_id: user_id ? user_id : undefined}))
+        dispatch(GetPacksTC(true, {user_id: user_id ? user_id : undefined}))
     }, [])
 
     const {_id, name, avatar, email, publicCardPacksCount} = userData
 
 
-    const logout = () => { dispatch(logOutTC()) }
-    const onClickEditMode = () => {dispatch(toggleEditMode(true))}
+    const logout = () => {
+        dispatch(logOutTC())
+    }
+    const onClickEditMode = () => {
+        dispatch(toggleEditMode(true))
+    }
 
 
     if (!isAuth) {
@@ -51,7 +56,7 @@ export const Profile = () => {
         <div className={st.profilePage}>
             {editMode
                 ?
-                <EditProfile userAvatar={avatar} profileLogo={profileLogo} userEmail={email} userName={name} />
+                <EditProfile userAvatar={avatar} profileLogo={profileLogo} userEmail={email} userName={name}/>
                 :
                 <div className={st.profileContain}>
 
@@ -65,7 +70,8 @@ export const Profile = () => {
                                              src={avatar === 'Avatar is not defined' || 'Add link to add ava!' ? profileLogo : avatar}/>
                                     </div>
                                     <div>Front-end developer</div>
-                                    <Button className={btn.editProfileBtn} onClick={onClickEditMode}>Edit profile</Button>
+                                    <Button className={btn.editProfileBtn} onClick={onClickEditMode}>Edit
+                                        profile</Button>
                                     <div>My public card count is: {publicCardPacksCount}</div>
                                 </div>
                                 <div className={st.range}><SearchDoubleRange/></div>
@@ -75,25 +81,29 @@ export const Profile = () => {
                                 </div>
                             </div>
 
-                        <div className={st.rightBlock}>
-                            <div className={st.input}>
-                                <div>Packs list <EditableSpan value={name} onChange={onChangeName}/></div>
-                                <Search/>
-                            </div>
-                            <div className={st.table}>
-                                <Packs/>
-                                {/*   <SearchTablePacks/>*/}
-                            </div>
+                            <div className={st.rightBlock}>
+                                <div className={st.input}>
+                                    <div>Packs list {name}</div>
+                                    <Search/>
+                                </div>
+                                <div className={st.table}>
+                                    <Packs/>
+                                    {/*   <SearchTablePacks/>*/}
+                                </div>
 
-                            <div className={st.pagination}>
-                                <SearchPaginator/>
-                                <PageCountSelect/>
+                                <div className={st.pagination}>
+                                    <SearchPaginator/>
+                                    <PageCountSelect/>
+                                </div>
                             </div>
-                        </div>
-                    </> : <Preloader/>
-                }
+                        </>
+                        :
+                        <Preloader/>
+                    }
+                </div>
 
-                </div>)
+            }
+        </div>)
 
 
 };
