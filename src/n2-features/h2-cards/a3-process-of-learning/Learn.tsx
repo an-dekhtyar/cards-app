@@ -59,7 +59,7 @@ export const Learn = () => {
         setCurCard(getCard(cards, curCard._id));
     }, []);
     useEffect(() => {
-        setValue(grades[curCard.grade - 1])
+        setValue(grades[Math.round(curCard.grade) - 1])
     }, [curCard])
 
     const history = useHistory();
