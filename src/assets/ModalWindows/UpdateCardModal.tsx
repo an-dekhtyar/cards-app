@@ -16,7 +16,8 @@ export let UpdateCardModal = (props:propsType) => {
         props.setShowUpdateProfileModal(false)
     }
     let showYesFoo=()=>{
-        dispatch(UpdateCardThunk(props.idForModal, props.setPreloader))
+        const card = { _id:props.idForModal}
+        dispatch(UpdateCardThunk(card))
         props.setShowUpdateProfileModal(false)
     }
     return (

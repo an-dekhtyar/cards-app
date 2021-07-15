@@ -1,0 +1,56 @@
+.editProfile {
+    display: flex;
+    justify-content: center;
+    min-height: 80vh;
+    color: #3b4652;
+    text-align: center;
+
+}
+
+.editProfileContain {
+    border: 1px solid darkblue;
+    width: 413px;
+    height: 465px;
+    align-self: center;
+    border-radius: 25px;
+    background-color: white;
+    text-align: center;
+
+}
+.editProfileContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.logo img {
+
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.inputContainer label {
+    display: block;
+    text-align: left;
+    padding-left: 30px;
+}
+.buttonContainer{
+    display: flex;
+    margin-top: 40px;
+    justify-content: space-between;
+    margin-left: 35px;
+    margin-right: 35px;
+}
+.inputContainer {
+    margin-top: 30px;
+}
+.attachFile {
+    display: block;
+    text-align: left;
+    padding-left: 30px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #21268F;
+    cursor: pointer;
+}

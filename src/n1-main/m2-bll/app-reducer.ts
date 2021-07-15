@@ -71,6 +71,8 @@ export const initializeApp = (): ThunkAction<void, AppStoreType, unknown, AppRed
 export type TState = typeof initState
 
 export type AppReducerActionsTypes =
-    | ReturnType<typeof setIsFetching>
+    | isFetchingType
     | ReturnType<typeof setError>
     | ReturnType<typeof setIsInitialized>
+
+export type isFetchingType = ReturnType<typeof setIsFetching>

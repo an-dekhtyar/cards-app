@@ -42,7 +42,7 @@ export const Packs = () => {
     }
 
     const GetCards = (id: string, cardsCount: number) => {
-        dispatch(GetCardsThunk(id, setPreloader))
+        dispatch(GetCardsThunk(id))
         if (cardsCount === 0) {
             // dispatch(AddNewCardThunk(id, setPreloader))
             // dispatch(CreatePackIdThunk(id))
