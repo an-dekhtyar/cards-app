@@ -59,8 +59,11 @@
     box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 .cardsPagination {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     grid-area: p;
-    margin: 5px 20px 5px 20px;
+    margin: 5px 20px 5px 50px;
 }
 .cardsTitle {
     grid-area: t;
