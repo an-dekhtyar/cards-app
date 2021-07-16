@@ -11,5 +11,5 @@
 }
 
 .active{
-
+    filter: invert(50%) sepia(31%) saturate(1005%) hue-rotate(345deg) brightness(90%) contrast(84%);
 }

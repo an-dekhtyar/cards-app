@@ -1,21 +1,38 @@
-.currentItem{
-    font-weight: bold;
-    background-color: #de9448;
+.container{
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
 }
 
 .item{
     display: inline-block;
     box-sizing: border-box;
-    padding: 5px;
-    border: 1px solid gray;
+    padding: 5px 10px;
+    border-radius: 2px;
     margin: 2px;
+    color: #2D2E46;
+}
+.currentItem{
+    font-weight: bold;
+    background-color:#21268F;
+    color: white;
 }
 
 .item:hover{
-    background-color: #de9448;
+    background-color: #f1f1f1;
 }
 
 .btn{
-    width: 30px;
-    height: 30px;
+    padding: 5px;
+    border-radius: 2px;
+    width: 14px;
+    height: 14px;
+    line-height: 0;
+    margin: 0;
+}
+
+
+.btn:hover{
+    background-color: #dbd6d6;;
+
 }

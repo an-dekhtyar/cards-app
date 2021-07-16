@@ -9,7 +9,7 @@
 
 .profileContain {
     display: grid;
-
+    margin-top: 50px;
     border: 1px solid darkblue;
     width: 80%;
     align-self: center;

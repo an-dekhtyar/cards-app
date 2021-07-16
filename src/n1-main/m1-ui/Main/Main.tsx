@@ -19,7 +19,7 @@ export const Main = () => {
     if (!isInitialized) return <Preloader/>
 
     return <div>
-        <Header/>
+        {/*<Header/>*/}
 
         <Routes/>
     </div>

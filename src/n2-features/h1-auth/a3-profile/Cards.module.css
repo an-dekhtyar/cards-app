@@ -9,7 +9,7 @@
 
 .cardsContain {
     display: grid;
-
+    margin-top: 50px;
     border: 1px solid darkblue;
     width: 70%;
     height: 850px;
@@ -45,6 +45,8 @@
 }
 .row span:last-child{
     flex: 240px;
+    text-align: right;
+    margin-right: 10px;
 }
 
 .buttons{
@@ -52,7 +54,15 @@
     margin-right: 10px;
 }
 
+.row a {
+    text-decoration: none;
+    color: black;
+}
 
+
+.row a:hover {
+    color: #b87035;
+}
 .cardsTable {
     grid-area: c;
     margin: 5px 20px 5px 20px;
@@ -68,6 +78,8 @@
 .cardsTitle {
     grid-area: t;
     margin: 15px 20px 5px 20px;
+    display: flex;
+    align-items: center;
     text-align: left;
 }
 .cardsSearch {
@@ -83,3 +95,23 @@
     width: 100%;
     height: 40px;
 }
+
+.cardsTitle a{
+    margin: 0 10px 0 0;
+    padding: 3px;
+    border-radius: 2px;
+    line-height: 0;
+}
+
+.cardsTitle a:hover{
+    background-color: #dbd6d6;;
+    line-height: 0;
+}
+
+.backArrow{
+    margin: 0;
+    width: 18px;
+    height: 18px;
+}
+
+

@@ -1,6 +1,7 @@
 import s from './Paginator.module.css';
 import React from 'react';
-
+import leftArr from './../../../../assets/images/left-arrow.png';
+import rightArr from './../../../../assets/images/right-arrow.png';
 
 type PaginatorPropsType = {
     currentItem: number,
@@ -57,11 +58,11 @@ export const Paginator = (props: PaginatorPropsType) => {
     });
 
     return (
-        <div>
-            {currentItem !== 1 && <button className={s.btn} onClick={onPrevButtonClick}>{'<'}</button>}
+        <div className={s.container}>
+            {currentItem !== 1 && <img src={leftArr} className={s.btn} onClick={onPrevButtonClick} alt={''}/>}
             {pagesComponent}
             {currentItem !== totalPortionCount &&
-            <button className={s.btn} onClick={onNextButtonClick}>{'>'}</button>}
+            <img src={rightArr} className={s.btn} onClick={onNextButtonClick} alt={''}/>}
         </div>
     );
 }

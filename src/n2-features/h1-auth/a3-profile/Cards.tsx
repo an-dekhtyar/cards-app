@@ -22,18 +22,17 @@ import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator
 import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
 import {CardSearchTableHeader} from '../../h2-cards/a1-search/search_cards/CardSearchTableHeader';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
-import {DateHelper} from "../../../assets/helper/date-helper";
-import {stat} from "fs";
+import {DateHelper} from '../../../assets/helper/date-helper';
+import backArrow from '../../../assets/images/back-arrow.png';
 
 export const Cards = () => {
     let dispatch = useDispatch()
     let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
     let packUserId = useSelector<AppStoreType, string>(state => state.cards.currentUserId)
-    let userId = useSelector<AppStoreType, string | null >(state => state.profile._id)
+    let userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
 
     let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.pack.user_id)
     let [preloader, setPreloader] = useState(false)
-
 
 
     //get Pack_id===============================================================
@@ -59,7 +58,6 @@ export const Cards = () => {
     let isUserPack = packUserId === userId
 
 
-
     const AddNewCard = () => {
         setAddNewCardModal(true)
 
@@ -78,9 +76,9 @@ export const Cards = () => {
                 <div className={st.cardsContain}>
                     <div className={st.cardsTitle}>
                         <NavLink to={PATH.PROFILE}>
-                            <button> ←</button>
+                            <img className={st.backArrow} src={backArrow} alt={''}/>
                         </NavLink>
-                        <span className={st.packName}>  Pack Name</span>
+                        <span className={st.packName}>Pack Name</span>
                     </div>
                     <div className={st.cardsSearch}>
                         <CardSearchBar/>
