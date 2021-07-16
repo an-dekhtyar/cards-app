@@ -31,14 +31,9 @@ export const Cards = () => {
     let packUserId = useSelector<AppStoreType, string>(state => state.cards.currentUserId)
     let userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
     const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
-    let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.pack.user_id)
+    let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.currentCardsPackId)
     let [preloader, setPreloader] = useState(false)
     let [initialized, setInitialized] = useState(false);
-
-    if (!initialized && isFetching) {
-        setInitialized(true);
-    }
-
 
     //get Pack_id===============================================================
     const location = useLocation();
@@ -47,6 +42,11 @@ export const Cards = () => {
         dispatch(changeCardSearchParamsAC({pageCount: 10}))
         dispatch(GetCardsThunk(pack_id))
     }, []);
+
+    if(!isFetching&&pack_id === currentPackUserId && !initialized){
+        setInitialized(true);
+    }
+
     //for Modal===============================================================
     let [showDeleteModal, setShowDeleteModal] = useState(false)
     let [idForModal, setIdForModal] = useState('')
@@ -62,10 +62,8 @@ export const Cards = () => {
     let [cardQuestion, setCardQuestion] = useState('')
     let isUserPack = packUserId === userId
 
-
     const AddNewCard = () => {
         setAddNewCardModal(true)
-
     }
     const updateCard = () => {
         dispatch(toggleEditCardMode(true))
