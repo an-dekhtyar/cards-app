@@ -1,10 +1,9 @@
 import {ChangeEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
-
+import st from './SearchBar.module.css';
 import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
 import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
-import {ThunkAction} from 'redux-thunk';
 
 type SearchPropsType = {
     getItems: () => void,
@@ -27,6 +26,7 @@ export const Search = () => {
     return (
         <Input value={packName}
                placeholder={'Search...'}
-               onChange={onInputChange}></Input>
+               onChange={onInputChange}
+        className={st.container}></Input>
     )
 }

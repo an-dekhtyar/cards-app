@@ -24,6 +24,8 @@
 
 .row{
     display: flex;
+    padding: 10px 0;
+    background-color: #ECECF9;
     justify-content: space-around;
 }
 
@@ -32,10 +34,10 @@
 }
 
 .row span{
-    flex: 1;
+    flex: 3;
 }
 .row span:last-child{
-    flex: 2;
+    flex: 240px;
 }
 
 .pagination{

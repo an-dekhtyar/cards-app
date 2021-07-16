@@ -12,7 +12,7 @@ export const PageCountSelect = () => {
 
 
     const pageCountValues = useMemo(() => {
-        return [7, 10, 15, 20];
+        return [5, 7, 10, 12];
     }, [])
 
     //functions

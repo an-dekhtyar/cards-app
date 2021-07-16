@@ -88,8 +88,9 @@ export const Profile = () => {
 
                             <div className={st.rightBlock}>
                                 <div className={st.input}>
-                                    <div>Packs list {name}</div>
-                                    <Search/>
+                                    <span>
+                                        <Search/>
+                                    </span>
                                     <Button children={'add new pack'} onClick={AddNewPack}/>
                                 </div>
                                 <div className={st.table}>

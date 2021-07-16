@@ -22,6 +22,7 @@ import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator
 import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
 import {CardSearchTableHeader} from '../../h2-cards/a1-search/search_cards/CardSearchTableHeader';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
+import {convertDate} from '../../../utils/Data-consversion';
 
 export const Cards = () => {
     let dispatch = useDispatch()
@@ -102,14 +103,15 @@ export const Cards = () => {
                         <CardSearchTableHeader/>
                         {
                             cards !== undefined ?
-                                cards.map((m) => {
+                                cards.map((card) => {
+                                    const updatedDate = convertDate(card.updated)
                                     return (
                                         <Card
-                                            key={m._id} cardId={m._id}
-                                            cardUserId={m.user_id} userId={userId}
-                                            answer={m.answer} question={m.question}
-                                            created={m.created} updated={m.updated}
-                                            grade={m.grade} setCardId={setCardId}
+                                            key={card._id} cardId={card._id}
+                                            cardUserId={card.user_id} userId={userId}
+                                            answer={card.answer} question={card.question}
+                                            created={card.created} updated={updatedDate}
+                                            grade={card.grade} setCardId={setCardId}
                                             setCardAnswer={setCardAnswer} setCardQuestion={setCardQuestion}
                                             updateCard={updateCard}
                                         />

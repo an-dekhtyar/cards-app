@@ -10,10 +10,10 @@ import {GetCardsThunk, setCurrentPackAC} from '../../../n1-main/m2-bll/cards-red
 import {PackType} from '../../../API/ApiCardsPack';
 import {DeletePackModal} from '../../../assets/ModalWindows/DeletePackModal';
 import {UpdatePackModal} from '../../../assets/ModalWindows/UpdatePackModal';
-import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackProfileModal';
 import bt from '../../../n1-main/m1-ui/Common/Button/Button.module.css';
 import {SearchTableHeader} from '../../h2-cards/a1-search/SearchTableHeader';
 import tableSt from './Cards.module.css';
+import {convertDate} from '../../../utils/Data-consversion';
 
 export const Packs = () => {
     let dispatch = useDispatch();
@@ -24,7 +24,6 @@ export const Packs = () => {
     let [showDeleteModal, setShowDeleteModal] = useState(false);
     let [idForModal, setIdForModal] = useState('');
     let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
-
 
 
     const DeletePack = (id: string) => {
@@ -63,20 +62,25 @@ export const Packs = () => {
                                 setShowUpdateProfileModal(true)
                                 setIdForModal(id)
                             }
+                            const updatedDate = convertDate(pack.updated);
                             return (
                                 <div key={pack._id} className={tableSt.row}>
                                     <NavLink to={`${PATH.CARDS}/${pack._id}`} className={st.headerLink}>
                                         <span>{pack.name}</span>
                                     </NavLink>
                                     <span>{pack.cardsCount}</span>
-                                    <span>{pack.updated}</span>
-                                    <span>{pack.created}</span>
-                                    <span>
-                                <Button children={'Delete'} red={true} className={bt.cardButton}
-                                        onClick={() => DeletePack(pack._id)}/>
-                                <Button children={'Update'} className={bt.cardButton}
-                                        onClick={() => UpdatePack(pack._id)}/>
-                                <NavLink to={`${PATH.LEARN}/${pack._id}`}>
+                                    <span>{updatedDate}</span>
+                                    <span>{pack.user_name}</span>
+                                    <span className={tableSt.buttons}>
+                                        {user_id === pack.user_id && <>
+                                            <Button children={'Delete'} red={true} className={bt.cardButton}
+                                                    onClick={() => DeletePack(pack._id)}/>
+                                            <Button children={'Update'} className={bt.cardButton}
+                                                    onClick={() => UpdatePack(pack._id)}/>
+                                        </>
+                                        }
+
+                                        <NavLink to={`${PATH.LEARN}/${pack._id}`}>
                                     <Button
                                         className={bt.cardButton}
                                         children={'Learn'}
