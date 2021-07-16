@@ -158,10 +158,9 @@ export const togglAddCardMode = (addCardMode: boolean) => ({
 } as const)
 
 
-export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const GetCardsThunk = (id: string ): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch: Dispatch, getState) => {
-        dispatch(setIsFetching(false));
-        dispatch(setCurrentPackId(id))
+            dispatch(setIsFetching(false));
         const {
             cardQuestion,
             min,
@@ -185,6 +184,7 @@ export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unkno
                 if (curState.page === page
                     && cardQuestion === curState.cardQuestion
                     && sortCards === curState.sortCards) {
+                    dispatch(setCurrentPackId(id))
                     dispatch(GetCardsAC(res.data));
                 }
 
@@ -194,7 +194,8 @@ export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unkno
                 dispatch(setError(error));
             })
             .finally(() => {
-                dispatch(setIsFetching(true));
+                 dispatch(setIsFetching(true));
+
             })
     }
 type AddNewCardACType = ReturnType<typeof AddNewCardAC>

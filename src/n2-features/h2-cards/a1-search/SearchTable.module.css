@@ -29,11 +29,15 @@
     justify-content: space-around;
 }
 
+
 .row:nth-child(2n){
     background-color: lightgray;
 }
 
-.row span{
+.row>span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 3;
 }
 .row span:last-child{

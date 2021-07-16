@@ -18,23 +18,22 @@ import bt from './../../../n1-main/m1-ui/Common/Button/Button.module.css'
 import {CardRating} from '../../h2-cards/a2-cards-rating/CardsRating';
 import {EditCard} from '../../h2-cards/a3-edit-card/EditCard';
 import {CardSearchBar} from '../../h2-cards/a1-search/search_cards/CardSearchBar';
-import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator';
-import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
 import {CardSearchTableHeader} from '../../h2-cards/a1-search/search_cards/CardSearchTableHeader';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
-import {DateHelper} from "../../../assets/helper/date-helper";
-import {stat} from "fs";
+import {DateHelper} from '../../../assets/helper/date-helper';
+import backArrow from '../../../assets/images/back-arrow.png';
+import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator';
+import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
 
 export const Cards = () => {
     let dispatch = useDispatch()
     let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
     let packUserId = useSelector<AppStoreType, string>(state => state.cards.currentUserId)
-    let userId = useSelector<AppStoreType, string | null >(state => state.profile._id)
-
-    let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.pack.user_id)
+    let userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
+    const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
+    let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.currentCardsPackId)
     let [preloader, setPreloader] = useState(false)
-
-
+    let [initialized, setInitialized] = useState(false);
 
     //get Pack_id===============================================================
     const location = useLocation();
@@ -43,6 +42,11 @@ export const Cards = () => {
         dispatch(changeCardSearchParamsAC({pageCount: 10}))
         dispatch(GetCardsThunk(pack_id))
     }, []);
+
+    if(!isFetching&&pack_id === currentPackUserId && !initialized){
+        setInitialized(true);
+    }
+
     //for Modal===============================================================
     let [showDeleteModal, setShowDeleteModal] = useState(false)
     let [idForModal, setIdForModal] = useState('')
@@ -78,9 +82,9 @@ export const Cards = () => {
                 <div className={st.cardsContain}>
                     <div className={st.cardsTitle}>
                         <NavLink to={PATH.PROFILE}>
-                            <button> ←</button>
+                            <img className={st.backArrow} src={backArrow} alt={''}/>
                         </NavLink>
-                        <span className={st.packName}>  Pack Name</span>
+                        <span className={st.packName}>Pack Name</span>
                     </div>
                     <div className={st.cardsSearch}>
                         <CardSearchBar/>
@@ -91,13 +95,13 @@ export const Cards = () => {
                     {showUpdateProfileModal &&
                     <UpdateCardModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}/>}
                     {AddNewCardModal &&
-                    <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} cardsPack_id={pack_id}/>}
-
-                    <div className={st.cardsTable}>
-                        <CardSearchTableHeader/>
-                        {
-                            cards !== undefined ?
-                                cards.map((card) => {
+                    <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} setPreloader={setPreloader}/>}
+                    {initialized ?
+                        <div className={st.cardsTable}>
+                            <CardSearchTableHeader/>
+                            {
+                                cards !== undefined ?
+                                    cards.map((card) => {
 
                                     return (
                                         <Card
@@ -114,7 +118,8 @@ export const Cards = () => {
                                 :
                                 <div>{preloader && <Preloader/>}</div>
                         }</div>
-
+                        :
+                        <Preloader/>}
                     {/*<Table data={cards.cardPacks}/>*/}
 
                     <div className={st.cardsPagination}>

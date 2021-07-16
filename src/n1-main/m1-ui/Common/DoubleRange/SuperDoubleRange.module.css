@@ -5,9 +5,16 @@
 
 .doubleRange {
     display: inline-flex;
+    width: 210px;
+    justify-content: space-between;
+}
+
+.doubleRange span {
+    flex: 1
 }
 
 .rangeSlider {
+    flex: 5;
     width: 150px;
     margin: auto;
     text-align: center;
@@ -138,6 +145,7 @@
 }
 
 .rangeSlider span {
+    flex: 1;
     position: absolute;
     top: 0;
     left: 0;
