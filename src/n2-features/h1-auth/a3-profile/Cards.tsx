@@ -7,7 +7,7 @@ import {
     toggleEditCardMode
 } from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
-import {NavLink, useHistory, useLocation} from 'react-router-dom';
+import {NavLink, useLocation} from 'react-router-dom';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {AddNewCardProfileModal} from '../../../assets/ModalWindows/AddNewCardProfileModal';
@@ -28,13 +28,12 @@ export const Cards = () => {
     let dispatch = useDispatch()
     let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
     let userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
-    let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.pack.user_id)
+    let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.currentUserId)
     let [preloader, setPreloader] = useState(false)
 
     console.log('currentPackUserId', currentPackUserId)
     console.log('userId', userId)
     console.log('currentPackUserId', currentPackUserId === userId)
-
     let isUserPack = currentPackUserId === userId
     //get Pack_id===============================================================
     const location = useLocation();
@@ -83,12 +82,14 @@ export const Cards = () => {
                 :
                 <div className={st.cardsContain}>
                     <div className={st.cardsTitle}>
-                        <NavLink to={PATH.PROFILE}><button> ← </button></NavLink>
+                        <NavLink to={PATH.PROFILE}>
+                            <button> ←</button>
+                        </NavLink>
                         <span className={st.packName}>  Pack Name</span>
                     </div>
                     <div className={st.cardsSearch}>
                         <CardSearchBar/>
-                        {!isUserPack && <div><Button children={'add new card'} onClick={AddNewCard}/></div>}
+                        {isUserPack && <div><Button children={'add new card'} onClick={AddNewCard}/></div>}
                     </div>
                     {showDeleteModal &&
                     <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={idForModal}
@@ -122,9 +123,14 @@ export const Cards = () => {
                         }</div>
 
                     {/*<Table data={cards.cardPacks}/>*/}
+
                     <div className={st.cardsPagination}>
-                        <CardPaginator/>
-                        <CardsPageCountSelect/>
+                        {cards.length !== 0 &&
+                        <>
+                            <CardPaginator/>
+                            <CardsPageCountSelect/>
+                        </>
+                        }
                     </div>
                 </div>}
         </div>)
