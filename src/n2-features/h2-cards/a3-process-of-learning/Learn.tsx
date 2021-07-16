@@ -67,7 +67,6 @@ export const Learn = () => {
     const isInitialized = cards.length !== 0 && (cards[0].cardsPack_id === pack._id || pack._id === '');
     const location = useLocation();
     const pack_id = location.pathname.substring(7, location.pathname.length);
-
     useEffect(() => {
         dispatch(changeCardSearchParamsAC({pageCount: pack.cardsCount}))
         dispatch(GetCardsThunk(pack_id));
@@ -104,9 +103,10 @@ export const Learn = () => {
 
     }
     return (
-        !isFetching && !isInitialized ? <Preloader/> :
+
             <div className={st.container}>
                 <div className={st.card}>
+                    {!isFetching && !isInitialized ? <Preloader/> : <>
                     <h2>Learn '{pack.name ? pack.name : 'Pack Name'}'</h2>
                     <p><span className={st.boldText}>Question:</span> {curCard.question}</p>
                     {
@@ -127,6 +127,7 @@ export const Learn = () => {
                             :
                             <Button onClick={onNextButtonClick}>Next</Button>}
                     </div>
+                </>}
                 </div>
             </div>
     )

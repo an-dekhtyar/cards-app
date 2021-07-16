@@ -1,5 +1,5 @@
 import React, {KeyboardEvent, useState} from 'react';
-import styles from './UpdateProfileModal.module.css'
+import styles from './AddNewCardProfileModal.module.css'
 import {Button} from '../../n1-main/m1-ui/Common/Button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {UpdatePackThunk} from '../../n1-main/m2-bll/packs-reducer';
