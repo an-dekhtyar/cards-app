@@ -33,7 +33,7 @@ export const Profile = () => {
 
     useEffect(() => {
         dispatch(changeSearchParams({user_id: user_id ? user_id : undefined}))
-        dispatch(GetPacksTC(true, {user_id: user_id ? user_id : undefined}))
+        dispatch(GetPacksTC(true))
     }, [])
 
     const {_id, name, avatar, email, publicCardPacksCount} = userData

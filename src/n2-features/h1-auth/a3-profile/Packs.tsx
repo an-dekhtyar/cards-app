@@ -56,33 +56,31 @@ export const Packs = () => {
             <Button children={'add new pack'} onClick={AddNewPack}/>
             <div className={st.profile}>{
                 packs !== undefined ?
-                    packs.map((m) => {
+                    packs.map((pack) => {
                         const onLearnButtonClick = () => {
-                            dispatch(setCurrentPackAC(m));
+                            dispatch(setCurrentPackAC(pack));
                         }
                         const UpdatePack = (id: string) => {
                             setShowUpdateProfileModal(true)
                             setIdForModal(id)
                         }
                         return (
-                            <div>
+                            <div key={pack._id}>
                                 <ul>
                                     <li>
-                                        <div>ID: {m._id}</div>
-                                        <div>USER-ID: {m.user_id}</div>
-                                        <div>NAME: {m.name}</div>
-                                        <div>CREATED: {m.created}</div>
-                                        <div>UPDATED: {m.updated}</div>
-                                        <div>cardsCount: {m.cardsCount}</div>
-                                        <p></p>
-                                        <Button children={'Delete'} onClick={() => DeletePack(m._id)}/>
-                                        <Button children={'Update'} onClick={() => UpdatePack(m._id)}/>
-                                        <NavLink to={PATH.CARDS} className={st.headerLink}>
-                                            <Button
-                                                children={'Show Cards'}
-                                                onClick={() => GetCards(m._id, m.cardsCount)}/>
+                                        <div>ID: {pack._id}</div>
+                                        <div>USER-ID: {pack.user_id}</div>
+                                        <NavLink to={`${PATH.CARDS}/${pack._id}`} className={st.headerLink}>
+                                            <div>NAME: {pack.name}</div>
                                         </NavLink>
-                                        <NavLink to={`${PATH.LEARN}/${m._id}`} className={st.headerLink}>
+                                        <div>CREATED: {pack.created}</div>
+                                        <div>UPDATED: {pack.updated}</div>
+                                        <div>cardsCount: {pack.cardsCount}</div>
+                                        <p></p>
+                                        <Button children={'Delete'} onClick={() => DeletePack(pack._id)}/>
+                                        <Button children={'Update'} onClick={() => UpdatePack(pack._id)}/>
+
+                                        <NavLink to={`${PATH.LEARN}/${pack._id}`} className={st.headerLink}>
                                             <Button
                                                 children={'Learn'}
                                                 onClick={onLearnButtonClick}/>
