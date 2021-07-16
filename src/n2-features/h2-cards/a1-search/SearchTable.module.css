@@ -34,6 +34,9 @@
 .row span{
     flex: 1;
 }
+.row span:last-child{
+    flex: 2;
+}
 
 .pagination{
     display: flex;

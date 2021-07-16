@@ -7,7 +7,7 @@ import {
     toggleEditCardMode
 } from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
-import {useLocation} from 'react-router-dom';
+import {NavLink, useHistory, useLocation} from 'react-router-dom';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {AddNewCardProfileModal} from '../../../assets/ModalWindows/AddNewCardProfileModal';
@@ -20,6 +20,8 @@ import {EditCard} from '../../h2-cards/a3-edit-card/EditCard';
 import {CardSearchBar} from '../../h2-cards/a1-search/search_cards/CardSearchBar';
 import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator';
 import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
+import {CardSearchTableHeader} from '../../h2-cards/a1-search/search_cards/CardSearchTableHeader';
+import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 
 export const Cards = () => {
     let dispatch = useDispatch()
@@ -33,7 +35,7 @@ export const Cards = () => {
     console.log('currentPackUserId', currentPackUserId === userId)
 
     let isUserPack = currentPackUserId === userId
-    //for Modal===============================================================
+    //get Pack_id===============================================================
     const location = useLocation();
     const pack_id = location.pathname.substring(7, location.pathname.length);
     useEffect(() => {
@@ -80,7 +82,7 @@ export const Cards = () => {
                 :
                 <div className={st.cardsContain}>
                     <div className={st.cardsTitle}>
-                        <span> ← </span>
+                        <NavLink to={PATH.PROFILE}><button> ← </button></NavLink>
                         <span className={st.packName}>  Pack Name</span>
                     </div>
                     <div className={st.cardsSearch}>
@@ -96,24 +98,26 @@ export const Cards = () => {
                     {AddNewCardModal &&
                     <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} setPreloader={setPreloader}/>}
 
-                    <div className={st.cardsTable}>{
-                        cards !== undefined ?
-                            cards.map((m) => {
-                                return (
-                                    <Card
-                                        key={m._id} cardId={m._id}
-                                        cardUserId={m.user_id} userId={userId}
-                                        answer={m.answer} question={m.question}
-                                        created={m.created} updated={m.updated}
-                                        grade={m.grade} setCardId={setCardId}
-                                        setCardAnswer={setCardAnswer} setCardQuestion={setCardQuestion}
-                                        updateCard={updateCard}
-                                    />
-                                )
-                            })
-                            :
-                            <div>{preloader && <Preloader/>}</div>
-                    }</div>
+                    <div className={st.cardsTable}>
+                        <CardSearchTableHeader/>
+                        {
+                            cards !== undefined ?
+                                cards.map((m) => {
+                                    return (
+                                        <Card
+                                            key={m._id} cardId={m._id}
+                                            cardUserId={m.user_id} userId={userId}
+                                            answer={m.answer} question={m.question}
+                                            created={m.created} updated={m.updated}
+                                            grade={m.grade} setCardId={setCardId}
+                                            setCardAnswer={setCardAnswer} setCardQuestion={setCardQuestion}
+                                            updateCard={updateCard}
+                                        />
+                                    )
+                                })
+                                :
+                                <div>{preloader && <Preloader/>}</div>
+                        }</div>
 
                     {/*<Table data={cards.cardPacks}/>*/}
                     <div className={st.cardsPagination}>
@@ -143,7 +147,6 @@ type CardPropsType = {
 export const Card = (props: CardPropsType) => {
 
     let dispatch = useDispatch()
-
     let {
         cardId, cardUserId,
         userId, answer, question,

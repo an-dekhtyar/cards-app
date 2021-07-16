@@ -11,7 +11,9 @@ import {PackType} from '../../../API/ApiCardsPack';
 import {DeletePackModal} from '../../../assets/ModalWindows/DeletePackModal';
 import {UpdatePackModal} from '../../../assets/ModalWindows/UpdatePackModal';
 import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackProfileModal';
-
+import bt from '../../../n1-main/m1-ui/Common/Button/Button.module.css';
+import {SearchTableHeader} from '../../h2-cards/a1-search/SearchTableHeader';
+import tableSt from './Cards.module.css';
 
 export const Packs = () => {
     let dispatch = useDispatch();
@@ -22,12 +24,9 @@ export const Packs = () => {
     let [showDeleteModal, setShowDeleteModal] = useState(false);
     let [idForModal, setIdForModal] = useState('');
     let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
-    let [showAddPackModal, setShowAddPackModal] = useState(false);
 
 
-    const AddNewPack = () => {
-        setShowAddPackModal(true);
-    }
+
     const DeletePack = (id: string) => {
         setShowDeleteModal(true)
         setIdForModal(id)
@@ -45,55 +44,52 @@ export const Packs = () => {
 
     return (
         <div className={st.profilePage}>
-            {showAddPackModal &&
-            <AddNewPackProfileModal setAddNewCardModal={setShowAddPackModal} setPreloader={setPreloader}/>}
+
             {showDeleteModal && <DeletePackModal idForModal={idForModal} setShowDeleteModal={setShowDeleteModal}
                                                  setPreloader={setPreloader}/>}
             {showUpdateProfileModal &&
             <UpdatePackModal idForModal={idForModal} setShowUpdateProfileModal={setShowUpdateProfileModal}
                              setPreloader={setPreloader}/>}
 
-            <Button children={'add new pack'} onClick={AddNewPack}/>
-            <div className={st.profile}>{
-                packs !== undefined ?
-                    packs.map((pack) => {
-                        const onLearnButtonClick = () => {
-                            dispatch(setCurrentPackAC(pack));
-                        }
-                        const UpdatePack = (id: string) => {
-                            setShowUpdateProfileModal(true)
-                            setIdForModal(id)
-                        }
-                        return (
-                            <div key={pack._id}>
-                                <ul>
-                                    <li>
-                                        <div>ID: {pack._id}</div>
-                                        <div>USER-ID: {pack.user_id}</div>
-                                        <NavLink to={`${PATH.CARDS}/${pack._id}`} className={st.headerLink}>
-                                            <div>NAME: {pack.name}</div>
-                                        </NavLink>
-                                        <div>CREATED: {pack.created}</div>
-                                        <div>UPDATED: {pack.updated}</div>
-                                        <div>cardsCount: {pack.cardsCount}</div>
-                                        <p></p>
-                                        <Button children={'Delete'} onClick={() => DeletePack(pack._id)}/>
-                                        <Button children={'Update'} onClick={() => UpdatePack(pack._id)}/>
+            <div className={st.flexTable}>
+                <SearchTableHeader/>
+                {
+                    packs !== undefined ?
+                        packs.map((pack) => {
+                            const onLearnButtonClick = () => {
+                                dispatch(setCurrentPackAC(pack));
+                            }
+                            const UpdatePack = (id: string) => {
+                                setShowUpdateProfileModal(true)
+                                setIdForModal(id)
+                            }
+                            return (
+                                <div key={pack._id} className={tableSt.row}>
+                                    <NavLink to={`${PATH.CARDS}/${pack._id}`} className={st.headerLink}>
+                                        <span>{pack.name}</span>
+                                    </NavLink>
+                                    <span>{pack.cardsCount}</span>
+                                    <span>{pack.updated}</span>
+                                    <span>{pack.created}</span>
+                                    <span>
+                                <Button children={'Delete'} red={true} className={bt.cardButton}
+                                        onClick={() => DeletePack(pack._id)}/>
+                                <Button children={'Update'} className={bt.cardButton}
+                                        onClick={() => UpdatePack(pack._id)}/>
+                                <NavLink to={`${PATH.LEARN}/${pack._id}`}>
+                                    <Button
+                                        className={bt.cardButton}
+                                        children={'Learn'}
+                                        onClick={onLearnButtonClick}/>
+                                </NavLink>
+                                </span>
+                                </div>
+                            )
+                        })
+                        :
+                        <div>{preloader && <Preloader/>}</div>
+                }</div>
 
-                                        <NavLink to={`${PATH.LEARN}/${pack._id}`} className={st.headerLink}>
-                                            <Button
-                                                children={'Learn'}
-                                                onClick={onLearnButtonClick}/>
-                                        </NavLink>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        )
-                    })
-                    :
-                    <div>{preloader && <Preloader/>}</div>
-            }</div>
 
             {/*<Table data={dataForTable.cardPacks}/>*/}
         </div>)

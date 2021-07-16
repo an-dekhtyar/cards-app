@@ -8,10 +8,7 @@ export const SearchCards = () => {
     return (
 
         <div>
-
             <Cards/>
-
-
         </div>
     )
 }

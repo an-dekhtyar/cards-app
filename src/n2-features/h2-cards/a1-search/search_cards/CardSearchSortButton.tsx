@@ -5,11 +5,11 @@ import {SortButton} from '../../../../n1-main/m1-ui/Common/SortButton/SortButton
 
 
 
-export const SearchSortButton = ({sortValueName}: { sortValueName: string }) => {
+export const CardSearchSortButton = ({sortValueName}: { sortValueName: string }) => {
     //state
     const dispatch = useDispatch()
-    const packSort = useSelector<AppStoreType, string>(state => state.packs.sortPacks);
-    const pack_id = useSelector<AppStoreType, string>(state => state.cards.pack._id);
+    const packSort = useSelector<AppStoreType, string>(state => state.cards.sortCards);
+    const pack_id = useSelector<AppStoreType, string>(state => state.cards.currentCardsPackId);
 
     //functions
 

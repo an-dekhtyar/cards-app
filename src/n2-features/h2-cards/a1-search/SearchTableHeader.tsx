@@ -10,6 +10,7 @@ export const SearchTableHeader = () => {
                 <span>Cards<SearchSortButton sortValueName={'cardsCount'}/></span>
                 <span>Last Updated<SearchSortButton sortValueName={'updated'}/></span>
                 <span>Created by<SearchSortButton sortValueName={'user_name'}/></span>
+                <span>Actions</span>
             </div>
         </div>
     )
