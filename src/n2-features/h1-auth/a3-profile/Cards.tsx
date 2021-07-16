@@ -18,21 +18,26 @@ import bt from './../../../n1-main/m1-ui/Common/Button/Button.module.css'
 import {CardRating} from '../../h2-cards/a2-cards-rating/CardsRating';
 import {EditCard} from '../../h2-cards/a3-edit-card/EditCard';
 import {CardSearchBar} from '../../h2-cards/a1-search/search_cards/CardSearchBar';
-import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator';
-import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
 import {CardSearchTableHeader} from '../../h2-cards/a1-search/search_cards/CardSearchTableHeader';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {DateHelper} from '../../../assets/helper/date-helper';
 import backArrow from '../../../assets/images/back-arrow.png';
+import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator';
+import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
 
 export const Cards = () => {
     let dispatch = useDispatch()
     let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
     let packUserId = useSelector<AppStoreType, string>(state => state.cards.currentUserId)
     let userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
-
+    const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
     let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.pack.user_id)
     let [preloader, setPreloader] = useState(false)
+    let [initialized, setInitialized] = useState(false);
+
+    if (!initialized && isFetching) {
+        setInitialized(true);
+    }
 
 
     //get Pack_id===============================================================
@@ -92,29 +97,30 @@ export const Cards = () => {
                                      setPreloader={setPreloader}/>}
                     {AddNewCardModal &&
                     <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} setPreloader={setPreloader}/>}
+                    {initialized ?
+                        <div className={st.cardsTable}>
+                            <CardSearchTableHeader/>
+                            {
+                                cards !== undefined ?
+                                    cards.map((card) => {
 
-                    <div className={st.cardsTable}>
-                        <CardSearchTableHeader/>
-                        {
-                            cards !== undefined ?
-                                cards.map((card) => {
-
-                                    return (
-                                        <Card
-                                            key={card._id} cardId={card._id}
-                                            cardUserId={card.user_id} userId={userId}
-                                            answer={card.answer} question={card.question}
-                                            created={card.created} updated={card.updated}
-                                            grade={card.grade} setCardId={setCardId}
-                                            setCardAnswer={setCardAnswer} setCardQuestion={setCardQuestion}
-                                            updateCard={updateCard}
-                                        />
-                                    )
-                                })
-                                :
-                                <div>{preloader && <Preloader/>}</div>
-                        }</div>
-
+                                        return (
+                                            <Card
+                                                key={card._id} cardId={card._id}
+                                                cardUserId={card.user_id} userId={userId}
+                                                answer={card.answer} question={card.question}
+                                                created={card.created} updated={card.updated}
+                                                grade={card.grade} setCardId={setCardId}
+                                                setCardAnswer={setCardAnswer} setCardQuestion={setCardQuestion}
+                                                updateCard={updateCard}
+                                            />
+                                        )
+                                    })
+                                    :
+                                    <div>{preloader && <Preloader/>}</div>
+                            }</div>
+                        :
+                        <Preloader/>}
                     {/*<Table data={cards.cardPacks}/>*/}
 
                     <div className={st.cardsPagination}>
@@ -129,20 +135,27 @@ export const Cards = () => {
         </div>)
 }
 
-type CardPropsType = {
-    cardId: string
-    cardUserId: string
-    userId: string | null
-    answer: string
-    question: string
-    created: string
-    updated: string
-    grade: number
-    setCardId: (cardId: string) => void
-    setCardAnswer: (answer: string) => void
-    setCardQuestion: (question: string) => void
-    updateCard: () => void
-}
+type CardPropsType =
+    {
+        cardId: string
+        cardUserId: string
+        userId: string | null
+        answer: string
+        question: string
+        created: string
+        updated: string
+        grade: number
+        setCardId: (cardId: string) => void
+        setCardAnswer
+            :
+            (answer: string) => void
+        setCardQuestion
+            :
+            (question: string) => void
+        updateCard
+            :
+            () => void
+    }
 
 
 export const Card = (props: CardPropsType) => {

@@ -13,6 +13,11 @@
     color: #2D2E46;
 }
 .currentItem{
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-radius: 2px;
+    margin: 2px;
     font-weight: bold;
     background-color:#21268F;
     color: white;
@@ -34,5 +39,4 @@
 
 .btn:hover{
     background-color: #dbd6d6;;
-
 }
