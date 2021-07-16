@@ -34,7 +34,7 @@ let initialState = {
     editCardMode:false,
     addCardMode:false,
     pack: {
-        cardsCount: 1,
+        cardsCount: 1000,
         created: '',
         grade: 1,
         more_id: '',
@@ -149,17 +149,16 @@ export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unkno
         dispatch(setCurrentPackId(id))
 
         const {
-            currentCardsPackId,
             cardQuestion,
             min,
             max,
             sortCards,
             page,
             pageCount
-        } = getState().cards;
+        } = getState().cards
 
 
-        ApiCardsCard.getCards(currentCardsPackId, {
+        ApiCardsCard.getCards(id, {
             cardQuestion,
             min,
             max,
@@ -169,10 +168,11 @@ export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unkno
         })
             .then((res) => {
                 const curState = getState().cards;
+                debugger;
                 if (curState.page === page
                     && cardQuestion === curState.cardQuestion
                     && sortCards === curState.sortCards) {
-                    //debugger;
+                    debugger;
                     dispatch(GetCardsAC(res.data));
                 }
 

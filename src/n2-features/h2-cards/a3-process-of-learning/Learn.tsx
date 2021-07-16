@@ -3,7 +3,12 @@ import {useEffect, useState} from 'react';
 import SuperRadio from '../../../n1-main/m1-ui/Common/Radio/SuperRadio';
 import {useHistory, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {CardType, GetCardsThunk, UpgradeCardGradeThunk} from '../../../n1-main/m2-bll/cards-reducer';
+import {
+    CardType,
+    changeCardSearchParamsAC,
+    GetCardsThunk,
+    UpgradeCardGradeThunk
+} from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {PackType} from '../../../API/ApiCardsPack';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
@@ -64,6 +69,7 @@ export const Learn = () => {
     const pack_id = location.pathname.substring(7, location.pathname.length);
 
     useEffect(() => {
+        dispatch(changeCardSearchParamsAC({pageCount: pack.cardsCount}))
         dispatch(GetCardsThunk(pack_id));
     }, []);
 
@@ -78,7 +84,6 @@ export const Learn = () => {
         }
     }
     //functions
-
     const onCancelButtonClick = () => {
         history.goBack();
     }

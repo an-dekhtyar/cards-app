@@ -7,10 +7,10 @@ import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {GetCardsThunk, setCurrentPackAC} from '../../../n1-main/m2-bll/cards-reducer';
-import {AddNewPackThunk, UpdatePackThunk} from '../../../n1-main/m2-bll/packs-reducer';
 import {PackType} from '../../../API/ApiCardsPack';
 import {DeletePackModal} from '../../../assets/ModalWindows/DeletePackModal';
 import {UpdatePackModal} from '../../../assets/ModalWindows/UpdatePackModal';
+import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackProfileModal';
 
 
 export const Packs = () => {
@@ -22,24 +22,18 @@ export const Packs = () => {
     let [showDeleteModal, setShowDeleteModal] = useState(false);
     let [idForModal, setIdForModal] = useState('');
     let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
+    let [showAddPackModal, setShowAddPackModal] = useState(false);
 
 
     const AddNewPack = () => {
-        if (user_id) {
-            dispatch(AddNewPackThunk('asdasdas', setPreloader))
-        }
+        setShowAddPackModal(true);
     }
     const DeletePack = (id: string) => {
         setShowDeleteModal(true)
         setIdForModal(id)
         // dispatch(DeleteCardsPackThunk(id, setPreloader))
     }
-    const UpdatePack = (id: string) => {
-        console.log(id)
-        setShowUpdateProfileModal(true)
-        setIdForModal(id)
-        dispatch(UpdatePackThunk(id, setPreloader))
-    }
+
 
     const GetCards = (id: string, cardsCount: number) => {
         dispatch(GetCardsThunk(id))
@@ -51,6 +45,8 @@ export const Packs = () => {
 
     return (
         <div className={st.profilePage}>
+            {showAddPackModal &&
+            <AddNewPackProfileModal setAddNewCardModal={setShowAddPackModal} setPreloader={setPreloader}/>}
             {showDeleteModal && <DeletePackModal idForModal={idForModal} setShowDeleteModal={setShowDeleteModal}
                                                  setPreloader={setPreloader}/>}
             {showUpdateProfileModal &&
@@ -61,8 +57,12 @@ export const Packs = () => {
             <div className={st.profile}>{
                 packs !== undefined ?
                     packs.map((m) => {
-                        const onLearnButtonClick = () =>{
+                        const onLearnButtonClick = () => {
                             dispatch(setCurrentPackAC(m));
+                        }
+                        const UpdatePack = (id: string) => {
+                            setShowUpdateProfileModal(true)
+                            setIdForModal(id)
                         }
                         return (
                             <div>
