@@ -11,8 +11,8 @@
     display: grid;
 
     border: 1px solid darkblue;
-    width: 1008px;
-    height: 636px;
+    width: 70%;
+    height: 850px;
     align-self: center;
     border-radius: 25px;
     background-color: white;
@@ -24,9 +24,8 @@
     "c"
     "p"
 ;
-    grid-template-rows: 50px 50px 400px 50px;
+    grid-template-rows: 50px 50px 650px 50px;
     grid-gap: 5px;
-
 }
 .row{
     display: flex;
@@ -34,38 +33,45 @@
 }
 
 .row:nth-child(2n){
-    background-color: lightgray;
+    background-color: #F8F7FD;
 }
 
 .row span, .row a{
-    flex: 1;
+    flex: 3;
     overflow: hidden;
     height: 30px;
+    padding: 10px 0;
     line-height: 30px;
 }
 .row span:last-child{
-    flex: 2;
+    flex: 240px;
 }
+
+.buttons{
+    text-align: right;
+    margin-right: 10px;
+}
+
 
 .cardsTable {
     grid-area: c;
-    border: 1px dashed darkblue;
     margin: 5px 20px 5px 20px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 .cardsPagination {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     grid-area: p;
-    border: 1px dashed darkblue;
-    margin: 5px 20px 5px 20px;
+    margin: 5px 20px 5px 50px;
 }
 .cardsTitle {
     grid-area: t;
-    border: 1px dashed darkblue;
     margin: 15px 20px 5px 20px;
     text-align: left;
 }
 .cardsSearch {
     grid-area: s;
-    border: 1px dashed darkblue;
     margin: 5px 20px 5px 20px;
     display: flex;
 }

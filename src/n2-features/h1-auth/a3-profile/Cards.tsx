@@ -7,7 +7,7 @@ import {
     toggleEditCardMode
 } from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
-import {NavLink, useHistory, useLocation} from 'react-router-dom';
+import {NavLink, useLocation} from 'react-router-dom';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {AddNewCardProfileModal} from '../../../assets/ModalWindows/AddNewCardProfileModal';
@@ -58,9 +58,6 @@ export const Cards = () => {
     let [cardQuestion, setCardQuestion] = useState('')
     let isUserPack = packUserId === userId
 
-    console.log('currentPackUserId', packUserId)
-    console.log('userId', userId)
-    console.log('is?', packUserId === userId)
 
 
     const AddNewCard = () => {
@@ -80,7 +77,9 @@ export const Cards = () => {
                 :
                 <div className={st.cardsContain}>
                     <div className={st.cardsTitle}>
-                        <NavLink to={PATH.PROFILE}><button> ← </button></NavLink>
+                        <NavLink to={PATH.PROFILE}>
+                            <button> ←</button>
+                        </NavLink>
                         <span className={st.packName}>  Pack Name</span>
                     </div>
                     <div className={st.cardsSearch}>
@@ -100,14 +99,15 @@ export const Cards = () => {
                         <CardSearchTableHeader/>
                         {
                             cards !== undefined ?
-                                cards.map((m) => {
+                                cards.map((card) => {
+
                                     return (
                                         <Card
-                                            key={m._id} cardId={m._id}
-                                            cardUserId={m.user_id} userId={userId}
-                                            answer={m.answer} question={m.question}
-                                            created={m.created} updated={m.updated}
-                                            grade={m.grade} setCardId={setCardId}
+                                            key={card._id} cardId={card._id}
+                                            cardUserId={card.user_id} userId={userId}
+                                            answer={card.answer} question={card.question}
+                                            created={card.created} updated={card.updated}
+                                            grade={card.grade} setCardId={setCardId}
                                             setCardAnswer={setCardAnswer} setCardQuestion={setCardQuestion}
                                             updateCard={updateCard}
                                         />
@@ -118,9 +118,14 @@ export const Cards = () => {
                         }</div>
 
                     {/*<Table data={cards.cardPacks}/>*/}
+
                     <div className={st.cardsPagination}>
-                        <CardPaginator/>
-                        <CardsPageCountSelect/>
+                        {cards.length !== 0 &&
+                        <>
+                            <CardPaginator/>
+                            <CardsPageCountSelect/>
+                        </>
+                        }
                     </div>
                 </div>}
         </div>)
