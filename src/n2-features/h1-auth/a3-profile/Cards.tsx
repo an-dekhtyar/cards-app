@@ -95,7 +95,7 @@ export const Cards = () => {
                     {showUpdateProfileModal &&
                     <UpdateCardModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}/>}
                     {AddNewCardModal &&
-                    <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} setPreloader={setPreloader}/>}
+                    <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} cardsPack_id={pack_id}/>}
                     {initialized ?
                         <div className={st.cardsTable}>
                             <CardSearchTableHeader/>
