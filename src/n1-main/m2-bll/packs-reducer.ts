@@ -106,7 +106,6 @@ export const AddNewPackThunk = (name: string, setPreloader: (value: boolean) => 
 export const DeletePackThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch, getState) => {
         setPreloader(true)
-        debugger;
         ApiCardsPack.DeletePack(id)
             .then((res) => {
                 // dispatch(DeleteCardsPackAC(id))
@@ -116,15 +115,13 @@ export const DeletePackThunk = (id: string, setPreloader: (value: boolean) => vo
             })
     }
 
-export const UpdatePackThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const UpdatePackThunk = (id: string,packName: string): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch, getState) => {
-        setPreloader(true)
-        ApiCardsPack.UpdatePack(id)
+        ApiCardsPack.UpdatePack(id, packName)
             .then((res) => {
                 // dispatch(DeleteCardsPackAC(id))
                 const user_id = getState().packs.user_id;
                 dispatch(GetPacksTC(false, {user_id}))
-                setPreloader(false)
             })
     }
 
