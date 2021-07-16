@@ -87,13 +87,11 @@ export const Cards = () => {
                         {isUserPack && <div><Button children={'add new card'} onClick={AddNewCard}/></div>}
                     </div>
                     {showDeleteModal &&
-                    <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={idForModal}
-                                     setPreloader={setPreloader}/>}
+                    <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={cardId}/>}
                     {showUpdateProfileModal &&
-                    <UpdateCardModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}
-                                     setPreloader={setPreloader}/>}
+                    <UpdateCardModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}/>}
                     {AddNewCardModal &&
-                    <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} setPreloader={setPreloader}/>}
+                    <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} cardsPack_id={pack_id}/>}
 
                     <div className={st.cardsTable}>
                         <CardSearchTableHeader/>
@@ -103,7 +101,7 @@ export const Cards = () => {
 
                                     return (
                                         <Card
-                                            key={card._id} cardId={card._id}
+                                            key={card._id} cardId={card._id} setShowDeleteModal={setShowDeleteModal}
                                             cardUserId={card.user_id} userId={userId}
                                             answer={card.answer} question={card.question}
                                             created={card.created} updated={card.updated}
@@ -144,6 +142,7 @@ type CardPropsType = {
     setCardAnswer: (answer: string) => void
     setCardQuestion: (question: string) => void
     updateCard: () => void
+    setShowDeleteModal:(showDeleteModal:boolean) => void
 }
 
 
@@ -153,18 +152,17 @@ export const Card = (props: CardPropsType) => {
     let {
         cardId, cardUserId,
         userId, answer, question,
-        created, updated, grade,
+        created, updated, grade,setShowDeleteModal,
         setCardId, setCardAnswer, setCardQuestion, updateCard
     } = props
 
     let isUserCard = userId === cardUserId
 
     const deleteCard = (id: string) => {
-
-        //setShowDeleteModal(true)
-        //setIdForModal(id)
-        // dispatch(DeleteCardsPackThunk(id, setPreloader))
-    }
+        if(id) {
+            setCardId(id)
+            setShowDeleteModal(true)
+        } }
     const updateCardHandler = () => {
         setCardId(cardId)
         setCardAnswer(answer)
@@ -188,7 +186,7 @@ export const Card = (props: CardPropsType) => {
             </span>
             {isUserCard &&
             <span className={st.cardButton}>
-                    <Button red={true} className={bt.cardButton} children={'Delete'}/>
+                    <Button red={true} className={bt.cardButton} children={'Delete'} onClick={()=> deleteCard(cardId)}/>
                     <Button className={bt.cardButton} children={'Update'} onClick={updateCardHandler}/>
                 </span>
             }

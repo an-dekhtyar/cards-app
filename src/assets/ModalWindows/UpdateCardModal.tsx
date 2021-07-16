@@ -7,7 +7,7 @@ import {UpdateCardThunk} from '../../n1-main/m2-bll/cards-reducer';
 type propsType={
     setShowUpdateProfileModal:(value:boolean)=>void;
     idForModal:string
-    setPreloader:(value:boolean)=>void;
+
 }
 
 export let UpdateCardModal = (props:propsType) => {

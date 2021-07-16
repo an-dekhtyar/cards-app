@@ -17,7 +17,7 @@ export let AddNewPackProfileModal = (props: propsType) => {
         props.setAddNewCardModal(false)
     }
     let showYesFoo = () => {
-        dispatch(AddNewPackThunk(name, props.setPreloader))
+        dispatch(AddNewPackThunk(name))
         props.setAddNewCardModal(false)
     }
     let onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {

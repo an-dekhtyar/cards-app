@@ -7,7 +7,6 @@ import {DeletePackThunk} from "../../n1-main/m2-bll/packs-reducer";
 type propsType={
     setShowDeleteModal:(value:boolean)=>void;
     idForModal:string
-    setPreloader:(value:boolean)=>void;
 }
 
 export let DeletePackModal = (props:propsType) => {
@@ -16,7 +15,7 @@ export let DeletePackModal = (props:propsType) => {
         props.setShowDeleteModal(false)
     }
     let showYesFoo=()=>{
-        dispatch(DeletePackThunk(props.idForModal, props.setPreloader))
+        dispatch(DeletePackThunk(props.idForModal))
         props.setShowDeleteModal(false)
     }
     return (

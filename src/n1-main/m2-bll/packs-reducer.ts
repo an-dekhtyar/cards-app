@@ -1,6 +1,7 @@
 import {ApiCardsPack, PackType, ResponsePacksType, SearchParamsType} from '../../API/ApiCardsPack';
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
+import {isFetchingType, setIsFetching} from "./app-reducer";
 
 
 let initialState = {
@@ -34,7 +35,7 @@ export const packsReducer = (state = initialState, action: allActionTypes): Pack
     }
 };
 
-type allActionTypes = GETPacksACType | ReturnType<typeof changeSearchParams>
+type allActionTypes = GETPacksACType | ReturnType<typeof changeSearchParams> | isFetchingType
 
 export type GETPacksACType = ReturnType<typeof setPacks>
 export const setPacks = (data: ResponsePacksType) => ({
@@ -90,27 +91,26 @@ export const GetPacksTC = (first: boolean, searchParams?: SearchParamsType): Thu
     }
 }
 
-export const AddNewPackThunk = (name: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const AddNewPackThunk = (name: string): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch, getState) => {
-        setPreloader(true)
+        dispatch(setIsFetching(false))
         ApiCardsPack.AddNewPack(name)
             .then((res) => {
                 const user_id = getState().packs.user_id;
                 // dispatch(AddNewCardsPackAC(res.data.newCardsPack))
                 // dispatch(GETCardsPackAC(res.data))
-                dispatch(GetPacksTC(false))
-                setPreloader(false)
+                dispatch(setIsFetching(true))
             })
     }
 
-export const DeletePackThunk = (id: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const DeletePackThunk = (id: string): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch, getState) => {
-        setPreloader(true)
+        dispatch(setIsFetching(false))
         ApiCardsPack.DeletePack(id)
             .then((res) => {
                 // dispatch(DeleteCardsPackAC(id))
                 dispatch(GetPacksTC(false))
-                setPreloader(false)
+                dispatch(setIsFetching(true))
             })
     }
 

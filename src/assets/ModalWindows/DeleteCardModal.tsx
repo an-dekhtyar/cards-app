@@ -7,12 +7,11 @@ import { DeleteCardThunk } from '../../n1-main/m2-bll/cards-reducer';
 type propsType={
     setShowDeleteModal:(value:boolean)=>void;
     idForModal:string
-    setPreloader:(value:boolean)=>void;
 }
 
 export let DeleteCardModal = (props:propsType) => {
-    let dispatch=useDispatch()
-    let showNoFoo=()=>{
+    let dispatch = useDispatch()
+    let showNoFoo = () => {
         props.setShowDeleteModal(false)
     }
     let showYesFoo=()=>{

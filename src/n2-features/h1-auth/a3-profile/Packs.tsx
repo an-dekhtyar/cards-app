@@ -46,8 +46,7 @@ export const Packs = () => {
     return (
         <div className={st.profilePage}>
 
-            {showDeleteModal && <DeletePackModal idForModal={idForModal} setShowDeleteModal={setShowDeleteModal}
-                                                 setPreloader={setPreloader}/>}
+            {showDeleteModal && <DeletePackModal idForModal={idForModal} setShowDeleteModal={setShowDeleteModal} />}
             {showUpdateProfileModal &&
             <UpdatePackModal idForModal={idForModal} setShowUpdateProfileModal={setShowUpdateProfileModal}
                              setPreloader={setPreloader}/>}

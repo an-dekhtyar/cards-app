@@ -13,8 +13,8 @@ export let ApiCardsCard = {
             }
         })
     },
-    AddCard: (CardsPackId: string, name: string) => {
-        return instance.post(`cards/card`, {card: {cardsPack_id: CardsPackId}})
+    AddCard: (card:addCardRequestType) => {
+        return instance.post(`cards/card`, {card})
     },
     DeleteCard: (id: string) => {
         return instance.delete(`cards/card?id=${id}`)
@@ -38,6 +38,15 @@ export type updateCardRequestType = {
         question?: string
         questionImg?: string
         questionVideo?: string
+}
+export type addCardRequestType = {
+    cardsPack_id: string
+    answer?: string
+    answerImg?: string
+    answerVideo?: string
+    question?: string
+    questionImg?: string
+    questionVideo?: string
 }
 
 

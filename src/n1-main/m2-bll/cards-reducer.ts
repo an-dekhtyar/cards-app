@@ -204,11 +204,13 @@ export const AddNewCardAC = (data: any) => {
         data
     } as const
 }
-export const AddNewCardThunk = (name: string, setPreloader: (value: boolean) => void): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const AddNewCardThunk = (cardsPack_id:string, newAnswer:string, newQuestion:string): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
     (dispatch, getState) => {
         dispatch(setIsFetching(false))
-        const packId = getState().cards.currentCardsPackId;
-        ApiCardsCard.AddCard(packId, name)
+        let card = {cardsPack_id,
+            answer: newAnswer,
+            question: newQuestion}
+        ApiCardsCard.AddCard(card)
             .then((res) => {
                 dispatch(AddNewCardAC(res.data.newCard))
                 dispatch(setIsFetching(true))
