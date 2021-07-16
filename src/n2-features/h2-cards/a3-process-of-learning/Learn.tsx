@@ -12,7 +12,7 @@ import {
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {PackType} from '../../../API/ApiCardsPack';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
-
+import st from './Learn.module.css';
 
 const getCard = (cards: Array<CardType>, curCard_id: string) => {
     if (cards.length === 1) {
@@ -105,22 +105,29 @@ export const Learn = () => {
     }
     return (
         !isFetching && !isInitialized ? <Preloader/> :
-            <div>
-                <h2>Learn '{pack.name ? pack.name : 'Pack Name'}'</h2>
-                <p>Question: {curCard.question}</p>
-                {
-                    showAnswer && <p>Answer: {curCard.answer}</p>}
-                {showAnswer && <div>
-                    <SuperRadio value={value}
-                                options={grades}
-                                onChangeOption={onOptionChange}/>
-                </div>}
-                <Button onClick={onCancelButtonClick}>Cancel</Button>
-                {!showAnswer ?
-                    <Button disabled={cards.length === 0}
-                            onClick={onShowAnswerButtonClick}>Show Answer</Button>
-                    :
-                    <Button onClick={onNextButtonClick}>Next</Button>}
+            <div className={st.container}>
+                <div className={st.card}>
+                    <h2>Learn '{pack.name ? pack.name : 'Pack Name'}'</h2>
+                    <p><span className={st.boldText}>Question:</span> {curCard.question}</p>
+                    {
+                        showAnswer && <p><span className={st.boldText}>Answer:</span> {curCard.answer}</p>}
+                    {showAnswer && <div>
+                        <div className={st.radio}>
+                            <p className={st.boldText}>Rate yourself:</p>
+                            <SuperRadio value={value}
+                                        options={grades}
+                                        onChangeOption={onOptionChange}/>
+                        </div>
+                    </div>}
+                    <div className={st.buttons}>
+                        <Button onClick={onCancelButtonClick}>Cancel</Button>
+                        {!showAnswer ?
+                            <Button disabled={cards.length === 0}
+                                    onClick={onShowAnswerButtonClick}>Show Answer</Button>
+                            :
+                            <Button onClick={onNextButtonClick}>Next</Button>}
+                    </div>
+                </div>
             </div>
     )
 }
