@@ -88,7 +88,7 @@ export const Cards = () => {
                     </div>
                     <div className={st.cardsSearch}>
                         <CardSearchBar/>
-                        {isUserPack && <div><Button children={'add new card'} onClick={AddNewCard}/></div>}
+                        {isUserPack && <div><Button children={'add new card'} disabled={!isFetching} onClick={AddNewCard}/></div>}
                     </div>
                     {showDeleteModal &&
                     <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={cardId}/>}

@@ -21,7 +21,7 @@ export const Packs = () => {
     let packs = useSelector<AppStoreType, Array<PackType>>(state => state.packs.cardPacks);
     let [preloader, setPreloader] = useState(false);
     let user_id = useSelector<AppStoreType, string | null>(state => state.profile._id);
-
+    const isFetching = useSelector<AppStoreType, boolean>(state=>state.app.isFetching)
     let [showDeleteModal, setShowDeleteModal] = useState(false);
     let [idForModal, setIdForModal] = useState('');
     let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
@@ -75,16 +75,16 @@ export const Packs = () => {
                                 { user_id === pack.user_id &&
                                 <>
                                 <Button children={'Delete'} red={true} className={bt.cardButton}
-                                         onClick={() => DeletePack(pack._id)}/>
+                                         onClick={() => DeletePack(pack._id)}  disabled={!isFetching}/>
                                          <Button children={'Update'} className={bt.cardButton}
-                                    onClick={() => UpdatePack(pack._id)}/>
+                                    onClick={() => UpdatePack(pack._id)}  disabled={!isFetching}/>
                                 </>
                                 }
                                 <NavLink to={`${PATH.LEARN}/${pack._id}`}>
                                     <Button
                                         className={bt.cardButton}
                                         children={'Learn'}
-                                        onClick={onLearnButtonClick}/>
+                                        onClick={onLearnButtonClick}  disabled={!isFetching}/>
                                 </NavLink>
                                 </span>
                                 </div>

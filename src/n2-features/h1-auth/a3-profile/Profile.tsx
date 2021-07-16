@@ -34,7 +34,7 @@ export const Profile = () => {
         let [preloader, setPreloader] = useState(false);
         const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
-        if(!isInitialized&&isFetching){
+        if (!isInitialized && isFetching) {
             setIsInitialized(true);
         }
 
@@ -67,53 +67,48 @@ export const Profile = () => {
                     <EditProfile userAvatar={avatar} profileLogo={profileLogo} userEmail={email} userName={name}/>
                     :
                     <div className={st.profileContain}>
-                        {isFetching
-                            ?
-                            <>
-                                <div className={st.leftBlock}>
-                                    <div className={st.info}>
-                                        <div className={st.logo}>
-                                            <img className={st.logo}
-                                                 src={avatar === 'Avatar is not defined' || 'Add link to add ava!' ? profileLogo : avatar}/>
-                                        </div>
-                                        <div>Front-end developer</div>
-                                        <Button className={btn.editProfileBtn} onClick={onClickEditMode}>Edit
-                                            profile</Button>
-                                        <div>My public card count is: {publicCardPacksCount}</div>
+                        <>
+                            <div className={st.leftBlock}>
+                                <div className={st.info}>
+                                    <div className={st.logo}>
+                                        <img className={st.logo}
+                                             src={avatar === 'Avatar is not defined' || 'Add link to add ava!' ? profileLogo : avatar}/>
                                     </div>
-                                    <div className={st.range}><SearchDoubleRange/><MyAllToggle/></div>
-                                    <div className={st.button}>
-
-                                        <Button onClick={logout}>Log out</Button>
-                                    </div>
+                                    <div>Front-end developer</div>
+                                    <Button className={btn.editProfileBtn} onClick={onClickEditMode}>Edit
+                                        profile</Button>
+                                    <div>My public card count is: {publicCardPacksCount}</div>
                                 </div>
+                                <div className={st.range}><SearchDoubleRange/><MyAllToggle/></div>
+                                <div className={st.button}>
 
-                                <div className={st.rightBlock}>
-                                    <div className={st.input}>
+                                    <Button onClick={logout} disabled={!isFetching}>Log out</Button>
+                                </div>
+                            </div>
+
+                            <div className={st.rightBlock}>
+                                <div className={st.input}>
                                     <span>
                                         <Search/>
                                     </span>
-                                        <Button children={'add new pack'} onClick={AddNewPack}/>
-                                    </div>
-                                    {isInitialized ?
-                                        <div className={st.table}>
-                                            <Packs/>
-                                        </div>
-                                        :
-                                        <Preloader/>}
-
-                                    <div className={st.pagination}>
-                                        <SearchPaginator/>
-                                        <PageCountSelect/>
-                                    </div>
+                                    <Button children={'add new pack'} onClick={AddNewPack} disabled={!isFetching}/>
                                 </div>
-                                {showAddPackModal &&
-                                <AddNewPackProfileModal setAddNewCardModal={setShowAddPackModal}
-                                                        setPreloader={setPreloader}/>}
-                            </>
-                            :
-                            <Preloader/>
-                        }
+                                {isInitialized ?
+                                    <div className={st.table}>
+                                        <Packs/>
+                                    </div>
+                                    :
+                                    <Preloader/>}
+
+                                <div className={st.pagination}>
+                                    <SearchPaginator/>
+                                    <PageCountSelect/>
+                                </div>
+                            </div>
+                            {showAddPackModal &&
+                            <AddNewPackProfileModal setAddNewCardModal={setShowAddPackModal}
+                                                    setPreloader={setPreloader}/>}
+                        </>
                     </div>
 
                 }
