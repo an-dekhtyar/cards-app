@@ -1,13 +1,18 @@
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {useEffect, useState} from 'react';
 import SuperRadio from '../../../n1-main/m1-ui/Common/Radio/SuperRadio';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {CardType, GetCardsThunk, UpgradeCardGradeThunk} from '../../../n1-main/m2-bll/cards-reducer';
+import {
+    CardType,
+    changeCardSearchParamsAC,
+    GetCardsThunk,
+    UpgradeCardGradeThunk
+} from '../../../n1-main/m2-bll/cards-reducer';
 import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {PackType} from '../../../API/ApiCardsPack';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
-
+import st from './Learn.module.css';
 
 const getCard = (cards: Array<CardType>, curCard_id: string) => {
     if (cards.length === 1) {
@@ -25,6 +30,7 @@ const getCard = (cards: Array<CardType>, curCard_id: string) => {
         rndNumber = rndNumber - (6 - newCards[i].grade) ** 2;
         i++;
     }
+    console.log(i - 1);
     return cards[i - 1];
 }
 
@@ -34,11 +40,6 @@ export const Learn = () => {
     const dispatch = useDispatch();
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [value, setValue] = useState<string>('Did not know');
-    const grades = ['Did not know', 'Forgot', 'A lot of thoughts', 'Confused', 'Knew the answer'];
-    const cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards);
-    const pack = useSelector<AppStoreType, PackType>(state => state.cards.pack);
-    const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
-    const isInitialized = cards.length !== 0 && cards[0].cardsPack_id === pack._id;
     const [curCard, setCurCard] = useState<CardType>({
         answer: '',
         answerImg: '',
@@ -59,9 +60,16 @@ export const Learn = () => {
         __v: 1,
         _id: '1',
     });
-
+    const grades = ['Did not know', 'Forgot', 'A lot of thoughts', 'Confused', 'Knew the answer'];
+    const cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards);
+    const pack = useSelector<AppStoreType, PackType>(state => state.cards.pack);
+    const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching);
+    const isInitialized = cards.length !== 0 && (cards[0].cardsPack_id === pack._id || pack._id === '');
+    const location = useLocation();
+    const pack_id = location.pathname.substring(7, location.pathname.length);
     useEffect(() => {
-        dispatch(GetCardsThunk(pack._id ));
+        dispatch(changeCardSearchParamsAC({pageCount: pack.cardsCount}))
+        dispatch(GetCardsThunk(pack_id));
     }, []);
 
     useEffect(() => {
@@ -74,9 +82,7 @@ export const Learn = () => {
             setCurCard(getCard(cards, curCard._id));
         }
     }
-
     //functions
-
     const onCancelButtonClick = () => {
         history.goBack();
     }
@@ -96,25 +102,33 @@ export const Learn = () => {
         setCurCard(getCard(cards, curCard._id));
 
     }
-
     return (
-        !isFetching || !isInitialized ? <Preloader/> :
-            <div>
-                <h2>Learn '{pack.name}'</h2>
-                <p>Question: {curCard.question}</p>
-                {
-                    showAnswer && <p>Answer: {curCard.answer}</p>}
-                {showAnswer && <div>
-                    <SuperRadio value={value}
-                                options={grades}
-                                onChangeOption={onOptionChange}/>
-                </div>}
-                <Button onClick={onCancelButtonClick}>Cancel</Button>
-                {!showAnswer ?
-                    <Button disabled={cards.length === 0}
-                            onClick={onShowAnswerButtonClick}>Show Answer</Button>
-                    :
-                    <Button onClick={onNextButtonClick}>Next</Button>}
+
+            <div className={st.container}>
+                <div className={st.card}>
+                    {!isFetching && !isInitialized ? <Preloader/> : <>
+                    <h2>Learn '{pack.name ? pack.name : 'Pack Name'}'</h2>
+                    <p><span className={st.boldText}>Question:</span> {curCard.question}</p>
+                    {
+                        showAnswer && <p><span className={st.boldText}>Answer:</span> {curCard.answer}</p>}
+                    {showAnswer && <div>
+                        <div className={st.radio}>
+                            <p className={st.boldText}>Rate yourself:</p>
+                            <SuperRadio value={value}
+                                        options={grades}
+                                        onChangeOption={onOptionChange}/>
+                        </div>
+                    </div>}
+                    <div className={st.buttons}>
+                        <Button onClick={onCancelButtonClick}>Cancel</Button>
+                        {!showAnswer ?
+                            <Button disabled={cards.length === 0}
+                                    onClick={onShowAnswerButtonClick}>Show Answer</Button>
+                            :
+                            <Button onClick={onNextButtonClick}>Next</Button>}
+                    </div>
+                </>}
+                </div>
             </div>
     )
 }

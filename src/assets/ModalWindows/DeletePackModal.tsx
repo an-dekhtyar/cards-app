@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import styles from './DeleteModal.module.css'
+import styles from './AddNewCardProfileModal.module.css';
 import {Button} from "../../n1-main/m1-ui/Common/Button/Button";
 import {useDispatch} from "react-redux";
 import {DeletePackThunk} from "../../n1-main/m2-bll/packs-reducer";

@@ -21,8 +21,8 @@ export const ApiCardsPack = {
     DeletePack: (id: string) => {
         return instance.delete(`cards/pack/?id=${id}`)
     },
-    UpdatePack: (id: string) => {
-        return instance.put(`cards/pack`, {cardsPack: {_id: id}})
+    UpdatePack: (id: string, name: string) => {
+        return instance.put(`cards/pack`, {cardsPack: {_id: id, name}})
     },
 
 }
