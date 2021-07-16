@@ -22,19 +22,20 @@ import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator
 import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
 import {CardSearchTableHeader} from '../../h2-cards/a1-search/search_cards/CardSearchTableHeader';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
+import {DateHelper} from "../../../assets/helper/date-helper";
+import {stat} from "fs";
 
 export const Cards = () => {
     let dispatch = useDispatch()
     let cards = useSelector<AppStoreType, Array<CardType>>(state => state.cards.cards)
-    let userId = useSelector<AppStoreType, string | null>(state => state.profile._id)
+    let packUserId = useSelector<AppStoreType, string>(state => state.cards.currentUserId)
+    let userId = useSelector<AppStoreType, string | null >(state => state.profile._id)
+
     let currentPackUserId = useSelector<AppStoreType, string>(state => state.cards.pack.user_id)
     let [preloader, setPreloader] = useState(false)
 
-    console.log('currentPackUserId', currentPackUserId)
-    console.log('userId', userId)
-    console.log('currentPackUserId', currentPackUserId === userId)
 
-    let isUserPack = currentPackUserId === userId
+
     //get Pack_id===============================================================
     const location = useLocation();
     const pack_id = location.pathname.substring(7, location.pathname.length);
@@ -55,14 +56,12 @@ export const Cards = () => {
     let [cardId, setCardId] = useState('')
     let [cardAnswer, setCardAnswer] = useState('')
     let [cardQuestion, setCardQuestion] = useState('')
+    let isUserPack = packUserId === userId
 
+    console.log('currentPackUserId', packUserId)
+    console.log('userId', userId)
+    console.log('is?', packUserId === userId)
 
-    /* useEffect(() => {
-         console.log('useEffect')
-         if (UserId) {
-             dispatch(GetCardsThunk(UserId, setPreloader))
-         }
-     }, [])*/
 
     const AddNewCard = () => {
         setAddNewCardModal(true)
@@ -72,7 +71,6 @@ export const Cards = () => {
         dispatch(toggleEditCardMode(true))
 
     }
-    console.log(editCardMode)
 
     return (
         <div className={st.cardsPage}>
@@ -87,7 +85,7 @@ export const Cards = () => {
                     </div>
                     <div className={st.cardsSearch}>
                         <CardSearchBar/>
-                        {!isUserPack && <div><Button children={'add new card'} onClick={AddNewCard}/></div>}
+                        {isUserPack && <div><Button children={'add new card'} onClick={AddNewCard}/></div>}
                     </div>
                     {showDeleteModal &&
                     <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={idForModal}
@@ -179,7 +177,7 @@ export const Card = (props: CardPropsType) => {
         <div className={st.row}>
             <span>{question}</span>
             <span>{answer}</span>
-            <span>{updated}</span>
+            <DateHelper date={updated}/>
             <span>
                 <CardRating rate={grade}/>
             </span>

@@ -14,6 +14,7 @@ import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackPro
 import bt from '../../../n1-main/m1-ui/Common/Button/Button.module.css';
 import {SearchTableHeader} from '../../h2-cards/a1-search/SearchTableHeader';
 import tableSt from './Cards.module.css';
+import {DateHelper} from "../../../assets/helper/date-helper";
 
 export const Packs = () => {
     let dispatch = useDispatch();
@@ -69,13 +70,17 @@ export const Packs = () => {
                                         <span>{pack.name}</span>
                                     </NavLink>
                                     <span>{pack.cardsCount}</span>
-                                    <span>{pack.updated}</span>
-                                    <span>{pack.created}</span>
+                                    <DateHelper date={pack.updated}/>
+                                    <span>{pack.user_name}</span>
                                     <span>
+                                { user_id === pack.user_id &&
+                                <>
                                 <Button children={'Delete'} red={true} className={bt.cardButton}
-                                        onClick={() => DeletePack(pack._id)}/>
-                                <Button children={'Update'} className={bt.cardButton}
-                                        onClick={() => UpdatePack(pack._id)}/>
+                                         onClick={() => DeletePack(pack._id)}/>
+                                         <Button children={'Update'} className={bt.cardButton}
+                                    onClick={() => UpdatePack(pack._id)}/>
+                                </>
+                                }
                                 <NavLink to={`${PATH.LEARN}/${pack._id}`}>
                                     <Button
                                         className={bt.cardButton}
