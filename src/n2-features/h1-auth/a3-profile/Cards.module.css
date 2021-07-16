@@ -37,9 +37,16 @@
     background-color: lightgray;
 }
 
-.row span{
+.row span, .row a{
     flex: 1;
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
 }
+.row span:last-child{
+    flex: 2;
+}
+
 .cardsTable {
     grid-area: c;
     border: 1px dashed darkblue;

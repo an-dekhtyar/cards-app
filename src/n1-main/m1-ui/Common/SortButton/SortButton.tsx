@@ -1,6 +1,6 @@
-import {Button} from '../Button/Button';
-
-
+import sortUp from './../../../../assets/images/ascending-sort.png'
+import sortDown from './../../../../assets/images/descending-sort.png'
+import st from './SortButton.module.css';
 type SortButtonPropsType = {
     sortValue: boolean
     changeSortValue: (value: boolean) => void
@@ -13,10 +13,10 @@ export const SortButton = (props: SortButtonPropsType) => {
     const onButtonClick = () => {
         props.changeSortValue(!props.sortValue);
     }
-
+    const className = `${st.container} ${props.active?st.active:''}`
     return (
-        <Button onClick={onButtonClick} red={props.active}>
-            {props.sortValue ? '^' : '⌄'}
-        </Button>
+        <div className={className} onClick={onButtonClick}>
+            {props.sortValue ? <img src={sortUp} alt={''}/> : <img src={sortDown} alt={''}/>}
+        </div>
     )
 }

@@ -2,9 +2,8 @@ import {Dispatch} from 'redux';
 import {ApiCardsCard, CardSearchDataType, updateCardRequestType} from '../../API/ApiCardsCard';
 import {ThunkAction} from 'redux-thunk';
 import {AppStoreType} from './store';
-import {isFetchingType, setIsFetching, setError} from "./app-reducer";
+import {AppReducerActionsTypes, isFetchingType, setError, setIsFetching} from './app-reducer';
 import {ApiCardsRating} from '../../API/ApiCardsRating';
-import {AppReducerActionsTypes} from './app-reducer';
 import {PackType} from '../../API/ApiCardsPack';
 
 export type CardType = {
@@ -31,8 +30,8 @@ export type CardType = {
 let initialState = {
     cards: [] as Array<CardType>,
     currentCardsPackId: '',
-    editCardMode:false,
-    addCardMode:false,
+    editCardMode: false,
+    addCardMode: false,
     pack: {
         cardsCount: 1000,
         created: '',
@@ -50,7 +49,9 @@ let initialState = {
         __v: 1,
         _id: ''
     } as PackType,
+    currentUserId: '',
     cardQuestion: '',
+    cardsTotalCount: 1,
     sortCards: '0grade',
     min: 0,
     max: 6,
@@ -62,7 +63,13 @@ export type InitialCardProfileReducerType = typeof initialState
 export const cardsReducer = (state = initialState, action: allActionTypes): InitialCardProfileReducerType => {
     switch (action.type) {
         case 'GetCardsCard': {
-            return {...state, cards: action.data?.cards ? action.data?.cards : []};
+            return {
+                ...state,
+                currentUserId: action.data.packUserId,
+                cards: action.data.cards,
+                pageCount: action.data.pageCount,
+                cardsTotalCount: action.data.cardsTotalCount
+            };
         }
         case 'SetCurrentPackId': {
             return {...state, currentCardsPackId: action.data};
@@ -114,7 +121,15 @@ export const cardsReducer = (state = initialState, action: allActionTypes): Init
     }
 };
 //types
-type allActionTypes = GetCardsACType | AddNewCardACType | SetCurrentPackIdType | UpdateCardType | isFetchingType| SetCurrentPackAT | ChangeCardSearchParamsAT | EditCardModeActionType
+type allActionTypes =
+    GetCardsACType
+    | AddNewCardACType
+    | SetCurrentPackIdType
+    | UpdateCardType
+    | isFetchingType
+    | SetCurrentPackAT
+    | ChangeCardSearchParamsAT
+    | EditCardModeActionType
     | AddCardModeActionType
 
 type GetCardsACType = ReturnType<typeof GetCardsAC>
@@ -123,7 +138,7 @@ export type EditCardModeActionType = ReturnType<typeof toggleEditCardMode>
 export type AddCardModeActionType = ReturnType<typeof togglAddCardMode>
 
 
-export const GetCardsAC = (data: any) => {
+export const GetCardsAC = (data: CardDataResponseType) => {
     return {
         type: 'GetCardsCard',
         data
@@ -135,10 +150,10 @@ export const setCurrentPackId = (data: string) => {
         data
     } as const
 }
-export const toggleEditCardMode = (editCardMode:boolean) => ({
+export const toggleEditCardMode = (editCardMode: boolean) => ({
     type: 'cards-app/card/TOGGLE_EDIT_CARD_MODE', editCardMode
 } as const)
-export const togglAddCardMode = (addCardMode:boolean) => ({
+export const togglAddCardMode = (addCardMode: boolean) => ({
     type: 'cards-app/card/TOGGLE_ADD_CARD_MODE', addCardMode
 } as const)
 
@@ -147,7 +162,6 @@ export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unkno
     (dispatch: Dispatch, getState) => {
         dispatch(setIsFetching(false));
         dispatch(setCurrentPackId(id))
-
         const {
             cardQuestion,
             min,
@@ -171,7 +185,6 @@ export const GetCardsThunk = (id: string): ThunkAction<void, AppStoreType, unkno
                 if (curState.page === page
                     && cardQuestion === curState.cardQuestion
                     && sortCards === curState.sortCards) {
-
                     dispatch(GetCardsAC(res.data));
                 }
 
@@ -202,7 +215,8 @@ export const AddNewCardThunk = (name: string, setPreloader: (value: boolean) => 
             })
             .catch(e => {
                 dispatch(setIsFetching(true));
-                console.log(e)})
+                console.log(e)
+            })
     }
 
 /*export let CreatePackIdThunk = (CardsPackId: string) => (dispatch: Dispatch) => {
@@ -214,7 +228,7 @@ export const AddNewCardThunk = (name: string, setPreloader: (value: boolean) => 
         .catch(e => console.log(e))
 }*/
 
-export let DeleteCardThunk = (id: string)  => (dispatch: any) => {
+export let DeleteCardThunk = (id: string) => (dispatch: any) => {
     dispatch(setIsFetching(false))
     ApiCardsCard.DeleteCard(id)
         .then((res) => {
@@ -232,7 +246,7 @@ export const UpdateCardsPackAC = (data: UpdateGradeDataType) => {
         ...data
     } as const
 }
-export const UpdateCardThunk = (card:updateCardRequestType): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
+export const UpdateCardThunk = (card: updateCardRequestType): ThunkAction<void, AppStoreType, unknown, allActionTypes> =>
 
     (dispatch) => {
         dispatch(setIsFetching(false))
@@ -283,3 +297,13 @@ export const changeCardSearchParamsAC = (data: CardSearchDataType) => {
 //types
 
 type DispatchType = allActionTypes | AppReducerActionsTypes
+
+type CardDataResponseType = {
+    cards: Array<CardType>
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    packUserId: string
+    page: number
+    pageCount: number
+}

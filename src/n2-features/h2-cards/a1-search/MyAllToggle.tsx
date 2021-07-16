@@ -15,12 +15,12 @@ export const MyAllToggle = () => {
         if (userId) {
             dispatch(changeSearchParams({user_id: userId}));
         }
-        dispatch(GetPacksTC(false));
+        dispatch(GetPacksTC(true));
     }
 
     const onAllClick = () => {
         dispatch(changeSearchParams({user_id: undefined}));
-        dispatch(GetPacksTC(false));
+        dispatch(GetPacksTC(true));
     }
 
     const myClassName = `${isMy ? st.active : ''}`

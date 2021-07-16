@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import btn from '../../../n1-main/m1-ui/Common/Button/Button.module.css';
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,6 +20,8 @@ import {changeSearchParams, GetPacksTC} from '../../../n1-main/m2-bll/packs-redu
 
 
 import {PageCountSelect} from "../../h2-cards/a1-search/PageCountSelect";
+import {MyAllToggle} from '../../h2-cards/a1-search/MyAllToggle';
+import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackProfileModal';
 
 export const Profile = () => {
     const dispatch = useDispatch()
@@ -29,11 +31,13 @@ export const Profile = () => {
     const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching)
     const user_id = useSelector<AppStoreType, string | null>(state => state.profile._id)
     const editMode = useSelector<AppStoreType, boolean>(state => state.profile.editMode)
+    let [showAddPackModal, setShowAddPackModal] = useState(false);
+    let [preloader, setPreloader] = useState(false);
 
 
     useEffect(() => {
-        dispatch(changeSearchParams({user_id: user_id ? user_id : undefined}))
-        dispatch(GetPacksTC(true, {user_id: user_id ? user_id : undefined}))
+
+        dispatch(GetPacksTC(true))
     }, [])
 
     const {_id, name, avatar, email, publicCardPacksCount} = userData
@@ -50,7 +54,9 @@ export const Profile = () => {
     if (!isAuth) {
         return <Redirect to={PATH.LOGIN}/>
     }
-
+    const AddNewPack = () => {
+        setShowAddPackModal(true);
+    }
 
     return (
         <div className={st.profilePage}>
@@ -59,7 +65,6 @@ export const Profile = () => {
                 <EditProfile userAvatar={avatar} profileLogo={profileLogo} userEmail={email} userName={name}/>
                 :
                 <div className={st.profileContain}>
-
                     {isFetching
                         ?
                         <>
@@ -74,7 +79,7 @@ export const Profile = () => {
                                         profile</Button>
                                     <div>My public card count is: {publicCardPacksCount}</div>
                                 </div>
-                                <div className={st.range}><SearchDoubleRange/></div>
+                                <div className={st.range}><SearchDoubleRange/><MyAllToggle/></div>
                                 <div className={st.button}>
 
                                     <Button onClick={logout}>Log out</Button>
@@ -85,6 +90,7 @@ export const Profile = () => {
                                 <div className={st.input}>
                                     <div>Packs list {name}</div>
                                     <Search/>
+                                    <Button children={'add new pack'} onClick={AddNewPack}/>
                                 </div>
                                 <div className={st.table}>
                                     <Packs/>
@@ -96,6 +102,8 @@ export const Profile = () => {
                                     <PageCountSelect/>
                                 </div>
                             </div>
+                            {showAddPackModal &&
+                            <AddNewPackProfileModal setAddNewCardModal={setShowAddPackModal} setPreloader={setPreloader}/>}
                         </>
                         :
                         <Preloader/>

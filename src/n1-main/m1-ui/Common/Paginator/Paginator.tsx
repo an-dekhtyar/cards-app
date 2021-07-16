@@ -47,12 +47,12 @@ export const Paginator = (props: PaginatorPropsType) => {
             props.onPageChanged(p);
         }
         return (
-            <>
+            <React.Fragment key={p}>
                 {totalPortionCount > 10 && totalPortionCount - currentItem > 5 && p === totalPortionCount && '...'}
-                <span key={p} className={`${p === currentItem ? s.currentItem : ''} ${s.item}`}
+                <span className={`${p === currentItem ? s.currentItem : ''} ${s.item}`}
                       onClick={onClick}>{p}</span>
                 {currentItem > 5 && p === 1 && totalPortionCount > 10 && '...'}
-            </>
+            </React.Fragment>
         )
     });
 

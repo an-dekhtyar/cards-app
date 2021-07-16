@@ -8,9 +8,9 @@ export const CardPaginator = () => {
     //state
     const dispatch = useDispatch()
     const page = useSelector<AppStoreType, number>(state => state.cards.page);
-    const cardsTotalCount = useSelector<AppStoreType, number>(state => state.cards.pack.cardsCount);
+    const cardsTotalCount = useSelector<AppStoreType, number>(state => state.cards.cardsTotalCount);
     const pageSize = useSelector<AppStoreType, number>(state => state.cards.pageCount);
-    const pack_id = useSelector<AppStoreType, string>(state => state.cards.pack._id);
+    const pack_id = useSelector<AppStoreType, string>(state => state.cards.currentCardsPackId);
 
     //functions
     const onPageChanged = (page: number) => {

@@ -98,7 +98,7 @@ export const AddNewPackThunk = (name: string, setPreloader: (value: boolean) => 
                 const user_id = getState().packs.user_id;
                 // dispatch(AddNewCardsPackAC(res.data.newCardsPack))
                 // dispatch(GETCardsPackAC(res.data))
-                dispatch(GetPacksTC(false, {user_id}))
+                dispatch(GetPacksTC(false))
                 setPreloader(false)
             })
     }
@@ -109,8 +109,7 @@ export const DeletePackThunk = (id: string, setPreloader: (value: boolean) => vo
         ApiCardsPack.DeletePack(id)
             .then((res) => {
                 // dispatch(DeleteCardsPackAC(id))
-                const user_id = getState().packs.user_id;
-                dispatch(GetPacksTC(false, {user_id}))
+                dispatch(GetPacksTC(false))
                 setPreloader(false)
             })
     }
@@ -120,8 +119,7 @@ export const UpdatePackThunk = (id: string,packName: string): ThunkAction<void, 
         ApiCardsPack.UpdatePack(id, packName)
             .then((res) => {
                 // dispatch(DeleteCardsPackAC(id))
-                const user_id = getState().packs.user_id;
-                dispatch(GetPacksTC(false, {user_id}))
+                dispatch(GetPacksTC(false))
             })
     }
 
