@@ -1,28 +1,3 @@
-.editProfile {
-    display: flex;
-    justify-content: center;
-    min-height: 80vh;
-    color: #3b4652;
-    text-align: center;
-
-}
-
-.editProfileContain {
-    border: 1px solid darkblue;
-    width: 413px;
-    height: 540px;
-    align-self: center;
-    border-radius: 25px;
-    background-color: white;
-    text-align: center;
-
-}
-.editProfileContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    text-align: center;
-}
 
 .logo img {
 
@@ -41,4 +16,54 @@
     justify-content: space-between;
     margin-left: 35px;
     margin-right: 35px;
+}
+
+
+.general{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+.general .window{
+    position: fixed;
+    width: 413px;
+    height: 550px;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    border: 1px solid darkblue;
+    border-radius: 30px;
+    z-index: 20;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.general .background{
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #3b4652;
+    opacity: 0.5;
+    z-index: 0;
+}
+.buttonContainer{
+    display: flex;
+    margin-top: 40px;
+    justify-content: space-around;
+}
+.buttonContainer button {
+    width: 140px;
+}
+.inputContainer label {
+    display: block;
+    text-align: left;
+
+}
+.general h2 {
+    margin-top: 30px;
+    margin-bottom: 30px;
 }

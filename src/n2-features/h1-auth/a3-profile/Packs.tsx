@@ -6,15 +6,14 @@ import {NavLink} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/Routes/Routes';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
-import {GetCardsThunk, setCurrentPackAC} from '../../../n1-main/m2-bll/cards-reducer';
+import {setCurrentPackAC} from '../../../n1-main/m2-bll/cards-reducer';
 import {PackType} from '../../../API/ApiCardsPack';
-import {DeletePackModal} from '../../../assets/ModalWindows/DeletePackModal';
-import {UpdatePackModal} from '../../../assets/ModalWindows/UpdatePackModal';
-import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackProfileModal';
 import bt from '../../../n1-main/m1-ui/Common/Button/Button.module.css';
 import {SearchTableHeader} from '../../h2-cards/a1-search/SearchTableHeader';
 import tableSt from './Cards.module.css';
 import {DateHelper} from "../../../assets/helper/date-helper";
+import { DeletePackModal } from '../../../assets/ModalWindows/DeletePackModal/DeletePackModal';
+import { UpdatePackModal } from '../../../assets/ModalWindows/UpdatePackModal/UpdatePackModal';
 
 export const Packs = () => {
     let dispatch = useDispatch();
@@ -35,14 +34,14 @@ export const Packs = () => {
     }
 
 
-    const GetCards = (id: string, cardsCount: number) => {
+   /* const GetCards = (id: string, cardsCount: number) => {
         dispatch(GetCardsThunk(id))
         if (cardsCount === 0) {
             // dispatch(AddNewCardThunk(id, setPreloader))
             // dispatch(CreatePackIdThunk(id))
         }
     }
-
+*/
     return (
         <div className={st.profilePage}>
 
@@ -74,13 +73,13 @@ export const Packs = () => {
                                     <span>
                                 { user_id === pack.user_id &&
                                 <>
-                                <Button children={'Delete'} red={true} className={bt.cardButton}
-                                         onClick={() => DeletePack(pack._id)}  disabled={!isFetching}/>
-                                         <Button children={'Update'} className={bt.cardButton}
-                                    onClick={() => UpdatePack(pack._id)}  disabled={!isFetching}/>
+                                    <Button children={'Delete'} red={true} className={bt.cardButton}
+                                            onClick={() => DeletePack(pack._id)}  disabled={!isFetching}/>
+                                    <Button children={'Update'} className={bt.cardButton}
+                                            onClick={() => UpdatePack(pack._id)}  disabled={!isFetching}/>
                                 </>
                                 }
-                                <NavLink to={`${PATH.LEARN}/${pack._id}`}>
+                                        <NavLink to={`${PATH.LEARN}/${pack._id}`}>
                                     <Button
                                         className={bt.cardButton}
                                         children={'Learn'}

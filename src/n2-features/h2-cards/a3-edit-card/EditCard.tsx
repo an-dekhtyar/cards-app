@@ -39,9 +39,11 @@ export const EditCard = (props: EditCardType) => {
         dispatch(toggleEditCardMode(false))
     }
 
+
+
     return (
-        <div className={st.editProfile}>
-            <div className={st.editProfileContain}>
+        <div className={st.general}>
+            <div className={st.window}>
                 <h2>Card Info</h2>
                 {!isFetching
                     ? <Preloader/>
@@ -55,12 +57,12 @@ export const EditCard = (props: EditCardType) => {
                         <div className={st.inputContainer}>
                             <label htmlFor={'Question'}>Question</label>
                             <Input value={newQuestion} onChangeText={setNewQuestion} name={'Question'} />
-                            <div className={st.attachFile}>+ Attach file</div>
+                            {/* <div className={st.attachFile}>+ Attach file</div> */}
                         </div>
                         <div className={st.inputContainer}>
                             <label htmlFor={'Answer'}>Answer</label>
                             <Input value={newAnswer} onChangeText={setNewAnswer} name={'Answer'} />
-                            <div className={st.attachFile}>+ Attach file</div>
+                            {/* <div className={st.attachFile}>+ Attach file</div> */}
                         </div>
                         <div className={st.buttonContainer}>
                             <Button className={btn.registrationCancel} children={'Cancel'} onClick={onClickCancel} />
@@ -69,6 +71,7 @@ export const EditCard = (props: EditCardType) => {
                     </>
                 }
             </div>
+            <div onClick={onClickCancel} className={st.background}></div>
         </div>
     )
 };

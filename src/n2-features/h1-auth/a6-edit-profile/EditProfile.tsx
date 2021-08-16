@@ -38,12 +38,9 @@ export const EditProfile = (props: EditProfileType) => {
 
 
 
-
-
-
     return (
-        <div className={st.editProfile}>
-            <div className={st.editProfileContain}>
+        <div className={st.general}>
+            <div className={st.window}>
                 <h2>Personal Information</h2>
                 {!isFetching
                     ? <Preloader/>
@@ -52,7 +49,7 @@ export const EditProfile = (props: EditProfileType) => {
                         <div className={st.editProfileContent}>
 
                             <div className={st.logo}>
-                                <img className={st.logo}
+                                <img className={st.logo} alt={'avatar'}
                                      src={avatar === 'Avatar is not defined' || 'Add link to add ava!' ? profileLogo : avatar} />
                             </div>
                         </div>
@@ -69,9 +66,11 @@ export const EditProfile = (props: EditProfileType) => {
                             <Button className={btn.registrationCancel} children={'Cancel'} onClick={onClickCancel} />
                             <Button children={'Save'} onClick={onChangeData} />
                         </div>
+
                     </>
                 }
             </div>
+            <div onClick={onClickCancel} className={st.background}/>
         </div>
     )
 };

@@ -1,13 +1,13 @@
 import React, {KeyboardEvent, useState} from 'react';
-import styles from './AddNewCardProfileModal.module.css'
-import {Button} from '../../n1-main/m1-ui/Common/Button/Button';
+import styles from './AddNewPackProfileModal.module.css'
+import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {useDispatch} from 'react-redux';
-import {Input} from '../../n1-main/m1-ui/Common/Input/Input';
-import {AddNewPackThunk} from '../../n1-main/m2-bll/packs-reducer';
+import {Input} from '../../../n1-main/m1-ui/Common/Input/Input';
+import {AddNewPackThunk} from '../../../n1-main/m2-bll/packs-reducer';
 
 type propsType = {
     setAddNewCardModal: (value: boolean) => void;
-    setPreloader: (value: boolean) => void;
+
 }
 
 export let AddNewPackProfileModal = (props: propsType) => {
@@ -28,16 +28,19 @@ export let AddNewPackProfileModal = (props: propsType) => {
     return (
         <div className={styles.general}>
             <div className={styles.window}>
-                <h1>Do you want to Add new Pack?</h1>
-                <p></p>
-                <Input value={name} onChangeText={SetName} placeholder={'enter your pack name'}
+                <h2>Do you want to Add new Pack?</h2>
+                
+                <div className={styles.inputContainer}>
+                <label htmlFor={'name'}>Enter your pack name</label>
+                <Input value={name} onChangeText={SetName}
                        onKeyPress={onKeyPressHandler}/>
-                <p></p>
+                </div>       
+                <div className={styles.buttonContainer}>
                 <Button children={'No'} onClick={showNoFoo}/>
                 <Button children={'Yes'} onClick={showYesFoo}/>
+                </div>
             </div>
-            <div onClick={showNoFoo} className={styles.background}></div>
+            <div onClick={showNoFoo} className={styles.background}/>
         </div>
-
     )
 }

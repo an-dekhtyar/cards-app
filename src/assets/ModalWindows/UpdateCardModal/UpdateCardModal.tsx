@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './UpdateProfileModal.module.css'
-import {Button} from "../../n1-main/m1-ui/Common/Button/Button";
+import styles from './UpdateCardModal.module.css'
 import {useDispatch} from "react-redux";
-import {UpdateCardThunk} from '../../n1-main/m2-bll/cards-reducer';
+import { UpdateCardThunk } from '../../../n1-main/m2-bll/cards-reducer';
+import { Button } from '../../../n1-main/m1-ui/Common/Button/Button';
+
 
 type propsType={
     setShowUpdateProfileModal:(value:boolean)=>void;
@@ -27,7 +28,7 @@ export let UpdateCardModal = (props:propsType) => {
                     <Button children={'No'} onClick={showNoFoo}/>
                     <Button children={'Yes'} onClick={showYesFoo} />
                 </div>
-                <div onClick={showNoFoo} className={styles.background}></div>
+                <div onClick={showNoFoo} className={styles.background}/>
             </div>
 
     )

@@ -1,24 +1,3 @@
-
-.logo img {
-
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.inputContainer label {
-    display: block;
-    text-align: left;
-    padding-left: 30px;
-}
-.buttonContainer{
-    display: flex;
-    margin-top: 40px;
-    justify-content: space-between;
-    margin-left: 35px;
-    margin-right: 35px;
-}
-
-
 .general{
     width: 100%;
     height: 100%;
@@ -27,7 +6,7 @@
 .general .window{
     position: fixed;
     width: 413px;
-    height: 450px;
+    height: 250px;
     transform: translate(-50%,-50%);
     background-color: white;
     border: 1px solid darkblue;
@@ -37,7 +16,6 @@
     top: 50%;
     display: flex;
     flex-direction: column;
-
 }
 
 .general .background{
@@ -48,22 +26,17 @@
     height: 100%;
     background-color: #3b4652;
     opacity: 0.5;
-    z-index: 0;
+    z-index: 10;
 }
 .buttonContainer{
     display: flex;
-    margin-top: 60px;
+    margin-top: 40px;
     justify-content: space-around;
 }
 .buttonContainer button {
     width: 140px;
 }
-.inputContainer label {
-    display: block;
-    text-align: left;
-
-}
 .general h2 {
-    margin-top: 40px;
-    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }

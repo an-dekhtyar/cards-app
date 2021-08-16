@@ -15,13 +15,13 @@ import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
 import {Search} from '../../h2-cards/a1-search/Search';
 import {SearchPaginator} from '../../h2-cards/a1-search/SearchPaginator';
 import {SearchDoubleRange} from '../../h2-cards/a1-search/SearchDoubleRange';
-import {EditProfile} from './../a6-edit-profile/EditProfile'
 import {GetPacksTC} from '../../../n1-main/m2-bll/packs-reducer';
 
 
 import {PageCountSelect} from '../../h2-cards/a1-search/PageCountSelect';
 import {MyAllToggle} from '../../h2-cards/a1-search/MyAllToggle';
-import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackProfileModal';
+import {AddNewPackProfileModal} from '../../../assets/ModalWindows/AddNewPackModal/AddNewPackProfileModal';
+import {EditProfile} from "../a6-edit-profile/EditProfile";
 
 export const Profile = () => {
         const dispatch = useDispatch()
@@ -31,7 +31,6 @@ export const Profile = () => {
         const isFetching = useSelector<AppStoreType, boolean>(state => state.app.isFetching)
         const editMode = useSelector<AppStoreType, boolean>(state => state.profile.editMode)
         let [showAddPackModal, setShowAddPackModal] = useState(false);
-        let [preloader, setPreloader] = useState(false);
         const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
         if (!isInitialized && isFetching) {
@@ -42,7 +41,7 @@ export const Profile = () => {
             dispatch(GetPacksTC(true))
         }, [])
 
-        const {_id, name, avatar, email, publicCardPacksCount} = userData
+        const {name, avatar, email, publicCardPacksCount} = userData
 
 
         const logout = () => {
@@ -62,56 +61,53 @@ export const Profile = () => {
 
         return (
             <div className={st.profilePage}>
-                {editMode
-                    ?
-                    <EditProfile userAvatar={avatar} profileLogo={profileLogo} userEmail={email} userName={name}/>
-                    :
-                    <div className={st.profileContain}>
-                        <>
-                            <div className={st.leftBlock}>
-                                <div className={st.info}>
-                                    <div className={st.logo}>
-                                        <img className={st.logo}
-                                             src={avatar === 'Avatar is not defined' || 'Add link to add ava!' ? profileLogo : avatar}/>
-                                    </div>
-                                    <div>Front-end developer</div>
-                                    <Button className={btn.editProfileBtn} onClick={onClickEditMode}>Edit
-                                        profile</Button>
-                                    <div>My public card count is: {publicCardPacksCount}</div>
+                <div className={st.profileContain}>
+                    <>
+                        <div className={st.leftBlock}>
+                            <div className={st.info}>
+                                <div className={st.logo}>
+                                    <img className={st.logo}
+                                         src={avatar === 'Avatar is not defined' || 'Add link to add ava!' ? profileLogo : avatar}/>
                                 </div>
-                                <div className={st.range}><SearchDoubleRange/><MyAllToggle/></div>
-                                <div className={st.button}>
-
-                                    <Button onClick={logout} disabled={!isFetching}>Log out</Button>
-                                </div>
+                                <div>Front-end developer</div>
+                                <Button className={btn.editProfileBtn} onClick={onClickEditMode}>Edit
+                                    profile</Button>
+                                <div>My public card count is: {publicCardPacksCount}</div>
                             </div>
+                            <div className={st.range}><SearchDoubleRange/><MyAllToggle/></div>
+                            <div className={st.button}>
 
-                            <div className={st.rightBlock}>
-                                <div className={st.input}>
+                                <Button onClick={logout} disabled={!isFetching}>Log out</Button>
+                            </div>
+                        </div>
+
+                        <div className={st.rightBlock}>
+                            <div className={st.input}>
                                     <span>
                                         <Search/>
                                     </span>
-                                    <Button children={'add new pack'} onClick={AddNewPack} disabled={!isFetching}/>
-                                </div>
-                                {isInitialized ?
-                                    <div className={st.table}>
-                                        <Packs/>
-                                    </div>
-                                    :
-                                    <Preloader/>}
-
-                                <div className={st.pagination}>
-                                    <SearchPaginator/>
-                                    <PageCountSelect/>
-                                </div>
+                                <Button children={'add new pack'} onClick={AddNewPack} disabled={!isFetching}/>
                             </div>
-                            {showAddPackModal &&
-                            <AddNewPackProfileModal setAddNewCardModal={setShowAddPackModal}
-                                                    setPreloader={setPreloader}/>}
-                        </>
-                    </div>
+                            {isInitialized ?
+                                <div className={st.table}>
+                                    <Packs/>
+                                </div>
+                                :
+                                <Preloader/>}
 
-                }
+                            <div className={st.pagination}>
+                                <SearchPaginator/>
+                                <PageCountSelect/>
+                            </div>
+                        </div>
+                        {editMode && <EditProfile userAvatar={avatar} profileLogo={profileLogo} userEmail={email} userName={name}/>}
+                        {showAddPackModal &&
+                        <AddNewPackProfileModal setAddNewCardModal={setShowAddPackModal}
+                                                />}
+                    </>
+                </div>
+
+
             </div>)
 
 

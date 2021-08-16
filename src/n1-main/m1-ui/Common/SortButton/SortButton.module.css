@@ -1,15 +1,21 @@
 
 .container{
+    width: 20px;
     display: inline;
     margin: 0;
+    cursor: pointer;
 }
 
 .container img{
-    margin: 0 0 0 5px;
+    margin: 0 0 0 0;
     height: 14px;
     width: 14px;
+    z-index: 0;
+    margin-left: 5px;
 }
+.active img {
+    z-index: 0;
+    background-color: white;
+    padding: 2px;
 
-.active{
-    filter: invert(50%) sepia(31%) saturate(1005%) hue-rotate(345deg) brightness(90%) contrast(84%);
 }

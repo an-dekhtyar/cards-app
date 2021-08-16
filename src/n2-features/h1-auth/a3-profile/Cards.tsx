@@ -10,9 +10,6 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {NavLink, useLocation} from 'react-router-dom';
 import {Button} from '../../../n1-main/m1-ui/Common/Button/Button';
 import {Preloader} from '../../../n1-main/m1-ui/Common/Preloader/Preloader';
-import {AddNewCardProfileModal} from '../../../assets/ModalWindows/AddNewCardProfileModal';
-import {DeleteCardModal} from '../../../assets/ModalWindows/DeleteCardModal';
-import {UpdateCardModal} from '../../../assets/ModalWindows/UpdateCardModal';
 import st from './Cards.module.css'
 import bt from './../../../n1-main/m1-ui/Common/Button/Button.module.css'
 import {CardRating} from '../../h2-cards/a2-cards-rating/CardsRating';
@@ -24,6 +21,8 @@ import {DateHelper} from '../../../assets/helper/date-helper';
 import backArrow from '../../../assets/images/back-arrow.png';
 import {CardPaginator} from '../../h2-cards/a1-search/search_cards/CardPaginator';
 import {CardsPageCountSelect} from '../../h2-cards/a1-search/search_cards/CardsPageCountSelect';
+import { DeleteCardModal } from '../../../assets/ModalWindows/DeleteCardModal/DeleteCardModal';
+import { AddNewCardProfileModal } from '../../../assets/ModalWindows/AddNewCardModal/AddNewCardProfileModal';
 
 export const Cards = () => {
     let dispatch = useDispatch()
@@ -49,9 +48,8 @@ export const Cards = () => {
 
     //for Modal===============================================================
     let [showDeleteModal, setShowDeleteModal] = useState(false)
-    let [idForModal, setIdForModal] = useState('')
 
-    let [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false)
+
     let [AddNewCardModal, setAddNewCardModal] = useState(false)
 
     //EditCardMode---------------------------------------------------------------
@@ -75,33 +73,28 @@ export const Cards = () => {
 
     return (
         <div className={st.cardsPage}>
-            {editCardMode
-                ?
-                <EditCard cardId={cardId} cardAnswer={cardAnswer} cardQuestion={cardQuestion}/>
-                :
-                <div className={st.cardsContain}>
-                    <div className={st.cardsTitle}>
-                        <NavLink to={PATH.PROFILE}>
-                            <img className={st.backArrow} src={backArrow} alt={''}/>
-                        </NavLink>
-                        <span className={st.packName}>Pack Name</span>
-                    </div>
-                    <div className={st.cardsSearch}>
-                        <CardSearchBar/>
-                        {isUserPack && <div><Button children={'add new card'} disabled={!isFetching} onClick={AddNewCard}/></div>}
-                    </div>
-                    {showDeleteModal &&
-                    <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={cardId}/>}
-                    {showUpdateProfileModal &&
-                    <UpdateCardModal setShowUpdateProfileModal={setShowUpdateProfileModal} idForModal={idForModal}/>}
-                    {AddNewCardModal &&
-                    <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} cardsPack_id={pack_id}/>}
-                    {initialized ?
-                        <div className={st.cardsTable}>
-                            <CardSearchTableHeader/>
-                            {
-                                cards !== undefined ?
-                                    cards.map((card) => {
+            <div className={st.cardsContain}>
+                <div className={st.cardsTitle}>
+                    <NavLink to={PATH.PROFILE}>
+                        <img className={st.backArrow} src={backArrow} alt={''}/>
+                    </NavLink>
+                    <span className={st.packName}>Pack Name</span>
+                </div>
+                <div className={st.cardsSearch}>
+                    <CardSearchBar/>
+                    {isUserPack && <div><Button children={'add new card'} disabled={!isFetching} onClick={AddNewCard}/></div>}
+                </div>
+                {showDeleteModal &&
+                <DeleteCardModal setShowDeleteModal={setShowDeleteModal} idForModal={cardId}/>}
+                {editCardMode && <EditCard cardId={cardId} cardAnswer={cardAnswer} cardQuestion={cardQuestion}/>}
+                {AddNewCardModal &&
+                <AddNewCardProfileModal setAddNewCardModal={setAddNewCardModal} cardsPack_id={pack_id}/>}
+                {initialized ?
+                    <div className={st.cardsTable}>
+                        <CardSearchTableHeader/>
+                        {
+                            cards !== undefined ?
+                                cards.map((card) => {
 
                                     return (
                                         <Card
@@ -116,21 +109,21 @@ export const Cards = () => {
                                     )
                                 })
                                 :
-                                <div>{preloader && <Preloader/>}</div>
+                                <div><Preloader/></div>
                         }</div>
-                        :
-                        <Preloader/>}
-                    {/*<Table data={cards.cardPacks}/>*/}
+                    :
+                    <Preloader/>}
+                {/*<Table data={cards.cardPacks}/>*/}
 
-                    <div className={st.cardsPagination}>
-                        {cards.length !== 0 &&
-                        <>
-                            <CardPaginator/>
-                            <CardsPageCountSelect/>
-                        </>
-                        }
-                    </div>
-                </div>}
+                <div className={st.cardsPagination}>
+                    {cards.length !== 0 &&
+                    <>
+                        <CardPaginator/>
+                        <CardsPageCountSelect/>
+                    </>
+                    }
+                </div>
+            </div>
         </div>)
 }
 
