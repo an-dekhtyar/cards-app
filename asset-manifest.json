@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/cards-app/static/css/main.97c274d8.chunk.css",
-    "main.js": "/cards-app/static/js/main.f798122f.chunk.js",
-    "main.js.map": "/cards-app/static/js/main.f798122f.chunk.js.map",
-    "runtime-main.js": "/cards-app/static/js/runtime-main.15c54034.js",
-    "runtime-main.js.map": "/cards-app/static/js/runtime-main.15c54034.js.map",
-    "static/js/2.e4616dd8.chunk.js": "/cards-app/static/js/2.e4616dd8.chunk.js",
-    "static/js/2.e4616dd8.chunk.js.map": "/cards-app/static/js/2.e4616dd8.chunk.js.map",
-    "static/js/3.d93ccabd.chunk.js": "/cards-app/static/js/3.d93ccabd.chunk.js",
-    "static/js/3.d93ccabd.chunk.js.map": "/cards-app/static/js/3.d93ccabd.chunk.js.map",
+    "main.css": "/cards-app/static/css/main.1a89eac5.chunk.css",
+    "main.js": "/cards-app/static/js/main.5f7c2b62.chunk.js",
+    "main.js.map": "/cards-app/static/js/main.5f7c2b62.chunk.js.map",
+    "runtime-main.js": "/cards-app/static/js/runtime-main.503f00b8.js",
+    "runtime-main.js.map": "/cards-app/static/js/runtime-main.503f00b8.js.map",
+    "static/js/2.f256126e.chunk.js": "/cards-app/static/js/2.f256126e.chunk.js",
+    "static/js/2.f256126e.chunk.js.map": "/cards-app/static/js/2.f256126e.chunk.js.map",
+    "static/js/3.c5c1439a.chunk.js": "/cards-app/static/js/3.c5c1439a.chunk.js",
+    "static/js/3.c5c1439a.chunk.js.map": "/cards-app/static/js/3.c5c1439a.chunk.js.map",
     "index.html": "/cards-app/index.html",
-    "static/css/main.97c274d8.chunk.css.map": "/cards-app/static/css/main.97c274d8.chunk.css.map",
-    "static/js/2.e4616dd8.chunk.js.LICENSE.txt": "/cards-app/static/js/2.e4616dd8.chunk.js.LICENSE.txt",
+    "static/css/main.1a89eac5.chunk.css.map": "/cards-app/static/css/main.1a89eac5.chunk.css.map",
+    "static/js/2.f256126e.chunk.js.LICENSE.txt": "/cards-app/static/js/2.f256126e.chunk.js.LICENSE.txt",
     "static/media/logo.70fefd3f.png": "/cards-app/static/media/logo.70fefd3f.png",
     "static/media/preloader.576a7a69.svg": "/cards-app/static/media/preloader.576a7a69.svg",
     "static/media/profileLogo.b223d406.png": "/cards-app/static/media/profileLogo.b223d406.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.15c54034.js",
-    "static/js/2.e4616dd8.chunk.js",
-    "static/css/main.97c274d8.chunk.css",
-    "static/js/main.f798122f.chunk.js"
+    "static/js/runtime-main.503f00b8.js",
+    "static/js/2.f256126e.chunk.js",
+    "static/css/main.1a89eac5.chunk.css",
+    "static/js/main.5f7c2b62.chunk.js"
   ]
 }
