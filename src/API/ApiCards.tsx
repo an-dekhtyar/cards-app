@@ -25,7 +25,7 @@ export const ApiCards = {
         return instance.delete<LoginResponseType>('/auth/me', {})
     },
     getInstruction(email: string) {
-        return instance.post('/auth/forgot', {
+        return axios.post('https://neko-back.herokuapp.com/2.0/auth/forgot', {
             email,
             from: 'test-front-admin <ai73a@yandex.by>',
             message: `<div style="background-color: lime; padding: 15px"> To change your password, please follow the link:<a href='http://localhost:3000/#/new-pass/$token$'>link</a></div>`

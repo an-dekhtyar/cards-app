@@ -13,8 +13,8 @@ import { Checkbox } from '../../../n1-main/m1-ui/Common/Checkbox/Checkbox';
 export const Login: React.FC = () => {
 
     //state
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState<string>('');
+    const [email, setEmail] = useState('dextar15@mail.ru')
+    const [password, setPassword] = useState<string>('qwe123qwe123');
     const [rememberMe, setRememberMe] = useState<boolean>(false)
     const dispatch = useDispatch();
     const isAuth = useSelector<AppStoreType, boolean>(state => state.login.isAuth);
@@ -56,7 +56,7 @@ export const Login: React.FC = () => {
                     <div className={st.remMeFogotContain}>
 
                         <span><Checkbox  checked={rememberMe} onChangeChecked={setRememberMe}/>Remember me</span>
-                        <NavLink to={PATH.ENTER_NEW_PASS}>Forgot Password</NavLink>
+                        <NavLink to={PATH.RESTORE_PASS}>Forgot Password</NavLink>
                     </div>
                     <div className={st.buttonContainer}>
                         <Button onClick={onSubmitClick}
